@@ -10,11 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ 检出仓库代码（包含主题 submodule）
+      # 1️⃣ 检出仓库代码（包含主题 ）
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          submodules: true
           fetch-depth: 0 # 推荐开启，避免某些主题构建问题
 
       # 2️⃣ 缓存 Hugo 资源目录（加速构建关键步骤）
