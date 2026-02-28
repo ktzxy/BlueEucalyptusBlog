@@ -1,0 +1,52 @@
+name: Deploy Hugo to Alibaba Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ 检出仓库代码（包含主题 submodule）
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          fetch-depth: 0 # 推荐开启，避免某些主题构建问题
+
+      # 2️⃣ 缓存 Hugo 资源目录（加速构建关键步骤）
+      - name: Cache Hugo resources
+        uses: actions/cache@v3
+        with:
+          path: |
+            resources
+            .hugo_cache
+          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum') }}-${{ hashFiles('**/config.*') }}
+          restore-keys: |
+            ${{ runner.os }}-hugo-
+
+      # 3️⃣ 安装 Hugo Extended 版本
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "0.157.0"
+          extended: true
+
+      # 4️⃣ 构建静态文件（生产环境）
+      - name: Build Hugo site
+        run: hugo --minify --environment production
+
+      # 5️⃣ 使用 rsync 部署到阿里云服务器
+      - name: Deploy via rsync
+        uses: burnett01/rsync-deployments@v5
+        with:
+          switches: -avzr --delete
+          path: public/
+          remote_host: ${{ secrets.ALI_HOST }}
+          remote_user: ${{ secrets.ALI_USER }}
+          remote_port: ${{ secrets.ALI_PORT }}
+          remote_path: /var/www/myblog/
+          remote_key: ${{ secrets.ALI_KEY }}
