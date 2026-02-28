@@ -47,5 +47,5 @@ jobs:
           remote_host: ${{ secrets.ALI_HOST }}
           remote_user: ${{ secrets.ALI_USER }}
           remote_port: ${{ secrets.ALI_PORT }}
-          remote_path: /var/www/myblog/
+          remote_path: /var/www/myblog/public/
           remote_key: ${{ secrets.ALI_KEY }}
