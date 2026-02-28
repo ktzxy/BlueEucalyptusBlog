@@ -13,6 +13,7 @@ theme = "hugo-PaperMod"
   enableFontSize = true      # 字号切换
   showReadingTime = true     # 阅读时长显示
   disableIntegrity = true    # 关闭 SRI 验证
+  disableLiveReload = true
 
   # Fuse.js 搜索选项
   [params.fuseOpts]
