@@ -1,0 +1,2901 @@
++++
+date = '2026-02-28T10:38:44+08:00'
+draft = false
+title = 'C语言编程实例'
+
++++
+
+# 1.温度转换
+
+```c
+#include<stdio.h>
+/*
+有人用温度计测量出用华氏温度98°F，现在要求用C语言实现把它转换为以摄氏法表示的温度。
+摄氏度等于九分之五乘以华氏度减去32的积
+*/
+int main(){
+	float f_Degree,centigrade;  // f_Degree表示华氏温度， centigrade表示摄氏法
+	f_Degree=98.0;
+	centigrade=(5.0/9)*(f_Degree-32);
+	printf("华氏度98的摄氏度为：%f\n",centigrade); 
+	return 0;
+}
+```
+
+# 2.字母大小写转换
+
+```c
+#include<stdio.h>
+/*
+大写字母转换为小写，小写字母转换为大写 
+*/
+int main(){
+	char ch;
+	printf("请输入一个字母：");
+	scanf("%c",&ch); 
+	if((ch<='z' && ch>='a') || (ch<='Z' && ch>='A') ){
+		if(ch<='z' && ch>='a'){
+			ch-=32;
+			printf("%c",ch);
+		}else{
+			ch+=32;
+			printf("%c",ch);
+		}
+	}else{
+		printf("输入有误！");
+	}
+	return 0;
+}
+```
+
+# 3.三目运算实现判断大写
+
+```c
+#include<stdio.h>
+/*
+输入一个字符，判别它是否为大写字母，如果是，将它转换成小写，如果不是，不转换。
+然后输出最后得到的字符，要求使用三目运算符。 
+*/
+int main(){
+	char character_Big,character_Small;
+	printf("请输入字母：");
+	scanf("%c",&character_Big);
+	character_Small=(character_Big<='Z'&&character_Big>='A')?(character_Big+32):character_Big;
+	printf("%c",character_Small); 
+	return 0;
+}
+```
+
+# 4.判断某年是否为闰年
+
+```c
+#include<stdio.h>
+/*
+C语言实现判断某一年是否是闰年。 
+*/
+int main(){
+	int year;
+	printf("请输入年份：");
+	scanf("%d",&year);
+	if((year%100!=0 && year%4==0) || year%400==0){
+		printf("%d是闰年",year);
+	}else{
+		printf("%d是平年",year); 
+	}
+	return 0;
+}
+```
+
+# 5.求1+2+……+100的和
+
+```c
+#include<stdio.h>
+/*
+C语言实现求1+2+3+……+100的和，要求分别用while、do while、for循环实现。 
+*/
+
+//for循环 
+int main() 
+{
+  int i,sum=0;
+  for(i=1;i<101;i++)
+  {
+    sum=sum+i;
+  } 
+  printf("%d",sum);
+  return 0;
+}
+//while循环 
+
+int main()
+{
+  int i=1,sum=0;
+  while(i<101)
+  {
+    sum=sum+i;
+    i=i+1; 
+  }
+  printf("%d",sum);
+  return 0;
+}
+//do while循环 
+int main()
+{
+  int i=1,sum=0;
+  do{
+    sum=sum+i;
+    i=i+1; 
+  }while(i<101); 
+  printf("%d",sum); 
+  return 0;
+}
+```
+
+# 6.统计捐款人数及捐款
+
+```c
+#include<stdio.h>
+/*
+在全系1000个学生中，征集慈善捐款，当总数达到10万元时就结束，
+统计此时的捐款人数，以及平均每人捐款的数目。 
+*/
+
+int main() 
+{
+	float amount,aver,total;
+	float sum=100000;
+	int i;
+	for(i=0,total=0;i<1001;i++){
+		printf("第%d个人捐款钱数：",i+1);
+		scanf("%f",&amount);
+		total+=amount;
+		if(total>sum) break;
+	}
+	aver=total/i;
+	printf("第%d个人捐款之后达到10万+\n平均每人捐款：%5.2f\n",i,aver);
+  return 0;
+}
+```
+
+# 7.100-200之间不能被3整除的数
+
+```c
+#include<stdio.h>
+/*
+C语言实现统计100~200之间的不能被3整除的数。
+*/
+
+int main(){
+	int i;
+	for(i=100;i<=200;i++){
+		if(i%3==0)
+		continue;
+		printf("%d\t",i);
+	}
+	printf("\n");
+  	return 0;
+}
+```
+
+# 8.输出4*5的矩阵
+
+```c
+#include<stdio.h>
+/*
+C语言实现输出4*5的矩阵。
+*/
+
+int main(){
+	
+	for(int i=1;i<5;i++){
+		for(int j=1;j<6;j++){
+			printf("%d\t",i*j);
+		}
+		printf("\n");
+	}
+  	return 0;
+}
+```
+
+# 9.输出斐波那契前30列
+
+```c
+#include<stdio.h>
+/*
+求Fibonacci数列的前40个数。这个数列有以下特点：第1,2两个数为1,1,。
+从第三个数开始，该数是其前两个数之和。（斐波那契不死神兔）
+*/
+
+int main(){
+	int row,i,f1,f2,f3;
+	f1=1,f2=1;
+	printf("请输入行数：");
+	scanf("%d",&row);
+	printf("%d\n%d\n",f1,f2);
+	for(i=1;i<row-1;i++){
+		f3=f1+f2;
+		printf("%d\n",f3);
+		f1=f2;
+		f2=f3;
+	} 
+  	return 0;
+}
+```
+
+# 10.判断是否素数
+
+```c
+#include<stdio.h>
+/*
+C语言实现输入一个大于3的整数n，判断他是否为素数（质数）。
+
+解题思路：本题采用的算法是，让n被i除，如果number能被2~（number-1）之中的任何一个整数整除，
+则表示number肯定不是素数，不必再继续被后面的整数除，因此，可以提前结束循环。
+*/
+
+int main(){
+	int i,number;
+	printf("请输入一个整数：");
+	scanf("%d",&number);
+	for(i=2;i<=number-1;i++){
+		if(number%i==0) break;
+	}
+	if(i<number){
+		printf("%d不是素数",number); 
+	}else{
+		printf("%d是素数",number);
+	}
+  	return 0;
+}
+```
+
+# 11. 素数
+
+```c
+#include<stdio.h>
+#include<math.h>
+/*
+C语言编程实现输出100~200之间的素数。
+*/
+
+int main(){
+	int i,j,count;
+	for(i=100;i<=200;i++){
+		for(j=2;j<sqrt(i);j++){
+			if(i%j==0) break;
+		}
+		if(i%j!=0){
+			count++;
+			printf("%d\n",i);
+		}
+	}
+	printf("total = %d\n",count);
+  	return 0;
+}
+
+
+//输入一个大于3的整数n，判定它是否为素数。
+#include<stdio.h>
+/*
+输入一个大于3的整数n，判定它是否为素数
+*/
+int main(){
+	int i,n;
+	printf("请输入一个整数：");
+	scanf("%d",&n);
+	for(i=2;i<n;i++){
+		if(n%i==0) break;
+	}
+	if(i<n) printf("%d 不是素数\n",n);
+	else printf("%d 是素数\n",n);
+	
+	return 0;
+}
+//改进
+#include<stdio.h>
+#include<math.h>
+/*
+输入一个大于3的整数n，判定它是否为素数
+*/ 
+int main(){
+	int i,n,k;
+	printf("请输入一个整数：");
+	scanf("%d",&n);
+	k=sqrt(n);
+	for(i=2;i<=k;i++){
+		if(n%i==0) break;
+	}
+	if(i<k) printf("%d 不是素数\n",n);
+	else printf("%d 是素数\n",n);
+	
+	return 0;
+}
+```
+
+# 12.九九乘法表
+
+```c
+#include<stdio.h>
+/*
+C语言编程实现九九乘法表，样式要求,常规，长方形、右三角形、左三角形。
+*/
+//常规 (左三角形)
+/*
+int main(){
+	for(int i=1;i<=9;i++){
+		for(int j=1;j<=i;j++){
+			printf("%d*%d=%d\t",i,j,i*j);
+		}
+		printf("\n");
+	}
+  	return 0;
+}
+*/ 
+
+//长方形
+/*
+int main(){
+	for(int i=1;i<=9;i++){
+		for(int j=1;j<=9;j++){
+			printf("%d*%d=%2d\t",i,j,i*j);
+		}
+		printf("\n");
+	}
+	return 0;
+}
+*/
+
+//右三角形
+
+int main(){
+	for(int i=1;i<=9;i++){
+		for(int j=1;j<=9;j++){
+			if(j<i) 
+			{
+				printf(" ");
+			}
+			else{
+				printf("%d*%d=%2d ",i,j,i*j);
+			}
+		}
+		printf("\n");
+	}
+	return 0;
+}
+```
+
+# 13.求特定规律的和
+
+```c
+#include<stdio.h>
+/*
+C语言实现求
+（1+2+3….+100）+（1*1+2*2+….50*50）+（1/1+1/2+…1/10）
+*/
+int main(){
+	float sum1=0,sum2=0,sum3=0,sum;
+	for(int i=1;i<=100;i++){
+		sum1+=i;
+	}
+	for(int j=1;j<=50;j++){
+		sum2+=j*j;
+	}
+	for(int k=1;k<=10;k++){
+		sum3+=1/k;
+	}
+	sum=sum1+sum2+sum3;
+	printf("（1+2+3…+100）+（1*1+2*2+…50*50）+（1/1+1/2+…+1/10）="); 
+	printf("%.2f\n",sum);
+	return 0;
+}
+```
+
+# 14.打印菱形
+
+```c
+#include<stdio.h>
+/*
+C语言实现打印菱形。
+*/
+int main(){
+	int i,j,k;
+	for(i=0;i<4;i++){  
+		for(j=0;j<=2-i;j++){  
+			printf(" ");  
+		}
+		for(k=0;k<=2*i;k++){ 
+			printf("*");
+		}
+		printf("\n");
+	}
+	for(i=0;i<=2;i++){
+		for(j=0;j<=i;j++){
+			printf(" ");
+		}
+		for(k=0;k<=4-2*i;k++){
+			printf("*");
+		}
+		printf("\n");
+	}
+	return 0;
+}
+```
+
+# 15.冒泡排序
+
+```c
+#include<stdio.h>
+/*
+C语言实现从小到大对10个数进行排序，要求使用冒泡排序实现。
+*/
+int main(){
+	int arr[10];
+	int temp,i,j;
+	printf("请输入十个数:");
+	for(i=0;i<10;i++){
+		scanf("%d",&arr[i]);
+	}
+	//排序 
+	for(i=0;i<9;i++){
+		for(j=0;j<9-i;j++){
+			if(arr[j]>arr[j+1]){  //如果前一个数比后一个数大 
+				temp=arr[j];  //把小的数赋值给前面，大的数赋值给后面 
+				arr[j]=arr[j+1];
+				arr[j+1]=temp;
+			}
+		}
+	}
+	printf("按照从小到大的顺序排序:");
+	for(i=0;i<10;i++){
+		printf("%d ",arr[i]);
+	}
+	printf("\n");
+	return 0;
+}
+```
+
+# 16.选择排序
+
+```c
+#include<stdio.h>
+#define N 10
+/*
+选择法排序 
+*/
+int main(){
+	void sort(int arr[N],int n);
+	int a[N];
+	printf("请输入十个数:");
+	for(int i=0;i<N;i++){
+		scanf("%d",&a[i]);
+	}
+	sort(a,N);
+	printf("按照从小到大的顺序排序:");
+	for(int i=0;i<N;i++){
+		printf("%d ",a[i]);
+	}
+	return 0;
+}
+void sort(int arr[N],int n){
+	int i,j,k,t;
+	for(i=0;i<n-1;i++){
+		k=i;
+		for(j=i+1;j<n;j++){
+			if(arr[j]<arr[k]) k=j;
+		}
+		t=arr[k];
+		arr[k]=arr[i];
+		arr[i]=t;
+	}
+}
+```
+
+```c
+#include<stdio.h>
+/*
+用选择法对数组中10个整数按由小到大排序
+
+所谓选择法就是先将10个数中最小的数与a[0]对换；再将a[1]~a[9]中最小的数与a[1]对换...每比较一轮，
+找出一个未经排序的数中最小的一个。共比较9轮 
+*/
+int main(){
+	int a[10];
+	int i,j,k,t;
+    for(int i=0;i<10;i++){
+		scanf("%d",&a[i]);
+	}
+	for(i=0;i<9;i++){
+		k=i;
+		for(j=i+1;j<10;j++){
+			if(a[j]<a[k]) k=j;
+		}
+		t=a[k];
+		a[k]=a[i];
+		a[i]=t;
+	}
+	for(i=0;i<10;i++){
+		printf("%d ",a[i]);
+	}
+    return 0;
+}
+```
+
+# 17.二维数组行列元素互换
+
+```c
+#include<stdio.h>
+/*
+C语言实现将一个二维数组行和列的元素互换，存到另一个二维数组中。
+*/
+int main(){
+	int a[2][3]={{1,2,3},{4,5,6}};
+	int b[3][2];
+	int i,j;
+	printf("横向数组的序列：\n");
+	for(i=0;i<2;i++){
+		for(j=0;j<3;j++){
+			printf("%d ",a[i][j]);
+			b[j][i]=a[i][j];
+		}
+		printf("\n");
+	}
+	printf("纵向数组的序列:\n");
+	for(i=0;i<3;i++){
+		for(j=0;j<2;j++){
+			printf("%d ",b[i][j]);
+		}
+		printf("\n");
+	}
+	return 0;
+}
+```
+
+# 18.求3*4的矩阵最大数及行号列号
+
+```c
+#include<stdio.h>
+/*
+C语言实现求3*4的矩阵中制最大的那个元素的值，以及其所在的行号列号。
+*/
+int main(){
+    int row=0,colum=0;
+    int a[3][4]={{1,2,3,4},{9,8,7,6},{-10,10,-5,2}};
+    int max=a[0][0];
+    for(int i=0;i<3;i++){
+        for(int j=0;j<4;j++){
+            if(a[i][j]>max) {
+                max=a[i][j];
+                row = i;
+                colum = j;
+            }
+        }
+    }
+    printf("max=%d\nrow=%d\ncolum=%d\n",max,row,colum);
+    return 0;
+}
+```
+
+# 19. C语言实现输出杨辉三角。
+
+```c
+#include<stdio.h>
+/*
+C语言实现输出杨辉三角。
+*/ 
+int main(){
+	int i,j;
+	//定义二维数组 
+	int a[10][10];
+	for(i=0;i<10;i++){
+		a[i][i]=1; //给二维数组的每一行的最后一个赋值为1
+		a[i][0]=1; //第二维数组的每一行的开头赋值为1 
+	} 
+	
+	for(i=2;i<10;i++){
+		for(j=1;j<=i-1;j++){
+			a[i][j]=a[i-1][j-1]+a[i-1][j];
+		}
+	}
+	
+	for(i=0;i<10;i++){
+		for(j=0;j<=i;j++){
+			printf("%6d",a[i][j]);
+		}
+		printf("\n");
+	}
+	return 0;
+}
+```
+
+# 20.函数实现比大小
+
+```c
+#include<stdio.h>
+/*
+输入两个整数，要求输出其中值较大者。要求用函数来找到大数。
+*/ 
+int main(){
+	int max(int x,int y);
+	int a,b;
+	printf("请输入两个整数：\n");
+	scanf("%d,%d",&a,&b);
+	printf("max=%d\n",max(a,b));
+	return 0;
+}
+int max(int x,int y){
+	return x>y?x:y;
+}
+```
+
+# 21.函数求年龄
+
+```c
+#include<stdio.h>
+/*
+有5个美女坐在一起，问第5个美女多少岁，她说比第4个美女大2岁；问第4个美女多少岁，她说比第3个美女大2岁；
+问第3个美女多少岁，她说比第2个美女大2岁；问第2个美女多少岁，她说比第一个大2岁。
+最后问第1个美女，她说10岁。请问第2、3、4、5个美女多少岁？要求用C语言编程实现。
+*/ 
+int main(){
+	int age(int temp);
+	int number;
+	printf("输入想知道的第几个孩子：");
+	scanf("%d",&number);
+	printf("第%d个学生的年龄是%d岁\n",number,age(number));
+	return 0;
+}
+int age(int temp){
+	return (temp==1)?10:age(temp-1)+2;
+}
+```
+
+# 22.递归求n的阶乘
+
+```c
+#include<stdio.h>
+/*
+C语言求n！，要求用递归实现。
+*/ 
+int main(){
+	int factorial(int number);
+	int number;
+	printf("输入要求阶乘的数：");
+	scanf("%d",&number);
+	printf("%d!=%d",number,factorial(number));
+	return 0;
+}
+int factorial(int number){
+	int temp;
+	if(number<0){
+		printf("错误数据请，输入大于0的数！");
+	}else if(number==0 || number==1){
+		temp=1;
+	}else{
+		temp=factorial(number-1)*number;
+	}
+	return temp;
+}
+```
+
+# **23.求平均分及第n个人成绩
+
+```c
+#include<stdio.h>
+/*
+有一个班，3个学生，各学习4门课，C语言编程实现计算总平均分数以及第n个学生的成绩，要求使用指针。
+*/ 
+
+int main(){
+	void average(float *p,int n);
+	void search_Grade(float (*p)[4],int n);
+	float score[3][4]={{70,86,93,80},{85,90,75,82},{90,100,96,98}};
+	average(*score,12);
+	search_Grade(score,2);
+	return 0;
+}
+//自定义求平均成绩函数 
+void average(float *p,int n){
+	float *p1;
+	float sum=0,aver;
+	p1=p+n-1;
+	for(;p<=p1;p++){
+		sum+=(*p);
+	}
+	aver=sum/n;
+	printf("平均数是:%.2f",aver);
+	printf("\n");
+} 
+
+//自定义求第n个学生成绩函数
+void search_Grade(float (*p)[4],int n){
+	printf("第%d个学生的成绩是:",n+1);
+	for(int i=0;i<4;i++){
+		printf("%5.2f ",*(*(p+n)+i));
+	}
+}
+```
+
+# **24.输出平均成绩最高学生的信息
+
+```c
+#include<stdio.h>
+#define N 3
+/*
+有n个结构体变量，内含学生的学号，学号，和三门成绩。要求输出平均成绩最高学生的信息
+（包括学号、姓名、三门课程成绩和平均成绩）n个学生的成绩，要求使用指针。
+*/ 
+struct Student{
+	int num;
+	char name[20];
+	float score[N];
+	float aver;
+};
+int main(){
+	void input(struct Student s[]);
+	struct Student max(struct Student s[]);
+	void print(struct Student stu);
+	
+	struct Student s[N],*p=s;
+	input(p);
+	print(max(p));
+	return 0;
+}
+//自定义输入函数
+void input(struct Student s[]){
+	printf("请输入各学生的信息：学号、姓名、三门课成绩:\n");
+	for(int i=0;i<N;i++){
+		scanf("%d %s %f %f %f",&s[i].num,s[i].name,&s[i].score[0],&s[i].score[1],&s[i].score[2]);
+		s[i].aver=(s[i].score[0]+s[i].score[1]+s[i].score[2])/N;
+	}
+}
+//自定义求最大值
+struct Student max(struct Student s[]){
+	int i,m=0;
+	for(i=0;i<N;i++){
+		if(s[i].aver>s[m].aver) m=i;
+	}
+	return s[m];
+};
+//自定义打印函数 
+void print(struct Student stu){
+	printf("\n成绩最高的学生是：\n");
+	printf("学号；%d\n姓名；%s\n三门课成绩：%5.1f,%5.1f,%5.1f\n平均成绩：%6.2f\n",
+	   stu.num,stu.name,stu.score[0],stu.score[1],stu.score[2],stu.aver);
+}
+```
+
+# 25.用指针字符串a复制为b并输出
+
+```c
+#include<stdio.h>
+/*
+C语言实现将字符串a复制为b，然后输出b，要求使用指针。
+*/ 
+int main(){
+	char a[]="I Love You";
+	char b[20];
+	int i;
+	for(i=0;*(a+i)!='\0';i++){
+		*(b+i)=*(a+i);
+	}
+	*(b+i)='\0';
+	printf("字符串a是:%s\n",a);
+	printf("单个输出字符b："); 
+	for(i=0;b[i]!='\0';i++){
+		printf("%c",*(b+i));
+	}
+	printf("\n");
+	return 0;
+}
+```
+
+# 26.统计投票的结果
+
+```c
+#include<stdio.h>
+#include<string.h>
+/*
+有三个候选人，每个选民只能投给一个人，要求用C语言编一个统计选票的程序，
+先后输入备选人的的名字，最后输出各人的得票结果。
+*/ 
+struct People{
+	char name[20];
+	int number;
+}leader[3]={{"zhang",0},{"li",0},{"sun",0}};
+int main(){
+	int i,j;
+	char leader_name[20];
+	for(i=0;i<10;i++){
+		printf("请输入人名\n");
+		scanf("%s",leader_name);
+		for(j=0;j<3;j++){
+			if(strcmp(leader_name,leader[j].name)==0){
+				leader[j].number++;
+			}
+		}
+	}
+	printf("结果是：\n");
+	for(i=0;i<3;i++){
+		printf("%s票数：%d\n",leader[i].name,leader[i].number);
+	}
+	return 0;
+}
+```
+
+# 27.按成绩高低输出学生信息
+
+```c
+#include<stdio.h>
+/*
+有n个学生的信息（包括学号、姓名、成绩），C语言编程实现按照成绩的高低顺序输出学生的信息。
+*/ 
+struct Student{
+	int num;
+	char name[10];
+	float score;
+};
+int main(){
+	struct Student stu[5]={{10010,"Tom",78},{10011,"Jon",98.5},{10012,"Lisi",100},{10013,"zhangsan",99},{10014,"wangwu",10}}; 
+	struct Student t;
+	int i,j,k;
+	printf("成绩由大到小排序：\n");
+	//用选择法排序
+	for(i=0;i<4;i++){
+		k=i;
+		for(j=i+1;j<5;j++){
+			if(stu[j].score>stu[k].score) k=j;
+		}
+		t=stu[k];
+		stu[k]=stu[i];
+		stu[i]=t;
+		
+	} 
+	for(i=0;i<5;i++){
+		printf("%d,%10s,%6.2f分\n",stu[i].num,stu[i].name,stu[i].score);
+	}
+	return 0;
+}
+```
+
+# 28.指向结构体变量的指针变量
+
+```c
+#include<stdio.h>
+#include<string.h>
+/*
+C语言实现通过指向结构体变量的指针变量变量输出结构体变量中的信息。
+*/ 
+struct Student{
+	int num;
+	char name[10];
+	char sex;
+	float score;
+};
+int main(){
+	struct Student stu;
+	struct Student *p;
+	p=&stu;
+	stu.num=10010;
+	strcpy(stu.name,"zhangsan");
+	stu.sex='M';
+	stu.score=100;
+	printf("学号是：%d\n名字是%s\n性别是：%c\n成绩是：%f\n",stu.num,stu.name,stu.sex,stu.score);
+	printf("\n");
+	printf("学号是：%d\n名字是%s\n性别是：%c\n成绩是：%f\n",(*p).num,(*p).name,(*p).sex,(*p).score);
+	printf("\n");
+	printf("学号是：%d\n名字是%s\n性别是：%c\n成绩是：%f\n",p->num,p->name,p->sex,p->score);
+	return 0;
+}
+```
+
+# 29.输入字符串直到输入#为止
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+/*
+C语音实现从键盘输入一些字符，逐个把他们送到磁盘上去，直到用户输入一个“#”为止。
+*/ 
+
+int main(){
+	FILE *fp;
+	char ch,filename[10];
+	printf("请输入所用的文件名:");
+	scanf("%s",filename);
+	if((fp=fopen(filename,"w"))==NULL){
+		printf("cannot open file.\n");
+		exit(0);
+	}
+	ch=getchar();
+	printf("请输入一个准备存储到磁盘的字符串（以#结束）：");
+	ch=getchar();
+	while(ch!='#'){
+		fputc(ch,fp);
+		putchar(ch);
+		ch=getchar();
+	}
+	fclose(fp);
+	putchar(10);
+	return 0;
+}
+```
+
+# 30.最大公约数最小公倍数
+
+```c
+#include<stdio.h>
+/*
+C语言编程实现求两个数的最大公约数和最小公倍数
+
+解题思路：最大公因数，也称最大公约数、最大公因子，
+指两个或多个整数共有约数中最大的一个；
+最小公倍数是指两个或多个整数公有的倍数叫做它们的公倍数，
+其中除0以外最小的一个公倍数就叫做这几个整数的最小公倍数。
+最小公倍数=两整数的乘积÷最大公约数 ， 所以怎么求最大公约数是关键。
+*/ 
+
+int main(){
+	int m,n,num1,num2,temp;
+	printf("请输入两个数：");
+	scanf("%d,%d",&num1,&num2);
+	m=num1;
+	n=num2;
+	while(num2!=0){
+		temp=num1%num2;
+		num1=num2;
+		num2=temp;
+	}
+	printf("最大公约数是：%d\n",num1);
+	printf("最小公倍数是：%d\n",m*n/num1);
+	return 0;
+}
+```
+
+```c
+#include<stdio.h>
+/*
+求最大公约数：
+其算法过程为：设两数为a,b设其中a 做被除数,b做除数，
+temp为余数
+1、大数放a中、小数放b中；
+2、求a/b的余数；
+3、若temp=0则b为最大公约数；
+4、如果temp!=0则把b的值给a、temp的值给b；
+5、返回第二步；
+求最小公倍数：
+一个简单的方法直接求：a*b/最大公约数
+*/
+int main(){
+	int divisor(int a,int b);
+	int multiple(int a,int b);
+	int a,b;
+	printf("请输入两个整数：");
+	scanf("%d,%d",&a,&b);
+	printf("最小公倍数:%d 最大公约数:%d", multiple(a,b),divisor(a,b));
+	return 0; 
+}
+//辗转相除法函数嵌套求两数的最大公约数
+int divisor(int a,int b){
+	int temp;
+	if(a<b){
+		temp=a;
+		a=b;
+		b=temp;
+	}
+	while(b!=0){ //通过循环求两数的余数，直到余数为0
+		temp=a%b;
+		a=b;
+		b=temp;
+	}
+	return a;
+}
+
+//辗转相除法函数嵌套求两数的最小公倍数
+int multiple(int a,int b){
+	int divisor(int a,int b);
+	int temp;
+	temp=divisor(a,b); //再次调用自定义函数，求出最大公约数
+	return (a*b/temp); //返回最小公倍数到主调函数处进行输出
+}
+```
+
+```c
+#include<stdio.h>
+/*
+穷举法（也叫枚举法）的基本思想是根据题目的部分条件确定
+答案的大致范围，并在此范围内对所有可能的情况逐一验证，直到
+全部情况验证完毕。若某个情况验证符合题目的全部条件，则为本
+问题的一个解；若全部情况验证后都不符合题目的全部条件，则本
+题无解。
+解题思想：从两个数中较小数开始由大到小列举约数，直到找
+到公约数立即中断列举，得到的公约数便是最大公约数 。
+解题步骤：
+1、求最大公约数
+对两个正整数a,b如果能在区间[a,0]或[b,0]内能找到一个整
+数temp能同时被a和b所整除，则temp即为最大公约数。
+2、求最小公倍数
+对两个正整数a,b,如果若干个a之和或b之和能被b所整除或能
+被a所整除，则该和数即为所求的最小公倍数。
+*/
+int main(){
+	int divisor(int a,int b);
+	int multiple(int a,int b);
+	int a,b;
+	printf("请输入两个整数：");
+	scanf("%d,%d",&a,&b);
+	printf("最小公倍数:%d 最大公约数:%d", multiple(a,b),divisor(a,b));
+	return 0; 
+}
+//穷举法求两数的最大公约数
+int divisor(int a,int b){
+	int temp;
+	temp=(a>b)?a:b;
+	while(temp>0){
+		if(a%temp==0 && b%temp==0) break; //只要找到一个数能同时被a,b所整除，则中止循环
+		temp--;  //如不满足if条件则变量自减，直到能被a,b所整除
+	}
+	return temp;
+}
+
+//穷举法求两数的最小公倍数
+int multiple(int a,int b){
+	int p,q,temp;
+	p=(a>b)?a:b;
+	q=(a>b)?b:a;
+	temp=p; //最大值赋给p为变量自增作准备
+	while(1){  //利用循环语句来求满足条件的数值
+		if(p%q==0) break; //只要找到变量的和数能被a或b所整除，则中止循环
+		p+=temp; //如果条件不满足则变量自身相加
+	}
+	return p;
+}
+```
+
+# 31.求圆周长 面积 表面积 体积
+
+```c
+#include<stdio.h>
+#define PI 3.14
+/*
+C语言编程求圆周长、圆面积、圆球表面积、圆球体积、圆柱体积。
+
+解题思路：就是简单的数学公式套用，
+圆周长公式=2πr，圆面积=πr2，圆球表面积=4πr2，
+圆球体积=4πR3 /3，圆柱体积=πr2h。
+*/ 
+
+int main(){
+	float r,h;
+	float perimeter; //圆周长
+	float area; //圆面积
+	float sphere_Surface_Area;//圆球表面积
+	float sphere_Volume;//圆球体积
+	float cylinder_Volume;//圆柱体积
+	printf("输入圆半径r，圆柱高h：");
+	scanf("%f,%f",&r,&h);
+	perimeter=2*PI*r;
+	area=PI*r*r;
+	sphere_Surface_Area=4*PI*r*r;
+	sphere_Volume=(4*PI*r*r*r)/3;
+	cylinder_Volume=(PI*r*r)*h;
+	printf("周长=%3.1f\n",perimeter);
+	printf("圆面积=%3.1f\n",area);
+	printf("圆球表面积=%3.1f\n",sphere_Surface_Area);
+	printf("圆球体积=%3.1f\n",sphere_Volume);
+	printf("圆柱体积=%3.1f\n",cylinder_Volume);
+	return 0;
+}
+```
+
+# 32.统计字符中英文 空格 数字
+
+```c
+#include<stdio.h>
+/*
+输入一行字符，C语言编程分别统计出其中英文字母、空格、数字和其他字符的个数。
+*/ 
+
+int main(){
+	char input_Character;
+	int letters=0,space=0,digit=0,other=0;
+	printf("请输入一行字符：");
+	while((input_Character=getchar())!='\n'){
+		if((input_Character<='z' && input_Character>='a') || (input_Character<='Z' && input_Character>='A')) letters++;
+		else if(input_Character==' ') space++;
+		else if(input_Character<='9' && input_Character>='0') digit++;
+		else other++; 
+	}
+	printf("字母：%d个\n",letters);//输出字母个数 
+	printf("空格：%d个\n",space);//输出空格个数 
+	printf("数字：%d个\n",digit);//输出数字个数 
+	printf("其他字符：%d个\n",other);//输出其他字符个数 
+	return 0;
+}
+```
+
+# 33.求1！+2！+3！+...20!
+
+```c
+#include<stdio.h>
+/*
+C语言编程求1！+2！+3！+...20!
+*/ 
+
+int main(){
+	double sum=0,temp=1;
+	for(int i=1;i<=20;i++){
+		temp*=i;
+		sum+=temp;
+	}
+	printf("结果：%22.15e\n",sum);
+	return 0;
+}
+```
+
+# 34.输出水仙花数
+
+```c
+#include<stdio.h>
+/*
+C语言编程输出100-1000之间所有的“水仙花数”，所谓的“水仙花数”是指一个3位数，其各位数字立方和等于该数本身。
+*/ 
+
+int main(){
+	int i,j,k,n;
+	printf("水仙花数是：\n");
+    for(n=100;n<1000;n++){
+		i=n/100;
+		j=n/10%10;
+		k=n%10;
+		if(n==(i*i*i+j*j*j+k*k*k)){
+			printf("%d\t",n);
+		}
+	}
+	return 0;
+}
+```
+
+# 35.求完数
+
+```c
+#include<stdio.h>
+/*
+一个数如果恰好等于它的因子之和，这个数就称为完数，
+C语言编程找出1000之内的所有完数，并输出其因子。 
+
+解题思路：6的因子为1,2,3，而6=1+2+3，因此6是“完数”，
+1不用判断，直接从2开始，因为1的因子只有1
+*/ 
+
+int main(){
+	int i,j,s,n;
+	printf("上限：\n");
+	scanf("%d",&n);
+	for(i=2;i<=n;i++){
+		s=0;
+		for(j=1;j<i;j++){
+			if(i%j==0) s+=j;	
+		}
+		if(s==i) printf("%d\t",i);
+	}
+	return 0;
+}
+```
+
+```c
+#include<stdio.h>
+/*
+一个数如果恰好等于它的因子之和，这个数就称为完数，
+C语言编程找出1000之内的所有完数，并输出其因子。 
+
+解题思路：6的因子为1,2,3，而6=1+2+3，因此6是“完数”，
+1不用判断，直接从2开始，因为1的因子只有1
+*/ 
+
+int main(){
+	int n,s,i;
+	for(n=2;n<1000;n++){
+		s=0;
+		for(i=1;i<n;i++){
+			if(n%i==0) s+=i;
+		}
+		if(s==n){
+			printf("%d的因子为：",n);
+			for(i=1;i<n;i++){
+				if(n%i==0) printf("%d ",i);
+			}
+			printf("\n");
+		}
+	}
+	return 0;
+}
+```
+
+# 36.求某个数列前20项和
+
+```c
+#include<stdio.h>
+/*
+有一个分数列：2/1,3/2,5/3，8/5,13/8,21/13...，
+C语言编程求出这个数列的前20项之和。 
+*/ 
+
+int main(){
+	int i;
+	double a=2,b=1,sum=0,temp;
+	for(i=1;i<=20;i++){
+		sum=sum+a/b;
+		temp=a;
+		a+=b;
+		b=temp;
+	}
+	printf("sum=%7.7f\n",sum);
+	return 0;
+}
+```
+
+# 37.自由落地
+
+```c
+#include<stdio.h>
+/*
+一个球从100m高度自由落下，每次落地后反跳回原高度的一半，再落下，再反弹。
+C语言编程求它在第10次落地时，共经过多少米，第10次反弹多高。 
+*/ 
+
+int main(){
+	double height,bounce_Height;
+	height=100;
+	bounce_Height=height/2;
+	for(int i=2;i<=10;i++){
+		height=height+2*bounce_Height;
+		bounce_Height=bounce_Height/2;
+	}
+	printf("第10次落地时共经过%f米\n",height);
+	printf("第10次反弹%f米\n",bounce_Height);
+	return 0;
+}
+```
+
+# 38.猴子吃桃
+
+```c
+#include<stdio.h>
+/*
+猴子吃桃问题。猴子第1天摘下若干个桃子，当即吃了一半，还不过瘾，又多吃了一个。
+第2天早上又将剩下的桃子吃掉一半，又多吃了一个，
+以后每天早上都吃了前一天剩下的一半零一个，到第10天早上想再吃时，
+就只剩下一个桃子了。C语言编程求第1天共摘了多少个桃子。  
+*/ 
+
+int main(){
+	int day,day_1,day_2;
+	day=9;
+	day_2=1;
+	while(day-->0){
+		day_1=(day_2+1)*2;
+		day_2=day_1;
+	}
+	printf("第一天共摘了%d个桃子\n",day_1);
+	return 0;
+}
+```
+
+# 39. 找出3对赛手的名单
+
+```c
+#include<stdio.h>
+/*
+两个乒乓球队进行比赛，各出3个人。甲队为A，B，C，3人，乙对为X，Y，Z，3人，
+已抽签决定比赛名单。有人向队员打听比赛的名单，A说他不和X比赛，C说他不和X，Z比赛，
+C语言编程程序找出3对赛手的名单。   
+*/ 
+
+int main(){
+	char i,j,k;
+	for(i='X';i<='Z';i++){
+		for(j='X';j<='Z';j++){
+			if(i!=j){
+				for(k='X';k<='Z';k++){
+					if(i!=k && j!=k){
+						if(i!='X' && k!='X'&&k!='Z'){
+							printf("A--%c\nB--%c\nC--%c\n",i,j,k);
+						}
+					}
+				}
+			}
+		}
+	}
+	return 0;
+}
+```
+
+# 40.求矩阵对角线元素和
+
+```c
+#include<stdio.h>
+/*
+C语言求3*3的整型矩阵对角线元素之和 。   
+*/ 
+
+int main(){
+	int a[3][3],sum=0;
+	int i,j;
+	printf("输入数据：\n");
+	for(i=0;i<3;i++){
+		for(j=0;j<3;j++){
+			scanf("%d",&a[i][j]);
+		}
+	}
+	sum=a[0][0]+a[1][1]+a[2][2]+a[0][2]+a[1][1]+a[2][0];
+	printf("对角线元素之和为%d\n",sum);
+	return 0;
+}
+```
+
+# **41.向数组中插入数
+
+```c
+#include<stdio.h>
+/*
+有一个已经排好序的数组，要求C语言实现输入一个数后，按原来排序的规律将它插入数组中。
+
+解题思路：假设数组a有n个元素，而且已按升序排列，在插入一个数时按以下方法处理：
+
+如果插入的数num比a数组最后一个数大，则将插入的数放在a数组末尾。
+如果插入的数num不比a数组最后一个数大，则将它依次和a[0]~a[n-1]比较，
+直到出现a[i]>num为止，这时表示a[0]~a[i-1]各元素的值比num小，
+a[i]~a[n-1]各元素的值比num大。 
+*/ 
+
+int main(){
+	int a[11]={1,4,6,9,13,16,19,28,40,100};
+	int t1,t2,num,end,i,j;
+	printf("原来的输出：\n");
+	for(i=0;i<10;i++){ //注意这里的10 
+		printf("%d ",a[i]);
+	}
+	printf("\n");
+	printf("输入要插入的数：\n");
+	scanf("%d",&num);
+	end=a[9]; //将最后一个数赋值给end 
+	if(num>end){ //先和最后一个数比大小 
+		a[10]=num;
+	}else{
+		//小于的话，依次比较，直到比插入的数大
+		for(i=0;i<10;i++){
+			if(a[i]>num){
+				t1=a[i];
+				a[i]=num;
+				for(j=i+1;j<11;j++){
+					t2=a[j];
+					a[j]=t1;
+					t1=t2;
+				}
+				break;
+			}
+		} 
+	}
+	printf("插入之后排序：\n");
+	for(i=0;i<11;i++){
+		printf("%d ",a[i]);
+	}
+	printf("\n");
+	return 0;
+}
+```
+
+# 42.魔方矩阵
+
+```c
+#include<stdio.h>
+/*
+C语言实现输出“魔方阵”。所谓魔方阵是指它的每一行，每一列和对角线之和均相等。
+
+解题思路：魔方阵中各数的排列规律，魔方阵的阶数应该为奇数。 
+
+将1放在第1行中间一列
+从2开始直到n*n止各数依次按下：每一个数存放的行比前一个数的行数减1，列数加1.
+如果上一数的行为为1，则下一个数的行数为n
+当上一个数的列数为n时，下一个数的列数应为1，行数减1
+按上面的规则确定的位置上已有数，或上一个数是第1行第n列时，则把下一个数放在上一个数的下面
+*/ 
+
+int main(){
+	int a[20][20]={0};
+	int i,j,k,n;
+	i=1;
+	printf("请输入阶数为1~15之间的奇数：\n");
+	scanf("%d",&n); //输入魔方阵的维度n
+	j=n/2+1; // j是维度的一半加1
+	a[i][j]=1; //确定第一排的中间一个数为1
+	for(k=2;k<=n*n;k++){ //已经确定1的位置了，再循环确定2~n*n的位置
+		i=i-1; //挪位，竖排往上挪一位
+		j=j+1; //挪位，横排往右挪一位
+		if((i<=0)&&(j<=n)) i=n; //如果竖排挪到顶，同时横排还没有超过最右，竖排就到从最下再继续。
+		if((i<=0)&&(j>n)) i=i+2,j=j-1;  //如果竖排挪到顶，同时横排超过最右，竖排往下挪两位，横排往左移一位。
+		if(j>n) j=1; //如果只有横排超过最右，横排挪到左边第二行。
+		if(a[i][j]==0) a[i][j]=k; //如果这个位置还没有赋值，那么赋值为k
+		else i+=2,j-=1,a[i][j]=k; //已经赋值过了。那么竖排往下挪两位，横排往左移一位，再赋值为k
+	}
+	for(i=1;i<=n;i++){ //循环输出
+		for(j=1;j<=n;j++){
+			printf("%3d ",a[i][j]);
+		}
+		printf("\n");
+	}
+	return 0;
+}
+```
+
+# 43. 统计一段话中的字符
+
+```c
+#include<stdio.h>
+/*
+有一篇文章，共有3行文字，每行有80个字符。
+C语言编程实现分别统计出其中英文大写字母、小写字母、数字、空格以及其他字符的个数 在该列上最小。也可能没有鞍点。
+*/ 
+
+int main(){
+	int i,j,capital=0,lower=0,number=0,space=0,other=0;
+	char text[3][80];
+	for(i=0;i<3;i++){
+		printf("请随意输入一行：\n");
+		gets(text[i]);
+		for(j=0;j<80&&text[i][j]!='\0';j++){
+			if(text[i][j]>='A'&&text[i][j]<='Z') capital++;
+			else if(text[i][j]>='a'&&text[i][j]<='z') lower++;
+			else if(text[i][j]>='0'&&text[i][j]<='9') number++;
+			else if(text[i][j]==' ') space++;
+			else other++;
+		}
+	}
+	printf("\n输出结果：\n");
+	printf("大写字母 :%d\n",capital);
+	printf("小写字母 :%d\n",lower); 
+	printf("数字 :%d\n",number);
+	printf("空格 :%d\n",space);
+	printf("其他字符 :%d\n",other);
+	return 0;
+}
+```
+
+# **44.将密码译回原文
+
+```c
+#include<stdio.h>
+/*
+有一行电文，已按下面规律译成密码：A->Z a->z;B->Y b->y;即第1个字母变成第26个字母，第i个字母变成第（26-i+1）个字母，非字母字符不变。要求C语言编程将密码译回原文，并输出密码和原文。
+*/ 
+
+int main(){
+	int j,n;
+	char ch[80],tran[80];
+	printf("输入密码：\n");
+	gets(ch);
+	printf("\n密码是：\n%s",ch);
+	j=0;
+	while(ch[j]!='\0'){
+		if((ch[j]>='A')&&(ch[j]<='Z')) tran[j]=155-ch[j];
+		else if((ch[j]>='a')&&(ch[j]<='z')) tran[j]=219-ch[j];
+		else tran[j]=ch[j];
+		j++;
+	}
+	n=j;
+	printf("\n输出原文：\n");
+	for(j=0;j<n;j++){
+		putchar(tran[j]);
+	}
+	printf("\n");
+	return 0;
+}
+```
+
+# 45.拼接字符串
+
+```c
+#include<stdio.h>
+/*
+C语言编写一个程序，将两个字符串连接起来，不要用strcat函数
+*/ 
+
+int main(){
+	char str1[80],str2[80];
+	int i=0,j=0;
+	printf("输入字符串1：");
+	scanf("%s",str1);
+	printf("输入字符串2：");
+	scanf("%s",str2);
+	while(str1[i]!='\0'){
+		i++;
+	}
+	while(str2[j]!='\0'){
+		str1[i++]=str2[j++];
+	}
+	str1[i]='\0';
+	printf("\n新的字符串是：%s\n",str1);
+	return 0;
+}
+```
+
+# 46.比较两个字符串
+
+```c
+#include<stdio.h>
+/*
+C语言编一个程序，将两个字符串s1和s2比较，若s1>s2，输出一个正数；
+若s1=s2，输出0，否则输出负数要求不要用strcmp函数
+*/ 
+
+int main(){
+	int i=0,result;
+	char s1[100],s2[100];
+	printf("输入字符1：");
+	gets(s1);
+	printf("输入字符2：");
+	gets(s2);
+	while((s1[i]==s2[i])&&(s1[i]!='\0')){
+		i++;
+	}
+	if(s1[i]!='\0'&&s2[i]!='\0'){
+		result=0;
+	}else{
+		result=s1[i]-s2[i];
+	}
+	printf("\n输出结果：%d\n",result);
+	return 0;
+}
+```
+
+# 47.将元音字母复制到另一个字符串中
+
+```c
+#include<stdio.h>
+/*
+C语言写一个函数，将一个字符串中的元音字母复制到另一字符串，然后输出。 
+*/ 
+
+int main(){
+	void copy(char s[],char str[]);
+	char str1[80],str2[80];
+	printf("输入字符串：");
+	gets(str1);
+	copy(str1,str2);
+	printf("元音字母是：%s\n",str2);
+	return 0;
+}
+void copy(char s[],char str[]){
+	int i,j=0;
+	for(i=0;s[i]!='\0';i++){
+		if(s[i]=='a'||s[i]=='e'||s[i]=='i'||s[i]=='o'||s[i]=='u'||s[i]=='A'||s[i]=='E'||s[i]=='I'||s[i]=='O'||s[i]=='U'){
+			str[j++]=s[i];
+		}else{
+			str[j]='\0';
+		}
+	}
+}
+```
+
+# 48.输出4个字符且每个字符间空一格
+
+```c
+#include<stdio.h>
+#include<string.h>
+/*
+C语言编写一个函数，输入一个4位数字，要求输出这4个数字字符，但每两个数字间空一个空格。如输入1990，应输出“1 9 9 0”出。 
+*/ 
+
+int main(){
+	void insert(char s[]);
+	char str[80];
+	printf("输入一个4位数字：");
+	scanf("%s",str);
+	insert(str);
+	return 0;
+}
+void insert(char s[]){
+	for(int i=strlen(s);i>0;i--){
+		s[2*i]=s[i];
+		s[2*i-1]=' ';
+	}
+	printf("输出结果：%s\n",s);
+}
+```
+
+# **49.递归求勒让德多项式
+
+```c
+#include<stdio.h>
+/*
+C语言编程用递归方法求n阶勒让德多项式
+
+解题思路：勒让德多项式是描述矩形表面和口径的另外一组多项式集合，它的优点是具有正交性。
+由于存在正交性条件，高阶项系数趋于零，并且增加和删除一个项对其他项没有影响。
+
+勒让德方程的解可写成标准的幂级数形式。
+当方程满足 |x| < 1 时，可得到有界解（即解级数收敛）。
+并且当n 为非负整数，即n = 0, 1, 2,... 时，在x = ± 1 点亦有有界解。
+这种情况下，随n 值变化方程的解相应变化，
+构成一组由正交多项式组成的多项式序列，这组多项式称为勒让德多项式
+*/ 
+
+int main(){
+	float polynomial(int,int);
+	int temp,num;
+	printf("输入num & temp:");
+	scanf("%d,%d",&num,&temp);
+	printf("Polynomial=%6.2f\n",polynomial(num,temp));
+	return 0;
+}
+float polynomial(int number,int x){
+	if(number==0) return 1;
+	else if(number==1) return x;
+	else return (2*number-1)*x*polynomial((number-1),x)-(number-1)*polynomial((number-2),x)/number;
+}
+```
+
+# 50.将数字转为字符串
+
+```c
+#include<stdio.h>
+/*
+C语言用递归方法将一个整数n转换成字符串。例如，输入483，应输出字符串“483”，n的位数不确定i，可以是任意位数的整数。 
+
+解题思路：如果是负数，要把它转换为正数，同时为地输出一个“-”号。convert函数只处理正数。
+字符‘0’的ASCII代码是48，3+48=51，51是字符‘3’的代码，因此putchar（n%10+‘0’）输出字符‘3’。
+32在ASCII代码中代表空格，以使两个字符之间空格隔开。
+*/ 
+
+int main(){
+	void convert(int n);
+	int number;
+	printf("输入一个整数：");
+	scanf("%d",&number);
+	printf("输出结构：");
+	if(number<0){
+		putchar('-');
+		putchar(' ');
+		number=-number;
+	}
+	convert(number);
+	printf("\n");
+	return 0;
+}
+void convert(int n){
+	int i;
+	if((i=n/10)!=0){
+		convert(i);
+	} 
+	putchar(n%10+'0');
+	putchar(32);
+}
+```
+
+# 51.求某日是该年第几天
+
+```c
+#include<stdio.h>
+/*
+给出年月日，C语言编程计算该日是该年的第几天
+*/ 
+
+int main(){
+	int leap(int year);
+	int sum_day(int month,int day);
+	
+	int year,month,day,days;
+	printf("输入日期：");
+	scanf("%d %d %d",&year,&month,&day);
+	printf("%d-%d-%d",year,month,day);
+	days=sum_day(month,day);
+	if(leap(year)&&month>=3) days+=1;
+	printf("是这一年的第%d天\n",days);
+	return 0;
+}
+int sum_day(int month,int day){
+	int day_tab[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+	for(int i=1;i<month;i++){
+		day+=day_tab[i];
+	}
+	return day;
+}
+int leap(int year){ //判断是否为闰年
+	return ((year%4==0&&year%100!=0) || (year%400==0));
+}
+```
+
+# 52.指针由小到大输出3个数
+
+```c
+#include<stdio.h>
+/*
+C语言输入3个整数，按由小到大的顺序输出。（要求用指针处理）
+*/ 
+
+int main(){
+	void swap(int *p1,int *p2);
+	int n1,n2,n3;
+	int *p1,*p2,*p3;
+	printf("请输入3个整数：");
+	scanf("%d %d %d",&n1,&n2,&n3);
+	p1=&n1;
+	p2=&n2;
+	p3=&n3;
+	if(n1>n2) swap(p1,p2);
+	if(n1>n3) swap(p1,p3);
+	if(n2>n3) swap(p2,p3);
+	printf("%d %d %d\n",n1,n2,n3);
+	return 0;
+}
+void swap(int *p1,int *p2){
+	int t;
+	t=*p1;
+	*p1=*p2;
+	*p2=t;
+}
+```
+
+# **53. 对n个字符开辟连续的存储空间
+
+```c
+#include<stdio.h>
+/*
+有n个整数，使前面各数顺序向后移动m个位置，最后m个数变成最前面m个数，
+C语言写一函数实现以上功能，
+在主函数中输入n个整数和输出调整后的n个数，要求用指针。
+*/ 
+
+int main(){
+	void move(int a[20],int n,int m);
+	int number[20],n,m,i;
+	printf("共有多少个数：");
+	scanf("%d",&n);
+	printf("输入这%d个数\n",n);
+	for(i=0;i<n;i++){
+		scanf("%d",&number[i]);
+	}
+	printf("向后移动多少个数：");
+	scanf("%d",&m);
+	move(number,n,m);
+	for(i=0;i<n;i++){
+		printf("%d ",number[i]);
+	}
+	printf("\n");
+	return 0;
+}
+void move(int a[20],int n,int m){
+	int *p,a_end;
+	a_end=*(a+n-1);
+	for(p=a+n-1;p>a;p--){
+		*p=*(p-1);
+	}
+	*a=a_end;
+	m--;
+	if(m>0) move(a,n,m);
+}
+```
+
+# 54.顺序排号
+
+```c
+#include<stdio.h>
+/*
+有n个人围成一圈，C语言进行顺序排号，要求用指针。
+*/ 
+
+int main(){
+	int i,k,m,n;
+	int num[50];
+	int *p;
+	printf("输入n=");
+	scanf("%d",&n);
+	p=num;
+	for(i=0;i<n;i++){
+		*(p+i)=i+1;
+	}
+	i=0;
+	k=0;
+	m=0;
+	while(m<n-1){
+		if(*(p+i)!=0) k++;
+		if(k==3) *(p+i)=0,k=0,m++;
+		i++;
+		if(i==n) i=0;
+	}
+	while(*p==0) p++;
+	printf("最后一个数是:%d\n",*p);
+	return 0;
+}
+```
+
+# 55.求字符串的长度
+
+```c
+#include<stdio.h>
+/*
+C语言写一个函数，求一个字符串的长度，在main函数中输入字符串，并输出其长度，要求用指针
+*/ 
+
+int main(){
+	int num_length(char *p);
+	char str[20];
+	printf("请输入要求长度的字符串：");
+	scanf("%s",str);
+	printf("字符串的长度是%d\n",num_length(str));
+	return 0;
+}
+int num_length(char *p){
+	int i=0;
+	while(*p!='\0'){
+		i++;
+		p++;
+	}
+	return i;
+}
+```
+
+# **56.指向指针的指针排序
+
+```c
+#include<stdio.h>
+#include<string.h>
+/*
+C语言写一个函数，求一个字符串的长度，在main函数中输入字符串，并输出其长度，要求用指针
+*/ 
+
+int main(){
+	void sort(char **p);
+	char **p,*pstr[5],str[5][20];
+	for(int i=0;i<5;i++){
+		pstr[i]=str[i];
+	}
+	printf("输入五个字符串：\n");
+	for(int i=0;i<5;i++){
+		scanf("%s",pstr[i]);
+	}
+	p=pstr;
+	sort(p);
+	printf("————————————\n");
+	printf("输出排序后的结果：\n");
+	for(int i=0;i<5;i++){
+		printf("%s\n",pstr[i]);
+	}
+	return 0;
+}
+void sort(char **p){
+	int i,j;
+	char *temp;
+	for(i=0;i<5;i++){
+		for(j=i+1;j<5;j++){
+			if(strcmp(*(p+i),*(p+j))>0){
+				temp=*(p+i);
+				*(p+i)=*(p+j);
+				*(p+j)=temp;
+			} 
+		}
+	}
+}
+```
+
+# **57.指向指针的指针
+
+```c
+#include<stdio.h>
+/*
+C语言用指向指针的指针的方法对n个整数排序并输出；要求将排序单独写成一个函数；
+n个整数在主函数中输入，最后在主函数中输出。 
+*/ 
+
+int main(){
+	void sort(int **p,int n);
+	int i,number,data[20],**p,*pstr[20];
+	printf("输入要排序的个数number：");
+	scanf("%d",&number);
+	for(i=0;i<number;i++){
+		pstr[i]=&data[i];
+	}
+	printf("逐个输入这%d个数：",number);
+	for(i=0;i<number;i++){
+		scanf("%d",pstr[i]);
+	}
+	p=pstr;
+	sort(p,number);
+	printf("\n-------------------\n");
+	printf("输出结果：\n");
+	for(i=0;i<number;i++){
+		printf("%d ",*pstr[i]);
+	}
+	printf("\n");
+	return 0;
+}
+void sort(int **p,int n){
+	int i,j,*temp;
+	for(i=0;i<n;i++){
+		for(j=i+1;j<n;j++){
+			if(**(p+i)>**(p+j)){
+				temp=*(p+i);
+				*(p+i)=*(p+j);
+				*(p+j)=temp;
+			}
+		}
+	}
+}
+```
+
+# 58.是否可以构成三角形
+
+```c
+#include<stdio.h>
+#include<math.h>
+/*
+给定平面上任意三个点的坐标(x1,y1)、(x2,y2)、(x3,y3)，检验它们能否构成三角形。 
+*/ 
+
+int main(){
+	double x1,y1,x2,y2,x3,y3;
+	float side_length1,side_length2,side_length3;
+	printf("请输入第一个坐标；");
+	scanf("%lf %lf",&x1,&y1);
+	printf("请输入第二个坐标；");
+	scanf("%lf %lf",&x2,&y2);
+	printf("请输入第三个坐标；");
+	scanf("%lf %lf",&x3,&y3);
+	side_length1=sqrt(pow(x2-x1,2)+pow(y2-y1,2));
+	side_length2=sqrt(pow(x3-x1,2)+pow(y3-y1,2));
+	side_length3=sqrt(pow(x3-x2,2)+pow(y3-y2,2));
+	if(side_length1+side_length2>side_length3&&side_length2+side_length3>side_length1
+	&&side_length1+side_length3>side_length2) printf("这三个点可以构成三角形！\n");
+	else printf("这三个点可以构成三角形！\n");
+	return 0;
+}
+```
+
+# 59. 求a+aa+...+aa..a的值
+
+```c
+#include<stdio.h>
+/*
+求sum=a+aa+aaa+aaaa+aa...a的值，其中a是一个数字。例如2+22+222+2222+22222(此时共有5个数相加)，几个数相加由键盘控制。
+*/ 
+
+int main(){
+	int a,number,count=1;
+	long int sum=0,temp=0;
+	printf("请输入a 和 number：");
+	scanf("%d %d",&a,&number);
+	printf("a=%d,number=%d\n",a,number);
+	while(count<=number){
+		temp+=a;
+		sum+=temp;
+		a*=10;
+		++count;
+	}
+	printf("a+aa+...=%ld\n",sum);
+	return 0;
+}
+```
+
+# 60.判断回文数
+
+```c
+#include<stdio.h>
+/*
+求一个五位数，C语言编程判断它是不是回文数。
+
+回文数是指个位与万位相同，十位与千位相同
+*/ 
+
+int main(){
+	long individual;
+	long ten;
+	long thousand;
+	long ten_Thousand; //万 
+	long n;
+	printf("请输入要判断的数：");
+	scanf("%ld",&n);
+	ten_Thousand=n/10000;
+	thousand=n%10000/1000;
+	ten=n%100/10;
+	individual=n%10;
+	if(individual==ten_Thousand&&ten==thousand){
+		printf("%ld是回文数！\n",n);
+	}else{
+		printf("%ld不是回文数！\n",n);
+	}
+	return 0;
+}
+```
+
+# 61.static auto register变量
+
+```c
+#include<stdio.h>
+/*
+static auto register变量 
+*/ 
+
+//static
+/*
+int main(){
+	void varfunc();
+	for(int i=0;i<3;i++){
+		varfunc();
+	}
+	return 0;
+}
+void varfunc(){
+	int var=0;
+	static int static_var=0;
+	printf("变量var值是：%d\n",var);
+	printf("静态变量static_var值是：%d\n",static_var);
+	printf("\n");
+	var++;
+	static_var++;
+}
+*/ 
+
+/*
+变量var值是：0
+静态变量static_var值是：0
+
+变量var值是：0
+静态变量static_var值是：1
+
+变量var值是：0
+静态变量static_var值是：2
+*/
+
+
+//auto
+/*
+int main(){
+	int num=2;
+	for(int i=0;i<3;i++){
+		printf("整型变量num的值是：%d\n",num);
+		num++;
+		{
+			auto int num=1;
+			printf("auto类型的num值是：%d\n",num);
+			num++;
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+整型变量num的值是：2
+auto类型的num值是：1
+整型变量num的值是：3
+auto类型的num值是：1
+整型变量num的值是：4
+auto类型的num值是：1
+*/
+
+
+//register
+/*
+register这个关键字请求编译器尽可能的将变量存在CPU内部寄存器中，而不是通过内存寻址访问，以提高效率。
+注意是尽可能，不是绝对。因为，如果定义了很多register变量，可能会超过CPU的寄存器个数，超过容量。 
+*/
+```
+
+# 62.求奇偶数个数
+
+```c
+#include<stdio.h>
+/*
+C语言编程求奇偶数的个数。 
+奇数是指指不能被2整除的整数；偶数是能够被2所整除的整数。
+*/
+int main(){
+	int i,n,m;
+	int odd_Number=0,even_Number=0; //同上且赋初值 
+	printf("请输入要判断几个数：");
+	scanf("%d",&n);
+	printf("输入这几个数：");
+	for(i=0;i<n;i++){
+		scanf("%d",&m);
+		if(m%2==0) even_Number++;
+		else odd_Number++;
+	}
+	printf("奇数：%d个\n偶数：%d个：\n",odd_Number,even_Number);
+	return 0;
+}
+```
+
+# **63.直接插入排序
+
+```c
+#include<stdio.h>
+/*
+C语言实现直接插入排序 。 
+
+解题思路：直接插入排序是一种最简单的排序方法，
+其基本操作是将一条记录插入到已排好的有序表中，从而得到一个新的、记录数量增1的有序表。
+*/
+int main(){
+	void insort(int post[],int n);
+	void print(int a[],int x);
+	int a[11];
+	printf("请输入10个数据：\n");
+	for(int i=1;i<=10;i++){
+		scanf("%d",&a[i]);
+	}
+	printf("原始顺序：\n");
+	print(a,11);
+	insort(a,10);
+	printf("\n插入数据排序后排序：\n");
+	print(a,11);
+	printf("\n");
+	return 0;
+}
+void insort(int post[],int n){
+	int i,j;
+	for(i=2;i<=n;i++){
+		post[0]=post[i];
+		j=i-1;
+		while(post[0]<post[j]){
+			post[j+1]=post[j];
+			j--;
+		}
+		post[j+1]=post[0];
+	}
+}
+void print(int a[],int x){
+	for(int i=1;i<x;i++){
+		printf("%5d",a[i]);
+	}
+}
+```
+
+# **64.希尔排序
+
+```c
+#include<stdio.h>
+/*
+C语言实现希尔排序。 
+
+解题思路：希尔排序是插入排序的一种又称缩小增量排序，
+是直接插入排序算法的一种更高效的改进版本，希尔排序是非稳定排序算法。
+希尔排序是把记录按下标的一定增量分组，对每组使用直接插入排序算法排序；
+随着增量逐渐减少，每组包含的关键词越来越多，
+当增量减至1时，整个文件恰被分成一组，算法便终止。
+*/
+int main(){
+	void shsort(int s[],int n);
+	void print(int a[],int x);
+	int a[11],i;
+	printf("请输入10个数：\n");
+	for(i=1;i<11;i++){
+		scanf("%d",&a[i]);
+	}
+	printf("初始顺序：\n");
+	print(a,11);
+	shsort(a,10);
+	printf("\n排序后顺序：\n");
+	print(a,11);
+	printf("\n");
+	return 0;
+}
+void shsort(int s[],int n){
+	int i,j,d;
+	d=n/2; /*确定固定增虽值*/
+	while(d>=1){
+		for(i=d+1;i<=n;i++){  /*数组下标从d+1开始进行直接插入排序*/
+			s[0]=s[i]; /*设置监视哨*/
+			j=i-d; /*设置监视哨*/
+			while((j>0) && (s[0]<s[j])){
+				s[j+d]=s[j]; /*数据右移*/
+				j=j-d; /*向左移d个位置V*/
+			}
+			s[j+d]=s[0]; /*在确定的位罝插入s[i]*/
+		}
+		d=d/2;  /*增里变为原来的一半*/
+	}
+}
+void print(int a[],int x){
+	for(int i=1;i<x;i++){
+		printf("%5d",a[i]);
+	}
+}
+```
+
+# 65.穷举解百钱百鸡
+
+```c
+#include<stdio.h>
+/*
+穷举解百钱百鸡
+古代数学家张丘建在《算经》一书中提出的数学问题：
+鸡翁一值钱五，鸡母一值钱三，鸡雏三值钱一。百钱买百鸡,问
+鸡翁、鸡母、鸡雏各几何?
+设鸡翁 鸡母 鸡雏数量分别为x y z，则：
+x+y+y=100
+5x+3y+(1/3)z=100
+*/
+int main(){
+	int x,y,z;
+	for(x=0;x<100;x++){
+		for(y=0;y<100;y++){
+			for(z=0;z<100;z++){
+				if((x+y+z==100) && (5*x+3*y+(1/3)*z==100)){
+					printf("鸡翁%d只，鸡母%d只，鸡稚%d只。\n",x,y,z);
+				}
+			}
+		}
+	}
+	return 0; 
+}
+```
+
+# 66.输出规则图形，如三角形、 塔形
+
+```c
+#include<stdio.h>
+//三角形 
+int main(){
+	int n;
+	scanf("%d",&n);
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n-i-1;j++){
+			printf(" ");
+		}
+		for(int k=0;k<2*(i+1)-1;k++){
+			printf("*");
+		}
+		printf("\n");
+	} 
+	return 0; 
+}
+```
+
+```c
+#include<stdio.h>
+//倒三角 
+int main(){
+	int n;
+	scanf("%d",&n);
+	for(int i=n;i>0;i--){
+		for(int j=0;j<n-i;j++){
+			printf(" ");
+		}
+		for(int k=0;k<2*i-1;k++){
+			printf("*");
+		}
+		printf("\n");
+	} 
+	return 0; 
+}
+```
+
+```c
+#include<stdio.h>
+//宝塔形 
+int main(){
+	int i,j;
+	for(i=1;i<=4;i++){
+		for(j=1;j<=10-i;j++){
+			printf(" ");
+		}
+		for(j=1;j<=i;j++){
+			printf("%d",j);
+		}
+		for(j=i-1;j>=1;j--){
+			printf("%d",j);
+		}
+		printf("\n");
+	} 
+	return 0; 
+}
+
+/*
+         1
+        121
+       12321
+      1234321
+*/
+```
+
+# 67.查找数组中指定的元素
+
+```c
+#include<stdio.h>
+#define N 10
+int main(){
+	int search(int a[],int n,int x);
+	int i,index,n,x;
+	int arr[N];
+	printf("请输入数组输的个数:\n");
+	scanf("%d",&n);
+	printf("请输入%d数:\n",n);
+	for(i=0;i<n;i++){
+		scanf("%d",&arr[i]);
+	}
+	printf("请输入需要查找的数:\n");
+	scanf("%d",&x);
+	index=search(arr,n,x);
+	if(index!=-1) printf("第%d个数\n",index+1);
+	else printf("not found\n");
+	return 0; 
+}
+int search(int a[],int n,int x){
+	int index,i;
+	index=-1;
+	for(i=0;i<n;i++){
+		if(a[i]==x){
+			index=i;
+			break;
+		}
+	}
+	return index;
+}
+```
+
+# **68.快速排序法
+
+```c
+#include<stdio.h>
+/*
+快速排序算法
+*/
+int main(){
+	int qusort(int s[],int start,int end);
+	int a[11], i;    //定义数组及变量为基本整型
+    printf("请输入10个数：\n");
+    for(i=1;i<=10;i++)
+        scanf("%d",&a[i]);    //从键盘中输入10个要进行排序的数
+    qusort(a,1,10);    //调用qusort()函数进行排序
+    printf("排序后的顺序是：\n");
+    for(i=1;i<=10;i++)
+        printf("%5d",a[i]);    //输出排好序的数组
+    printf("\n");
+    return 0;
+}
+
+int qusort(int s[],int start,int end){   //自定义函数 qusort()
+    int i,j;    //定义变量为基本整型
+    i=start;    //将每组首个元素赋给i
+    j = end;    //将每组末尾元素赋给j
+    s[0]=s[start];    //设置基准值
+    while(i<j)
+    {
+        while(i<j&&s[0]<s[j])
+        j--;    //位置左移
+        if(i<j)
+        {
+            s[i]=s[j];    //将s[j]放到s[i]的位置上
+            i++;    //位置右移
+        }
+        while(i<j&&s[i]<=s[0])
+            i++;    //位置左移
+        if(i<j)
+        {
+            s[j]=s[i];    //将大于基准值的s[j]放到s[i]位置
+            j--;    //位置左移
+        }
+    }
+    s[i]=s[0];    //将基准值放入指定位置
+    if (start<i)
+        qusort(s,start,j-1);    //对分割出的部分递归调用qusort()函数
+    if (i<end)
+        qusort(s,j+1,end);
+    return 0;
+}
+```
+
+# **69.归并排序
+
+```c
+#include<stdio.h>
+/*
+归并排序算法
+*/
+int main(){
+	int merge(int r[],int s[],int x1,int x2,int x3);
+	int merge_sort(int r[],int s[],int m,int n);
+	int a[11];
+    int i;
+    printf("请输入10个数：\n");
+    for(i=1;i<=10;i++)
+        scanf("%d",&a[i]);    //从键盘中输入10个数
+    merge_sort(a,a,1,10);    //调用merge_sort()函数进行归并排序
+    printf("排序后的顺序是：\n");
+    for(i=1;i<=10;i++)
+        printf("%5d",a[i]);    //输出排序后的数据
+    printf("\n");
+    return 0;
+}
+
+int merge(int r[],int s[],int x1,int x2,int x3)    //自定义实现一次归并样序的函数
+{
+    int i,j,k;
+    i=x1;    //第一部分的开始位置
+    j=x2+1;  //第二部分的开始位置
+    k=x1;
+    while((i<=x2)&&(j<=x3)){    //当i和j都在两个要合并的部分中时
+        if(r[i]<=r[j])    //筛选两部分中较小的元素放到数组s中
+        {
+            s[k] = r[i];
+            i++;
+            k++;
+        }
+        else
+        {
+            s[k]=r[j];
+            j++;
+            k++;
+        }
+        while(i<=x2)    //将x1~x2范围内未比较的数顺次加到数组r中
+            s[k++]=r[i++];
+        while(j<=x3) //将x2+l~x3范围内未比较的数顺次加到数组r中
+            s[k++]=r[j++];
+    }
+	return 0;
+}
+
+int merge_sort(int r[],int s[],int m,int n)
+{
+    int p;
+    int t[20];
+    if(m==n)
+        s[m]=r[m];
+    else
+    {
+        p=(m+n)/2;
+        merge_sort(r,t,m,p);    //递归调用merge_soit()函数将r[m]?r[p]归并成有序的t[m]?t[p]
+        merge_sort(r,t,p+1,n);    //递归一调用merge_sort()函数将r[p+l]?r[n]归并成有序的t[p+l]?t[n]
+        merge(t,s,m,p,n);    //调用函数将前两部分归并到s[m]?s[n】*/
+    }
+    return 0;
+}
+```
+
+# **70.二分查找算法，折半查找算法
+
+```c
+#include <stdio.h>
+int binary_search(int key,int a[],int n) //自定义函数binary_search()
+{
+    int low,high,mid,count=0,count1=0;
+    low=0;
+    high=n-1;
+    while(low<high)    //査找范围不为0时执行循环体语句
+    {
+        count++;    //count记录査找次数
+        mid=(low+high)/2;    //求中间位置
+        if(key<a[mid])    //key小于中间值时
+            high=mid-1;    //确定左子表范围
+        else if(key>a[mid])    //key 大于中间值时
+            low=mid+1;    //确定右子表范围
+        else if(key==a[mid])    //当key等于中间值时，证明查找成功
+        {
+            printf("查找成功!\n 查找 %d 次!a[%d]=%d",count,mid,key);    //输出査找次数及所査找元素在数组中的位置
+            count1++;    //count1记录查找成功次数
+            break;
+        }
+    }
+    if(count1==0)    //判断是否查找失敗
+        printf("查找失敗!");    //査找失敗输出no found
+    return 0;
+}
+int main()
+{
+    int i,key,a[100],n;
+    printf("请输入数组的长度：\n");
+    scanf("%d",&n);    //输入数组元素个数
+    printf("请输入数组元素：\n");
+    for(i=0;i<n;i++)
+        scanf("%d",&a[i]);    //输入有序数列到数组a中
+    printf("请输入你想查找的元素：\n");
+    scanf("%d",&key);    //输入要^找的关键字
+    binary_search(key,a,n);    //调用自定义函数
+    printf("\n");
+    return 0;
+}
+```
+
+# **71.分块查找算法，索引顺序查找算法
+
+```c
+#include <stdio.h>
+struct index    //定义块的结构
+{
+    int key;    //块的关键字
+    int start;    //块的起始值
+    int end;    //块的结束值
+}index_table[4];    //定义结构体数组
+int block_search(int key,int a[])    //自定义实现分块查找
+{
+    int i,j;
+    i=1;
+    while(i<=3&&key>index_table[i].key)    //确定在哪个块中
+        i++;
+    if(i>3)    //大于分得的块数，则返回0
+        return 0;
+    j=index_table[i].start;    //j等于块范围的起始值
+    while(j<=index_table[i].end&&a[j]!=key)    //在确定的块内进行顺序查找
+        j++;
+    if(j>index_table[i].end)    //如果大于块范围的结束值，则说明没有要査找的数，j置0
+        j = 0;
+    return j;
+}
+int main()
+{
+    int i,j=0,k,key,a[16];
+    printf("请输入15个数：\n");
+    for(i=1;i<16;i++)
+        scanf("%d",&a[i]);    //输入由小到大的15个数
+    for(i=1;i<=3;i++)
+    {
+        index_table[i].start=j+1;    //确定每个块范围的起始值
+        j=j+1;
+        index_table[i].end=j+4;    //确定每个块范围的结束值
+        j=j + 4;
+        index_table[i].key=a[j];    //确定每个块范围中元素的最大值
+    }
+    printf("请输入你想査找的元素：\n");
+    scanf("%d",&key);    //输入要查询的数值
+    k=block_search(key,a);    //调用函数进行杳找
+    if(k!=0)
+        printf("查找成功，其位置是：%d\n",k);    //如果找到该数，则输出其位置
+    else
+        printf("查找失败!");    //若未找到，则输出提示信息
+    return 0; 
+}
+```
+
+# 72.求自然底数e
+
+```c
+#include <stdio.h>
+/*
+自然底数 e=2.718281828…，e 的计算公式如下：
+e=1+1/1!+1/2!+1/3!+…
+要求当最后一项的值小于 10-10 时结束。
+*/
+int main(){
+   	float e=1.0,n=1.0;
+   	int i=1;
+   	while(1/n>1e-10){
+	   	e+=1/n;
+	   	i++;
+	   	n=i*n;
+	}
+	printf("e的值是：%f\n",e);
+	return 0; 
+}
+```
+
+# 73.求回文素数
+
+```c
+#include <stdio.h>
+/*
+任意的整数，当从左向右读与从右向左读是相同的，且为素数时，称为回文素数。求 1000 以内的所有回文素数。
+
+实例的重点是判断一个数是否是回文素数。要输出 1000 以内的所有回文素数，首先应判断这个数是否是素数；如果是，再进一步判断这个数是两位数还是三位数，若是两位数，则需判断个位数和十位数是否相同；若是三位数，则需判断个位数和百位数是否相同。若相同，则判断为回文素数，否则继续下次判断。
+
+① 定义一个函数 sushu，其作用是判断一个数是否是素数。
+② 对判断为素数的数，再判断其是否是两位数。
+    若是两位数，再判断其个位数和十位数是否相同，若相同则打印输出；若不相同，则执行④；若不是两位数，则执行③。
+③ 若是三位数，则判断其个位数和百位数是否相同。若相同，则打印输出；若不相同，则执行 ④。
+④ 循环控制变量 i 自增 1。
+⑤ 直到 i 自增至 1000 结束。
+*/
+int main(){
+   	int sushu(int n);
+   	int i;
+   	for(i=0;i<1000;i++){
+	   	if(sushu(i)==1){
+		   	if(i/100==0){
+			   	if(i/10==i%10) printf("%5d",i);
+			   	if(i%5==0) printf("\n");
+			   }
+			else{
+				if(i/100==i%10) printf("%5d",i);
+				if(i%5==0) printf("\n");
+			}
+		   }
+	   }
+	return 0; 
+}
+int sushu(int n){
+	int i;
+	if(n<=1) return 0;
+	if(n==1) return 1;
+	for(i=2;i<n;i++){
+		if(n%i==0) return 0;
+		else if(n!=i+1) continue;
+		else return 1;
+	}
+	return 0;
+}
+```
+
+# 74.兔子生兔子问题
+
+```c
+#include <stdio.h>
+/*
+假设一对兔子的成熟期是一个月，即一个月可长成成兔，那么，如果每对成兔每个月都生一对小兔，
+一对新生的小兔从第二个月起就开始生兔子，试问从一对兔子开始繁殖，以后每个月会有多少对兔子？
+*/
+int main(){
+   	int i,tu1,tu2,tu3,m;
+   	tu1=1;
+   	tu2=1;
+   	printf("请输入月份数\n");
+   	scanf("%d",&m);
+   	if(m==1||m==2) printf("有一对兔子");
+   	else if(m>2){
+	   	for(i=3;i<=m;i++){
+		   	tu3=tu1+tu2;
+	   	   	tu1=tu2;
+	   	   	tu2=tu3;
+		   }
+		printf("%d月的兔子数为：%d\n",m,tu3);
+	   }
+	return 0; 
+}
+```
+
+# **75.约瑟夫环问题
+
+```c
+#include<stdio.h>
+/*
+编号为 1，2，3，…，n 的 n 个人围坐一圈，任选一个正整数 m 作为报数上限值，从第一个人开始按顺时针方向报数，
+报数到 m 时停止，报数为 m 的人出列。从出列人的顺时针方向的下一个人开始又从 1 重新报数，如此下去，直到所有人都全部出列为止。
+*/
+#define N 100
+int josef(int a[],int n,int m)
+{
+    int i,j,k=0;
+    for(i=0;i<n;i++)
+    {
+        j=1;
+        while(j<m)
+        {
+            while(a[k]==0)
+            k=(k+1)%n;
+            j++;
+            k=(k+1)%n;
+        }
+        while(a[k]==0)
+        k=(k+1)%n;
+        printf("%d ",a[k]);
+        a[k]=0;
+    }
+    return 0;
+}
+int main()
+{
+    int a[100];
+    int i,m,n;
+    printf("input n and m：");
+    scanf("%d%d",&n,&m);
+    for(i=0;i<n;i++)
+        a[i]=i+1;
+    printf("\n output：\n");
+    josef(a,n,m);
+    printf("\n");
+    return 0;
+}
+```
+
+# **76.日期处理函数
+
+```c
+#include <stdio.h>
+#include <math.h>
+/*
+定义一个表示日期的结构体类型，再分别定义函数完成下列功能：计算某一天是对应年的第几天，
+这一年一共多少天；计算两个日期之间相隔的天数。两个日期由键盘输入。
+
+设定结构体类型表示日期类型名为 Date，利用 typedef 将其定义为日期型类型名，有三个整型类型的成员分别表示年、月、日。
+
+设定函数计算输入的日期是这一年的第几天。函数的形参为日期型变量，函数体中设定整型数组存放每个月的天数，二月份的天数为 28 天；
+设定函数判断年份是否为闰年以决定二月份的天数。根据输入的日期月份，在数组中将相应的月份天数求和，假日曰期即为天数。
+
+设定函数完成两个日期的比较，比较形参 d 和 s 两个日期的大小。首先比较年，同年的比较月，同月的比较日。
+变量 start 保存输入的小的日期年份，end 保存输入日期大的年份，然后计算两个日期之间的天数。
+
+程序由 6 个函数构成，
+yearday() 函数计算某年的天数，
+monthday() 函数计算某年二月份的天数，
+dayofyeaK() 函数计算某日期是某年的第几天，
+cmpdate() 函数比较两个日期的大小，
+interday() 函数计算两个日期之间的天数；
+dayofyear() 函数调用 monthday() 函数，
+interday() 函数调用 cmpdate() 函数、yearday() 函数、dayofyear() 函数；
+主函数调用 yearday() 函数、dayofyear() 函数、interday() 函数。
+*/
+
+typedef struct
+{
+    int year,month,day;
+}Date;
+int yearday(int year)
+{
+    int yday;
+    if((year%4==0 && year%100!=0)||year%400==0)
+        yday=366;
+    else
+        yday=365;
+    return yday;
+}
+int monthday(int year)
+{
+    int mday;
+    if((year%4==0 && year%100!=0)||year%400==0)
+        mday=29;
+    else
+        mday=28;
+    return mday;
+}
+int dayofyear(Date d)
+{
+    int i,total=0;
+    int months[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+    months[2]=monthday(d.year);
+    for(i=1;i<d.month;i++)
+        total=total+months[i];
+    total=total+d.day;
+    return total;
+}
+int cmpdate(Date d,Date s)
+{
+    int result;
+    if(d.year==s.year)
+    {
+        if(d.month==s.month)
+        {
+            if(d.day==s.day)
+            result=0;
+            else result=d.day-s.day;
+        }
+        else result=d.month-s.month;
+    }
+    else result=d.year-s.year;
+    return result;
+}
+int interday(Date d,Date s)
+{
+    int result,te,ts,total;
+    int start,end,day;
+    int i;
+    result=cmpdate(d,s);
+    if(result>0)
+    {
+        start=s.year;
+        end=d.year;
+        te=dayofyear(d);
+        ts=dayofyear(s);
+    }
+    else if(result<0)
+    {
+        start=d.year;
+        end=s.year;
+        ts=dayofyear(d);
+        te=dayofyear(s);
+    }
+    else return 0;
+    if(start==end)
+        return abs(te-ts);
+    else
+    {
+        total=0;
+        for(i=start;i<=end;i++)
+        {
+            day=yearday(i);
+            if(i==start)
+                total=total+day-ts;
+            else if(i==end)
+                total=total+te;
+            else
+                total=total+day;
+        }
+    }
+    return total;
+}
+int main()
+{
+    Date d1,d2;
+    int y,n;
+    printf("input date：");
+    scanf("%d%d%d",&d1.year,&d1.month,&d1.day);
+    scanf("%d%d%d",&d2.year,&d2.month,&d2.day);
+    y=yearday(d1.year);
+    n=dayofyear(d1);
+    printf("%d days %d\n",d1.year,y);
+    printf("%d-%d-%d is the %d day.\n",d1.year,d1.month,d1.day,n);
+    n=interday(d1,d2);
+    printf("%d-%d-%d and %d-%d-%d distance ",d1.year,d1.month,d1.day,d2.year,d2.month,d2.day);
+    printf("%d days\n",n);
+    return 0;
+}
+```
+
+# **77.汉诺塔问题
+
+```c
+#include<stdio.h>
+/*
+汉诺塔问题是指：一块板上有三根针 A、B、C。A 针上套有 64 个大小不等的圆盘，按照大的在下、小的在上的顺序排列，
+要把这 64 个圆盘从 A 针移动到 C 针上，每次只能移动一个圆盘，移动过程可以借助 B 针。但在任何时候，
+任何针上的圆盘都必须保持大盘在下，小盘在上。从键盘输入需移动的圆盘个数，给出移动的过程。
+
+算法思想
+对于汉诺塔问题，当只移动一个圆盘时，直接将圆盘从 A 针移动到 C 针。若移动的圆盘为 n(n>1)，则分成几步走：
+把 (n-1) 个圆盘从 A 针移动到 B 针（借助 C 针）；A 针上的最后一个圆盘移动到 C 针；
+B 针上的 (n-1) 个圆盘移动到 C 针（借助 A 针）。每做一遍，移动的圆盘少一个，逐次递减，最后当 n 为 1 时，完成整个移动过程。
+
+因此，解决汉诺塔问题可设计一个递归函数，利用递归实现圆盘的整个移动过程，问题的解决过程是对实际操作的模拟。
+*/
+int main()
+{
+    int hanoi(int,char,char,char);
+    int n;
+    printf("Input the number of diskes：");
+    scanf("%d",&n);
+    printf("\n");
+    hanoi(n,'A','B','C');
+    return 0;
+}
+int hanoi(int n,char x,char y,char z)
+{
+    int move(char,int,char);
+    if(n==1)
+        move(x,1,z);
+    else
+    {
+        hanoi(n-1,x,z,y);
+        move(x,n,z);
+        hanoi(n-1,y,x,z);
+    }
+    return 0;
+}
+int move(char getone,int n,char putone)
+{
+    static int k=1;
+    printf("%2d:%3d # %c---%c\n",k,n,getone,putone);
+    if(k++%3==0)
+        printf("\n");
+    return 0;
+}
+```
+
+# *78.求圆周率π
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+/*
+题目1) 利用公式①计求π的近似值，要求累加到最后一项小于10^(-6)为止。
+
+题目2) 根据公式②，用前100项之积计算π的值。
+
+题目1)提供了一种解法，题目2)提供了两种解法，请看解析。
+*/
+int main(){
+    float s=1;
+    float pi=0;
+    float i=1.0;
+    float n=1.0;
+    while(fabs(i)>=1e-6){
+        pi+=i;
+        n=n+2;
+        // 这里设计的很巧妙，每次正负号都不一样 
+        s=-s; 
+        i=s/n;
+    }
+    pi=4*pi;
+    printf("pi的值为：%.6f\n",pi);
+    
+    return 0;
+}
+```
+
