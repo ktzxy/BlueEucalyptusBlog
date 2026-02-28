@@ -41,7 +41,7 @@ jobs:
 
       # 5️⃣ 使用 rsync 部署到阿里云服务器
       - name: Deploy via rsync
-        uses: burnett01/rsync-deployments@v5
+        uses: burnett01/rsync-deployments@v4.1
         with:
           switches: -avzr --delete
           path: public/
