@@ -1,4 +1,4 @@
-name: Deploy Hugo to Alibaba Cloud
+name: Deploy Hugo to Alibaba Cloud (Docker)
 
 on:
   push:
@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ 检出仓库代码（包含主题 ）
+      # 1️⃣ 拉取仓库
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 推荐开启，避免某些主题构建问题
+          fetch-depth: 0
 
-      # 2️⃣ 缓存 Hugo 资源目录（加速构建关键步骤）
+      # 2️⃣ 缓存 Hugo 资源
       - name: Cache Hugo resources
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             resources
@@ -27,19 +27,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-hugo-
 
-      # 3️⃣ 安装 Hugo Extended 版本
+      # 3️⃣ 安装 Hugo
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: "0.157.0"
           extended: true
 
-      # 4️⃣ 构建静态文件（生产环境）
+      # 4️⃣ 构建站点
       - name: Build Hugo site
         run: hugo --minify --environment production
 
-      # 5️⃣ 使用 rsync 部署到阿里云服务器
-      - name: Deploy via rsync
+      # 5️⃣ 同步 public 到服务器
+      - name: Rsync to server
         uses: burnett01/rsync-deployments@v8
         with:
           switches: -avzr --delete
@@ -49,3 +49,15 @@ jobs:
           remote_port: ${{ secrets.ALI_PORT }}
           remote_path: /var/www/myblog/public/
           remote_key: ${{ secrets.ALI_KEY }}
+
+      # 6️⃣ 远程重启 Docker 容器
+      - name: Restart Docker
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.ALI_HOST }}
+          username: ${{ secrets.ALI_USER }}
+          key: ${{ secrets.ALI_KEY }}
+          port: ${{ secrets.ALI_PORT }}
+          script: |
+            cd /var/www/myblog
+            docker compose up -d --force-recreate
