@@ -36,7 +36,7 @@ jobs:
 
       # 4️⃣ 构建站点
       - name: Build Hugo site
-        run: hugo --minify --environment production --cleanDestinationDir
+        run: hugo --minify --cleanDestinationDir --environment production -D
 
       - name: Verify Hugo output
         run: |
