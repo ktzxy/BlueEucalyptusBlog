@@ -14,6 +14,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          submodules: recursive
           fetch-depth: 0
 
       # 2️⃣ 缓存 Hugo 资源
@@ -36,7 +37,13 @@ jobs:
 
       # 4️⃣ 构建站点
       - name: Build Hugo site
-        run: hugo --minify --cleanDestinationDir --environment production -D
+        run: hugo --minify --cleanDestinationDir -D
+
+      - name: List theme folder
+        run: ls -R themes/PaperMod
+
+      - name: Print Hugo environment
+        run: hugo env
 
       - name: Verify Hugo output
         run: |
