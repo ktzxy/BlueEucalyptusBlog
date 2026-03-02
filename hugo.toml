@@ -2,7 +2,7 @@ baseURL = 'https://ktzxy.top/'
 languageCode = "zh-cn"
 title = "Blue Eucalyptus's Blog"
 copyright = "[©2024 Blue Eucalyptus's Blog](https://ktzxy.top/)"
-theme = "hugo-PaperMod"
+theme = "PaperMod"
 
 
 # 输出 JSON 用于搜索
