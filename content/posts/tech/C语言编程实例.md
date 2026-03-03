@@ -2,10 +2,19 @@
 date = '2026-02-28T10:38:44+08:00'
 draft = false
 title = 'C语言编程实例'
+description = "C语言编程的一些实例"
+categories = ["📒C"]
+tags = ["C"]
+summary = "C语言编程的一些实例"
 
+[cover]
+image = "/images/Image00025.webp"    # 文章封面路径
+hidden = true                      # 是否隐藏
+hiddenInList = true                 # 列表页隐藏
+hiddenInSingle = true               # 单页隐藏
 +++
 
-# 1.温度转换
+## 1.温度转换
 
 ```c
 #include<stdio.h>
@@ -22,7 +31,7 @@ int main(){
 }
 ```
 
-# 2.字母大小写转换
+## 2.字母大小写转换
 
 ```c
 #include<stdio.h>
@@ -48,7 +57,7 @@ int main(){
 }
 ```
 
-# 3.三目运算实现判断大写
+## 3.三目运算实现判断大写
 
 ```c
 #include<stdio.h>
@@ -66,7 +75,7 @@ int main(){
 }
 ```
 
-# 4.判断某年是否为闰年
+## 4.判断某年是否为闰年
 
 ```c
 #include<stdio.h>
@@ -86,7 +95,7 @@ int main(){
 }
 ```
 
-# 5.求1+2+……+100的和
+## 5.求1+2+……+100的和
 
 ```c
 #include<stdio.h>

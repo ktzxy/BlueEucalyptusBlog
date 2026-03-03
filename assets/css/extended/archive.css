@@ -1,0 +1,140 @@
+/* ===================================== */
+/*        Apple 风高级时间轴             */
+/* ===================================== */
+
+.archive {
+    position: relative;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 120px 0;
+}
+
+/* 中心时间线 */
+.archive::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #5ee7df, #b490ca);
+    border-radius: 2px;
+    transform: translateX(-50%);
+}
+
+/* ===== 年份 ===== */
+.archive-year-header {
+    position: relative;
+    text-align: center;
+    margin: 140px 0 100px 0;
+    font-size: 2.2rem;
+    font-weight: 500;
+    letter-spacing: 4px;
+    opacity: 0.9;
+    color: #333;
+}
+
+/* 年份圆点 */
+.archive-year-header::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -40px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5ee7df, #b490ca);
+    box-shadow: 0 0 10px rgba(94, 231, 223, 0.4), 0 0 10px rgba(180, 144, 202, 0.4);
+    transform: translateX(-50%);
+}
+
+/* 隐藏月份层级 */
+.archive-month-header {
+    display: none;
+}
+
+/* ===== 文章布局 ===== */
+.archive-entry {
+    position: relative;
+    width: 50%;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    transition: all 0.35s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* 左侧 */
+.archive-entry:nth-of-type(odd) {
+    left: 0;
+    text-align: right;
+}
+
+/* 右侧 */
+.archive-entry:nth-of-type(even) {
+    left: 50%;
+    text-align: left;
+}
+
+/* 中心小节点（渐变 + 微光） */
+.archive-entry::before {
+    content: "";
+    position: absolute;
+    top: 30px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5ee7df, #b490ca);
+    box-shadow: 0 0 8px rgba(94, 231, 223, 0.4), 0 0 8px rgba(180, 144, 202, 0.4);
+    transition: all 0.35s ease;
+}
+
+/* 左节点位置 */
+.archive-entry:nth-of-type(odd)::before {
+    right: -5px;
+}
+
+/* 右节点位置 */
+.archive-entry:nth-of-type(even)::before {
+    left: -5px;
+}
+
+/* 日期 */
+.archive-entry-link time {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    opacity: 0.5;
+    margin-bottom: 10px;
+}
+
+/* 标题 */
+.archive-entry-link {
+    font-size: 1.05rem;
+    font-weight: 400;
+    transition: all 0.35s ease;
+    color: #222;
+    /* 确保可读 */
+}
+
+/* ===== Apple 式 Hover 微动 ===== */
+
+/* 左侧向时间线靠近 */
+.archive-entry:nth-of-type(odd):hover {
+    transform: translateX(12px);
+}
+
+/* 右侧向时间线靠近 */
+.archive-entry:nth-of-type(even):hover {
+    transform: translateX(-12px);
+}
+
+/* Hover 节点微放大、高光 */
+.archive-entry:hover::before {
+    transform: scale(1.5);
+    box-shadow: 0 0 15px rgba(94, 231, 223, 0.6), 0 0 15px rgba(180, 144, 202, 0.6);
+}
+
+/* Hover 标题文字高亮 */
+.archive-entry:hover .archive-entry-link {
+    opacity: 1;
+    color: #5ee7df;
+}

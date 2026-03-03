@@ -39,20 +39,6 @@ jobs:
       - name: Build Hugo site
         run: hugo --minify --cleanDestinationDir -D
 
-      - name: List theme folder
-        run: ls -R themes/PaperMod
-
-      - name: Print Hugo environment
-        run: hugo env
-
-      - name: Verify Hugo output
-        run: |
-          ls -l public
-          if [ ! -f public/index.html ]; then
-            echo "Error: index.html not generated"
-            exit 1
-          fi
-
       # 5️⃣ 同步 public 到服务器
       - name: Rsync to server
         uses: burnett01/rsync-deployments@v8

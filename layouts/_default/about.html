@@ -1,15 +1,28 @@
 {{- define "main" }}
 
-<header class="page-header">
-  <h1>{{ .Title }}</h1>
-  {{- if .Description }}
-  <div class="post-description">{{ .Description }}</div>
-  {{- end }}
-</header>
+<div class="about-container">
+  <!-- 顶部 Hero 卡片 -->
+  <div class="about-hero-card">
+    <div class="about-avatar-wrapper">
+      <img class="about-avatar-img" src="/images/profile.png" alt="头像" />
+    </div>
 
-<section>
-  <br />
-  {{ .Content }}
-</section>
+    <div class="about-hero-text">
+      <h1>{{ .Title }}</h1>
+      {{- if .Description }}
+      <p class="about-description">{{ .Description }}</p>
+      {{- end }}
 
-{{- end }}{{/* end main */}}
+      <div class="about-buttons">
+        <a href="/posts/">Posts</a>
+        <a href="/tags/">Tags</a>
+        <a href="/archives/">Archives</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 下方交错卡片 -->
+  <div class="about-grid">{{ .Content }}</div>
+</div>
+
+{{- end }}

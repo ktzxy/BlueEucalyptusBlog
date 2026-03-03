@@ -1,0 +1,144 @@
+/* =========================
+   页面整体
+========================= */
+.about-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* =========================
+   Hero 卡片（头像 + 按钮）
+========================= */
+.about-hero-card {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background: rgba(255, 255, 255, 0.12);
+    /* 玻璃拟态效果 */
+    backdrop-filter: blur(12px);
+    padding: 30px;
+    border-radius: 18px;
+    margin-bottom: 60px;
+    transition: all 0.3s ease;
+}
+
+.about-hero-card:hover {
+    transform: translateY(-6px);
+}
+
+.about-avatar-wrapper {
+    width: 110px;
+    height: 110px;
+    flex: 0 0 110px;
+}
+
+.about-avatar-img {
+    width: 110px !important;
+    height: 110px !important;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+.about-hero-text h1 {
+    margin: 0 0 10px 0;
+    font-size: 1.8rem;
+}
+
+.about-description {
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.about-buttons a {
+    display: inline-block;
+    margin-right: 15px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+    color: #333;
+    transition: all 0.25s ease;
+}
+
+.about-buttons a:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   真 · Markdown 分组卡片
+========================= */
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+    /* 关键修改 */
+    column-gap: 40px;
+    row-gap: 40px;
+}
+
+/* 隐藏 hr，不参与布局 */
+.about-grid hr {
+    display: none;
+}
+
+/* 每个 h2 作为一个卡片起点 */
+.about-grid h2 {
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(10px);
+    padding: 25px 30px 0 30px;
+    margin: 0;
+    border-radius: 16px 16px 0 0;
+}
+
+/* h2 后面所有内容并入同一个卡片视觉 */
+.about-grid h2+p,
+.about-grid h2+ul,
+.about-grid h2+blockquote {
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(10px);
+    padding: 10px 30px 25px 30px;
+    margin: 0;
+    border-radius: 0 0 16px 16px;
+}
+
+/* 如果有多个段落 */
+.about-grid h2+p+p {
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(10px);
+    padding: 0 30px 25px 30px;
+    margin: 0;
+    border-radius: 0 0 16px 16px;
+}
+
+/* 悬浮效果 */
+.about-grid h2:hover,
+.about-grid h2+p:hover,
+.about-grid h2+ul:hover {
+    transform: translateY(-4px);
+    transition: 0.3s ease;
+}
+
+/* 标题样式 */
+.about-grid h2 {
+    font-size: 1.25rem;
+}
+
+/* 正文 */
+.about-grid p {
+    line-height: 1.7;
+}
+
+.about-grid ul {
+    padding-left: 20px;
+}
+
+/* 移动端 */
+@media (max-width: 900px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+}

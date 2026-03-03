@@ -1,0 +1,97 @@
+/* =========================
+   标签美化：Apple 风格渐变 + 高光微动
+========================= */
+
+/* 标签容器 */
+.terms-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+/* 单个标签卡片 */
+.terms-tags li {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+}
+
+.terms-tags li a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 18px;
+    min-width: 70px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 12px;
+
+    /* Apple 风格渐变色背景 */
+    background: linear-gradient(135deg, #5ee7df, #b490ca);
+    background-size: 200% 200%;
+    transition: all 0.3s ease;
+
+    /* 玻璃拟态 + 背景微动 */
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+/* 高光动画 */
+.terms-tags li a::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(60deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0) 60%);
+    transform: rotate(25deg);
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
+
+.terms-tags li a:hover::before {
+    top: -30%;
+    left: -30%;
+    transition: all 0.5s ease;
+}
+
+/* 悬浮提升 */
+.terms-tags li a:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    background-position: 100% 0%;
+}
+
+/* 数量右上角小圆点 */
+.terms-tags li a sup {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 8px;
+}
+
+/* 响应式调整 */
+@media (max-width: 900px) {
+    .terms-tags li a {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    .terms-tags li a sup {
+        font-size: 0.6rem;
+        padding: 1px 4px;
+    }
+}

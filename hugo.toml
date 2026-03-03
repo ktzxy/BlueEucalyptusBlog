@@ -1,6 +1,6 @@
 baseURL = 'https://ktzxy.top/'
 languageCode = "zh-cn"
-title = "Blue Eucalyptus's Blog"
+title = "🏘️Home"
 copyright = "[©2024 Blue Eucalyptus's Blog](https://ktzxy.top/)"
 theme = "PaperMod"
 
@@ -10,21 +10,29 @@ theme = "PaperMod"
   home = ["HTML", "RSS", "JSON"]
 
 [params]
-  author = "Atticus Wilde"
-  enableThemeToggle = true   # 夜间模式开关
-  enableFontSize = true      # 字号切换
-  showReadingTime = true     # 阅读时长显示
-  disableIntegrity = true    # 关闭 SRI 验证
-  disableLiveReload = true
-
-  enableInlineShortcodes = true # shortcode，类似于模板变量，可以在写 markdown 的时候便捷地插入，官方文档中有一个视频讲的很通俗
-  hasCJKLanguage = true # 是否有 CJK 的字符
-  enableRobotsTXT = true # 允许生成 robots.txt
-  buildDrafts = false # 构建时是否包括草稿
-  buildFuture = false # 构建未来发布的内容
-  buildExpired = false # 构建过期的内容
-  enableEmoji = true # 允许 emoji
-  pygmentsUseClasses = true
+  author = "Atticus Wilde"           # 作者名称
+  enableThemeToggle = true           # 夜间模式开关
+  enableFontSize = true              # 字号切换
+  showReadingTime = true             # 显示阅读时间
+  showWordCount = true               # 显示文章字数
+  disableIntegrity = true            # 关闭 SRI 验证
+  disableLiveReload = true           # 构建时关闭 LiveReload
+  enableSearch = true                # 启用搜索功能
+  enableInlineShortcodes = true      # 允许短代码
+  hasCJKLanguage = true              # 中文/日文/韩文字符支持
+  enableRobotsTXT = true             # 生成 robots.txt
+  buildDrafts = false                 # 是否构建草稿
+  buildFuture = false                 # 是否构建未来内容
+  buildExpired = false                # 是否构建过期内容
+  enableEmoji = true                  # 启用 emoji 表情
+  pygmentsUseClasses = true           # 高亮使用 class 而不是 inline 样式
+  #  标签和首页显示配置
+  ShowBreadCrumbs = true               # 面包屑导航
+  ShowPostNavLinks = true              # 文章上下页导航
+  ShowShareButtons = true              # 分享按钮
+  UseHugoToc = true                    # 启用 Hugo 内置目录
+  showtoc = true                        # 页面显示目录
+  tocopen = false                        # 目录默认折叠
 
   # Fuse.js 搜索选项
   [params.fuseOpts]
@@ -35,25 +43,56 @@ theme = "PaperMod"
     threshold = 0.4
     minMatchCharLength = 1
     keys = ["title", "permalink", "summary", "content"]
+  
+  [params.cover]
+    hidden = true          # 默认隐藏
+    hiddenInList = true
+    hiddenInSingle = true
 
+  # 🖼 头像模式配置（参考 RexBlog）
+  [params.profileMode]
+    enabled = true                     # 启用头像模式
+    title = "蓝桉の博客"
+    subtitle = "行至水穷处，坐看云起时；山海自远，心自从容。"
+    imageUrl = "./images/profile.png"  # 头像路径
+    imageWidth = 120
+    imageHeight = 120
+    imageTitle = "头像"
+    buttons = [
+      { name = "Posts", url = "/posts/" },
+      { name = "Tags", url = "/tags/" },
+      { name = "Archives", url = "/archives/" },
+      { name = "About", url = "/about/" }
+    ]
+
+  # 📂 社交图标（可自由添加）
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/ktzxy"
+  [[params.socialIcons]]
+    name = "email"
+    url = "mailto:kt_zxh@163.com"
+  [[params.socialIcons]]
+    name = "csdn"
+    url = "https://blog.csdn.net/qq_46087070?type=blog"
+  
 
 # 菜单
 [menu]
-
-  [[menu.main]]
-    identifier = "home"
-    name = "Home"
-    url = "/"
-    weight = 1
 
   [[menu.main]]
     identifier = "search"
     name = "Search"
     url = "/search/"
     weight = 2
+  
+# Markdown/数学公式支持
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      passthrough.delimiters.block = [["\\[","\\]"], ["$$","$$"]]
+      passthrough.delimiters.inline = [["\\(","\\)"], ["$","$"]]
+      passthrough.enable = true
 
-  [[menu.main]]
-    identifier = "about"
-    name = "About"
-    url = "/about/"
-    weight = 3
+  [markup.highlight]
+    noClasses = false
