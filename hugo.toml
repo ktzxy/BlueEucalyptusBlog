@@ -33,6 +33,7 @@ theme = "PaperMod"
   UseHugoToc = true                    # 启用 Hugo 内置目录
   showtoc = true                        # 页面显示目录
   tocopen = false                        # 目录默认折叠
+  disableFingerprinting = false          #启用资源指纹识别
 
   # Fuse.js 搜索选项
   [params.fuseOpts]
