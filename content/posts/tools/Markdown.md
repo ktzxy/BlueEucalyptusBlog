@@ -2,6 +2,7 @@
 date = '2024-08-17T10:14:07+08:00'
 draft = false
 title = 'Markdown'
+slug = "98xrscljza"
 description = "Markdown学习笔记"
 categories = ["📒tools"]
 tags = ["tools"]

@@ -2,6 +2,7 @@
 date = '2026-03-03T22:16:52+08:00'
 draft = false
 title = "Git |Permission denied"
+slug = "ef4hfr6xaz"
 description = "Git |Permission denied"      
 summary = "Git |Permission denied"                                                    
 categories = ["错误集锦"]                                      

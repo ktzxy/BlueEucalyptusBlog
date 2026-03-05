@@ -2,6 +2,7 @@
 date = '2024-09-19T09:39:07+08:00'
 draft = false
 title = 'Oracle 基础'
+slug = "8slmdac1h8"
 description = "Oracle 基础"
 categories = ["📒数据库"]
 tags = ["Oracle"]

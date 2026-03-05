@@ -2,6 +2,7 @@
 date = '2024-06-09T21:51:35+08:00'
 draft = false
 title = 'MySQL性能优化 表结构优化'
+slug = "n4kobyv07w"
 description = "MySQL性能优化 表结构优化"
 categories = ["📒数据库"]
 tags = ["mysql","性能优化"]

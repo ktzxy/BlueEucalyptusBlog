@@ -2,6 +2,7 @@
 date = '2024-06-22T11:05:58+08:00'
 draft = false
 title = 'Docker学习'
+slug = "q723p7r0gr"
 description = "Docker学习"
 categories = ["📒docker"]
 tags = ["docker","docker加速器","docker compose"]

@@ -2,6 +2,7 @@
 date = '2025-01-11T10:38:44+08:00'
 draft = false
 title = 'Linux学习笔记'
+slug = "9ot8187agx"
 description = "Linux学习笔记"
 categories = ["os"]
 tags = ["Linux"]

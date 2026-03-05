@@ -2,6 +2,7 @@
 date = '2025-06-23T09:21:47+08:00'
 draft = false
 title = 'Redis 安装部署'
+slug = "sfmj09zg3t"
 description = "Redis 安装部署"
 categories = ["📒数据库"]
 tags = ["redis"]

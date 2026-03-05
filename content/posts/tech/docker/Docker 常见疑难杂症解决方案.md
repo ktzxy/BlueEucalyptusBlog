@@ -2,6 +2,7 @@
 date = '2024-03-18T08:01:59+08:00'
 draft = false
 title = 'Docker 常见疑难杂症解决方案'
+slug = "7k38hq60mo"
 description = "Docker 常见疑难杂症解决方案"
 categories = ["📒docker"]
 tags = ["docker","问题集锦"]

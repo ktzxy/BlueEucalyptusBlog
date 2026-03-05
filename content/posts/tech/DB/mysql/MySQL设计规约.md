@@ -2,6 +2,7 @@
 date = '2024-09-08T23:09:22+08:00'
 draft = false
 title = 'MySQL设计规约'
+slug = "jkk4t4s90r"
 description = "MySQL设计规约"
 categories = ["📒数据库"]
 tags = ["mysql"]

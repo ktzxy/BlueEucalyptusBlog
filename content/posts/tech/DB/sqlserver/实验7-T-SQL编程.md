@@ -2,6 +2,7 @@
 date = '2024-08-15T18:28:38+08:00'
 draft = false
 title = '实验7 T SQL编程'
+slug = "d1lx0hx0un"
 description = "实验7 T SQL编程"
 categories = ["📒数据库"]
 tags = ["sqlserver","sql编程"]

@@ -2,6 +2,7 @@
 date = '2024-06-15T07:16:15+08:00'
 draft = false
 title = '高质量Mysql'
+slug = "c8cbh1lay1"
 description = "高质量Mysql"
 categories = ["📒数据库"]
 tags = ["mysql"]

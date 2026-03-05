@@ -2,6 +2,7 @@
 date = '2024-12-28T22:03:45+08:00'
 draft = false
 title = 'MySQL limit 分页优化'
+slug = "9iky5e06ti"
 description = "MySQL limit 分页优化"
 categories = ["📒数据库"]
 tags = ["mysql","性能优化"]

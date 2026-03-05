@@ -2,6 +2,7 @@
 date = '2025-06-11T10:19:53+08:00'
 draft = false
 title = 'MySQL 的 14个 小技巧！'
+slug = "c6wwqur40z"
 description = "MySQL 的 14个 小技巧！"
 categories = ["📒数据库"]
 tags = ["mysql"]

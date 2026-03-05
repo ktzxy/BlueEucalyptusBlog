@@ -2,6 +2,7 @@
 date = '2024-03-27T20:24:51+08:00'
 draft = false
 title = 'SQL调优'
+slug = "6jl02cmmvr"
 description = "SQL调优"
 categories = ["📒数据库"]
 tags = ["mysql"]

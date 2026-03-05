@@ -2,6 +2,7 @@
 date = '2025-02-19T07:39:57+08:00'
 draft = false
 title = '优化 sql 语句的一般步骤'
+slug = "8ni22mjzb6"
 description = "优化 sql 语句的一般步骤"
 categories = ["📒数据库"]
 tags = ["mysql","性能优化"]

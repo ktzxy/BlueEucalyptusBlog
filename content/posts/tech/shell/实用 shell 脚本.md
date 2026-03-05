@@ -2,6 +2,7 @@
 date = '2024-04-03T23:59:14+08:00'
 draft = false
 title = '实用 shell 脚本'
+slug = "a119mbv6vt"
 description = "实用 shell 脚本"
 categories = ["📒shell"]
 tags = ["shell"]

@@ -2,6 +2,7 @@
 date = '2024-02-28T22:23:41+08:00'
 draft = false
 title = 'MongoDB 基础'
+slug = "fhrj0q4ypi"
 description = "MongoDB 基础"
 categories = ["📒数据库"]
 tags = ["MongoDB"]

@@ -2,6 +2,7 @@
 date = '2024-06-03T10:33:27+08:00'
 draft = false
 title = 'Vimium'
+slug = "8zzgdsihkq"
 description = "Vimium学习笔记"
 categories = ["📒tools"]
 tags = ["tools"]

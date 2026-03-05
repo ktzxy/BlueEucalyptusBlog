@@ -2,6 +2,7 @@
 date = '2024-08-22T20:49:31+08:00'
 draft = false
 title = 'mysq错误l经典记录'
+slug = "jjz0oze62m"
 description = "mysq错误l经典记录"
 categories = ["📒数据库"]
 tags = ["mysql","问题集锦"]

@@ -2,6 +2,7 @@
 date = '2024-03-22T13:08:09+08:00'
 draft = false
 title = 'MySQL备份工具之Xtrabackup '
+slug = "ueqj0hq2yh"
 description = "MySQL备份工具之Xtrabackup "
 categories = ["📒数据库"]
 tags = ["mysql","备份"]

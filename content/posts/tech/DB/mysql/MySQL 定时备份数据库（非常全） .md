@@ -2,6 +2,7 @@
 date = '2025-04-20T04:38:48+08:00'
 draft = false
 title = 'MySQL 定时备份数据库（非常全） '
+slug = "239zs40dad"
 description = "MySQL 定时备份数据库（非常全） "
 categories = ["📒数据库"]
 tags = ["mysql","备份"]

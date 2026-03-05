@@ -2,6 +2,7 @@
 date = '2024-10-15T22:28:47+08:00'
 draft = false
 title = 'Oracle数据库速查知识文档'
+slug = "ko1zbxsojy"
 description = "Oracle数据库速查知识文档"
 categories = ["📒数据库"]
 tags = ["Oracle"]

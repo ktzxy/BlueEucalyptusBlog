@@ -2,6 +2,7 @@
 date = '2025-09-01T19:08:44+08:00'
 draft = true
 title = 'halo快速部署个人博客'
+slug = "bbezvn095x"
 description = "halo快速部署个人博客"
 categories = ["📒博客部署"]
 tags = ["halo"]

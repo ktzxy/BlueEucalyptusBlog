@@ -2,6 +2,7 @@
 date = '2025-02-20T16:08:57+08:00'
 draft = false
 title = 'MySQL数据恢复大法'
+slug = "95fp70i8u7"
 description = "MySQL数据恢复大法"
 categories = ["📒数据库"]
 tags = ["mysql","备份"]

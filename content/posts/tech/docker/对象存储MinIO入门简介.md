@@ -2,6 +2,7 @@
 date = '2024-12-14T04:35:44+08:00'
 draft = false
 title = '对象存储MinIO入门简介'
+slug = "b9mqlkeyf4"
 description = "对象存储MinIO入门简介"
 categories = ["📒docker"]
 tags = ["docker","minio"]

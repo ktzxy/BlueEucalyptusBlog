@@ -2,6 +2,7 @@
 date = '2025-12-01T16:46:02+08:00'
 draft = false
 title = 'MySQL高级篇笔记'
+slug = "h5ywf58tp4"
 description = "MySQL高级篇笔记"
 categories = ["📒数据库"]
 tags = ["mysql"]

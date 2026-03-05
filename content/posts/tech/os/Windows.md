@@ -2,6 +2,7 @@
 date = '2024-06-15T10:38:44+08:00'
 draft = false
 title = 'Windows学习'
+slug = "89bvjnh2zh"
 description = "Windows学习"
 categories = ["os"]
 tags = ["windows"]

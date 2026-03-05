@@ -2,6 +2,7 @@
 date = '2024-11-11T08:54:21+08:00'
 draft = false
 title = '‌SQL Server 禁用发布和分发错误 15517 解决方案‌'
+slug = "p3706qjruc"
 description = "‌SQL Server 禁用发布和分发错误 15517 解决方案‌"
 categories = ["📒数据库"]
 tags = ["sqlserver","问题集锦"]

@@ -2,6 +2,7 @@
 date = '2024-12-02T08:37:30+08:00'
 draft = false
 title = 'MySQL行构造器表达式优化(Row Constructor Expression)'
+slug = "ehj3wyi14c"
 description = "MySQL行构造器表达式优化(Row Constructor Expression)"
 categories = ["📒数据库"]
 tags = ["mysql","性能优化"]

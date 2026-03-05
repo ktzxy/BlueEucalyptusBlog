@@ -2,6 +2,7 @@
 date = '2024-03-20T22:22:09+08:00'
 draft = false
 title = 'tomcat启动脚本'
+slug = "bhytpcx85p"
 description = "tomcat启动脚本"      
 summary = "tomcat启动脚本"                       
 categories = ["📒tomcat"]                                      

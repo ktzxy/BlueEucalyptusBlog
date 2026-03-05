@@ -2,6 +2,7 @@
 date = '2024-01-15T07:20:07+08:00'
 draft = false
 title = 'MongoDB 安装与使用'
+slug = "68vsn79kl7"
 description = "MongoDB 安装与使用"
 categories = ["📒数据库"]
 tags = ["MongoDB"]

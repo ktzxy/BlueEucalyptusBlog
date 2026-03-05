@@ -2,6 +2,7 @@
 date = '2024-07-26T07:38:50+08:00'
 draft = false
 title = 'Docker操作系统之Alpine'
+slug = "n89ccfrysq"
 description = "Docker操作系统之Alpine"
 categories = ["📒docker"]
 tags = ["docker","alpine"]

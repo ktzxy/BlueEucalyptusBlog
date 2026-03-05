@@ -2,6 +2,7 @@
 date = '2024-03-21T22:22:09+08:00'
 draft = false
 title = 'tomcat部署和安装'
+slug = "frk61ebu2f"
 description = "tomcat部署和安装"      
 summary = "tomcat部署和安装"                       
 categories = ["📒tomcat"]                                      

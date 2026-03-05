@@ -2,6 +2,7 @@
 date = '2024-12-03T18:49:58+08:00'
 draft = false
 title = 'MySQL插入数据insert ignore'
+slug = "16gffynatx"
 description = "MySQL插入数据insert ignore"
 categories = ["📒数据库"]
 tags = ["mysql"]

@@ -2,6 +2,7 @@
 date = '2025-08-10T13:23:57+08:00'
 draft = false
 title = '生产环境下实现每天自动备份mysql数据库'
+slug = "bhu6l5osgd"
 description = "生产环境下实现每天自动备份mysql数据库"
 categories = ["📒数据库"]
 tags = ["mysql","备份"]

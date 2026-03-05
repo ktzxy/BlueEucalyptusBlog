@@ -2,6 +2,7 @@
 date = '2025-10-02T19:40:35+08:00'
 draft = false
 title = 'mysql完整备份和恢复'
+slug = "c3e1d6q1oq"
 description = "mysql完整备份和恢复"
 categories = ["📒数据库"]
 tags = ["mysql","备份"]

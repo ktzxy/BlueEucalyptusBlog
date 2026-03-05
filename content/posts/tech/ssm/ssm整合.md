@@ -2,6 +2,7 @@
 date = '2024-03-21T22:22:09+08:00'
 draft = false
 title = 'ssm整合'
+slug = "2vbb07ezlj"
 description = "ssm框架整合"      
 summary = "ssm框架整合"                       
 categories = ["📒项目"]                                      

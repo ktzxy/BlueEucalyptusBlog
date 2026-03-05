@@ -2,6 +2,7 @@
 date = '2024-11-03T14:27:22+08:00'
 draft = false
 title = 'MySQL数据库150道高频面试题'
+slug = "8nv3v2qdlr"
 description = "MySQL数据库150道高频面试题"
 categories = ["📒数据库"]
 tags = ["mysql","面试题"]

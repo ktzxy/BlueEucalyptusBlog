@@ -2,6 +2,7 @@
 date = '2025-03-23T22:23:31+08:00'
 draft = false
 title = 'TCP中的拥塞控制和流量控制'
+slug = "50o5sxm5mx"
 description = "TCP中的拥塞控制和流量控制"
 categories = ["📒网络"]
 tags = ["网络"]

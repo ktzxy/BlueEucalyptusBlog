@@ -2,6 +2,7 @@
 date = '2026-02-28T10:38:44+08:00'
 draft = false
 title = 'C语言编程实例'
+slug = "xowmgokf5a"
 description = "C语言编程的一些实例"
 categories = ["📒C"]
 tags = ["C"]

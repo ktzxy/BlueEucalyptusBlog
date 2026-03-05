@@ -2,6 +2,7 @@
 date = '2024-07-14T10:38:44+08:00'
 draft = true
 title = 'C++学习笔记'
+slug = "w9ipl974gh"
 description = "学习C++语言笔记"
 categories = ["📒C++"]
 tags = ["C++"]

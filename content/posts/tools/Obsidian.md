@@ -2,6 +2,7 @@
 date = '2025-07-17T13:31:51+08:00'
 draft = false
 title = 'Obsidian'
+slug = "c3b5uqabt2"
 description = "Obsidian学习笔记"
 categories = ["📒tools"]
 tags = ["tools"]

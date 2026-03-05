@@ -2,6 +2,7 @@
 date = '2024-09-03T10:59:07+08:00'
 draft = false
 title = 'https和http'
+slug = "ffm1molr8n"
 description = "https和http"
 categories = ["📒网络"]
 tags = ["网络"]

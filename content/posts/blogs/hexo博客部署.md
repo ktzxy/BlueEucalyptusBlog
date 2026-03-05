@@ -2,6 +2,7 @@
 date = '2025-03-04T11:02:13+08:00'
 draft = false
 title = 'hexo博客部署'
+slug = "l1om86bxy2"
 description = "hexo博客框架-折腾版"  
 summary = ""         
 categories = ["📒博客部署"]                                      

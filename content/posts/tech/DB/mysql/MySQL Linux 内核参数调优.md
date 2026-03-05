@@ -2,6 +2,7 @@
 date = '2025-02-17T10:25:23+08:00'
 draft = false
 title = 'MySQL Linux 内核参数调优'
+slug = "tx6bn28k3p"
 description = "MySQL Linux 内核参数调优"
 categories = ["📒数据库"]
 tags = ["mysql","性能优化"]

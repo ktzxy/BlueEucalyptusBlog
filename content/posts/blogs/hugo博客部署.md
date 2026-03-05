@@ -2,6 +2,7 @@
 date = '2026-01-04T11:02:13+08:00'
 draft = false
 title = 'hugo博客部署'
+slug = "4163nwhh20"
 description = "使用docker部署hugo，部署到云服务器"  
 summary = "使用docker部署hugo，部署到云服务器"         
 categories = ["📒博客部署"]                                      

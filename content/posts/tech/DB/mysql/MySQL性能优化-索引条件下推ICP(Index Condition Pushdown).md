@@ -2,6 +2,7 @@
 date = '2024-12-26T02:07:23+08:00'
 draft = false
 title = 'MySQL性能优化 索引条件下推ICP(Index Condition Pushdown)'
+slug = "m74onpz1c7"
 description = "MySQL性能优化 索引条件下推ICP(Index Condition Pushdown)"
 categories = ["📒数据库"]
 tags = ["mysql","性能优化"]

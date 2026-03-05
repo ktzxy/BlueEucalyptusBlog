@@ -2,6 +2,7 @@
 date = '2024-10-30T13:08:33+08:00'
 draft = false
 title = 'MySQL SQL性能分析 Profiling Using Performance Schema'
+slug = "ruspmrw6g4"
 description = "MySQL SQL性能分析 Profiling Using Performance Schema"
 categories = ["📒数据库"]
 tags = ["mysql","性能优化"]

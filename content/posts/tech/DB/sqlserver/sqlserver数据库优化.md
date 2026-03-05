@@ -2,6 +2,7 @@
 date = '2024-12-20T01:09:17+08:00'
 draft = false
 title = 'sqlserver数据库优化'
+slug = "s9j0hwrw17"
 description = "sqlserver数据库优化"
 categories = ["📒数据库"]
 tags = ["数据库优化","sqlserver"]

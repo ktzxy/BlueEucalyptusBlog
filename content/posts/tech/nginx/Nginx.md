@@ -2,6 +2,7 @@
 date = '2024-07-22T06:48:18+08:00'
 draft = false
 title = 'Nginx'
+slug = "mutl9oasar"
 description = "Nginx学习笔记"
 categories = ["📒nginx"]
 tags = ["nginx"]
