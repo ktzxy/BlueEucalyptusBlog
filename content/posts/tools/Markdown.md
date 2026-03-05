@@ -1,12 +1,13 @@
 +++
-date = '2026-02-01T10:38:44+08:00'
+date = '2024-08-17T10:14:07+08:00'
 draft = false
-title = 'Markdown 教程'
-description = "Markdown 教程"
-categories = ["📒工具"]
-tags = ["Markdown"]
-summary = "Markdown 教程"
+title = 'Markdown'
+description = "Markdown学习笔记"
+categories = ["📒tools"]
+tags = ["tools"]
+summary = "Markdown学习笔记"
 +++
+
 ## 1. 基础语法
 
 ### 1.1. 标题（Headings）

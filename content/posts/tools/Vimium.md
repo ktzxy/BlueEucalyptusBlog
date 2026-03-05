@@ -1,12 +1,13 @@
 +++
-date = '2026-03-03T10:38:44+08:00'
+date = '2024-06-03T10:33:27+08:00'
 draft = false
-title = 'Vimium 教程'
-description = "Vimium 教程"
-categories = ["📒工具"]
-tags = ["Vim"]
-summary = "Vimium 教程"
+title = 'Vimium'
+description = "Vimium学习笔记"
+categories = ["📒tools"]
+tags = ["tools"]
+summary = "Vimium学习笔记"
 +++
+
 # Vimium 教程
 
 所有快捷键可以通过`?`查看.
