@@ -6,7 +6,8 @@ slug = "4163nwhh20"
 description = "使用docker部署hugo，部署到云服务器"  
 summary = "使用docker部署hugo，部署到云服务器"         
 categories = ["📒博客部署"]                                      
-tags = ["hugo"]                                                  
+tags = ["hugo"]    
+comments = true                                              
 +++
 # **一、准备 SSH 密钥**
 
@@ -258,16 +259,26 @@ https://your-domain.com
 hugo.toml
 
 ```shell
-baseURL = 'https://your-domain.com/'
+baseURL = 'https://ktzxy.top/'
 languageCode = "zh-cn"
+timeZone = "Asia/Shanghai"
 title = "🏘️Home"
-copyright = "[©2024 Blue Eucalyptus's Blog](https://your-domain.com/)"
+copyright = "[©2024 Blue Eucalyptus's Blog](https://ktzxy.top/)"
 theme = "PaperMod"
+enableRobotsTXT = true             # 生成 robots.txt
+buildDrafts = false                 # 是否构建草稿
+buildFuture = false                 # 是否构建未来内容
+buildExpired = false                # 是否构建过期内容
+canonifyURLs = true
+enableGitInfo = true
 
 
 # 输出 JSON 用于搜索
 [outputs]
   home = ["HTML", "RSS", "JSON"]
+
+[permalinks]
+  posts = "/posts/:slug/"
 
 [params]
   author = "Atticus Wilde"           # 作者名称
@@ -280,10 +291,8 @@ theme = "PaperMod"
   enableSearch = true                # 启用搜索功能
   enableInlineShortcodes = true      # 允许短代码
   hasCJKLanguage = true              # 中文/日文/韩文字符支持
-  enableRobotsTXT = true             # 生成 robots.txt
-  buildDrafts = false                 # 是否构建草稿
-  buildFuture = false                 # 是否构建未来内容
-  buildExpired = false                # 是否构建过期内容
+  ShowCodeCopyButtons = true          # 代码复制按钮
+  ShowRssButtonInSectionTermList = true  # RSS按钮
   enableEmoji = true                  # 启用 emoji 表情
   pygmentsUseClasses = true           # 高亮使用 class 而不是 inline 样式
   #  标签和首页显示配置
@@ -291,9 +300,13 @@ theme = "PaperMod"
   ShowPostNavLinks = true              # 文章上下页导航
   ShowShareButtons = true              # 分享按钮
   UseHugoToc = true                    # 启用 Hugo 内置目录
-  showtoc = true                        # 页面显示目录
-  tocopen = false                        # 目录默认折叠
+  ShowToc  = true                        # 页面显示目录
+  TocOpen  = false                        # 目录默认折叠
   disableFingerprinting = false          #启用资源指纹识别
+  comments = true                         #启用评论
+  ShowAllPagesInArchive = true          # 文章归档显示
+  defaultTheme = "auto"               # 自动适配系统暗黑模式。
+  
 
   # Fuse.js 搜索选项
   [params.fuseOpts]
@@ -303,12 +316,25 @@ theme = "PaperMod"
     distance = 1000
     threshold = 0.4
     minMatchCharLength = 1
+    includeMatches = true
     keys = ["title", "permalink", "summary", "content"]
   
   [params.cover]
     hidden = true          # 默认隐藏
     hiddenInList = true
     hiddenInSingle = true
+  
+  [params.giscus]
+    repo = "ktzxy/BlueEucalyptusBlog"
+    repoId = "R_kgDORa2bBQ"
+    category = "General"
+    categoryId = "DIC_kwDORa2bBc4C3yKa"
+    mapping = "pathname"
+    reactionsEnabled = "1"
+    inputPosition = "top"
+    theme = "preferred_color_scheme"
+    lang = "zh-CN"
+    loading = "lazy"
 
   # 🖼 头像模式配置（参考 RexBlog）
   [params.profileMode]
@@ -329,13 +355,13 @@ theme = "PaperMod"
   # 📂 社交图标（可自由添加）
   [[params.socialIcons]]
     name = "github"
-    url = "https://github.com/用户名"
+    url = "https://github.com/ktzxy"
   [[params.socialIcons]]
     name = "email"
-    url = "mailto:123@163.com"
+    url = "mailto:kt_zxh@163.com"
   [[params.socialIcons]]
     name = "csdn"
-    url = ""
+    url = "https://blog.csdn.net/qq_46087070?type=blog"
   
 
 # 菜单
@@ -356,7 +382,21 @@ theme = "PaperMod"
       passthrough.enable = true
 
   [markup.highlight]
-    noClasses = false
+    style = "github-dark"
+    lineNos = true
+    codeFences = true
+    guessSyntax = true
+
+# Sitemap优化
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+# 性能优化
+[minify]
+  disableXML = true
+  minifyOutput = true
 ```
 
 myblog\content\search.md
@@ -827,5 +867,137 @@ layout = "about"
 showToc = false
 +++
 ........
+```
+
+# 评论配置
+
+## 安装 Giscus App
+
+直接打开这个页面：
+
+👉 https://github.com/apps/giscus
+
+这是 **GitHub** 的 App 页面。
+
+右上角会看到：
+
+```
+Install
+```
+
+点击：
+
+```
+Install
+```
+
+然后选择：
+
+```
+Only select repositories
+```
+
+选择你的博客仓库，例如：
+
+```
+myblog
+```
+
+最后点击：
+
+```
+Install
+```
+
+安装完成。
+
+------
+
+## 开启 GitHub Discussions
+
+进入你的博客仓库：
+
+```
+Settings
+```
+
+找到：
+
+```
+Features
+```
+
+勾选：
+
+```
+Discussions
+```
+
+保存。
+
+此时仓库顶部会出现：
+
+```
+Code | Issues | Pull requests | Actions | Discussions
+```
+
+------
+
+## 生成 Giscus 配置
+
+打开：
+
+👉 https://giscus.app
+
+填写：
+
+```
+Repository
+你的用户名/仓库名
+```
+
+例如：
+
+```
+AtticusWilde/myblog
+```
+
+如果安装成功，会自动检测到仓库。
+
+然后选择：
+
+```
+Discussion Category
+→ General
+```
+
+映射方式推荐：
+
+```
+pathname
+```
+
+下面就会生成 **配置代码**。
+
+## 把配置写入 Hugo PaperMod
+
+config.toml 添加 Giscus
+
+```shell
+[params]
+comments = true
+
+[params.giscus]
+repo = "你的用户名/仓库名"
+repoId = "R_kgDOxxxx"
+category = "General"
+categoryId = "DIC_kwDOxxxx"
+mapping = "pathname"
+strict = "0"
+reactionsEnabled = "1"
+emitMetadata = "0"
+inputPosition = "top"
+theme = "preferred_color_scheme"
+lang = "zh-CN"
 ```
 

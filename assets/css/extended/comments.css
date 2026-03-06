@@ -1,0 +1,84 @@
+/* ================================
+   Giscus 评论区高级美化
+   PaperMod 专用
+================================ */
+
+/* 评论整体容器 */
+.giscus {
+    margin-top: 60px;
+    padding: 25px;
+    border-radius: 16px;
+    background: linear-gradient(145deg,
+            rgba(255, 255, 255, 0.02),
+            rgba(255, 255, 255, 0.04));
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+/* hover微动 */
+.giscus:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* 评论标题 */
+.giscus::before {
+    content: "💬 评论区";
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--primary);
+}
+
+/* 评论iframe */
+.giscus iframe {
+    border-radius: 12px;
+}
+
+/* 评论区加载动画 */
+.giscus:empty {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.giscus:empty::after {
+    content: "评论加载中...";
+    color: var(--secondary);
+    font-size: 14px;
+    animation: fade 1.2s infinite;
+}
+
+@keyframes fade {
+    0% {
+        opacity: .3
+    }
+
+    50% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: .3
+    }
+}
+
+/* 暗黑模式优化 */
+.dark .giscus {
+    background: linear-gradient(145deg,
+            rgba(255, 255, 255, 0.02),
+            rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 评论区间距优化 */
+.post-content+.giscus {
+    margin-top: 80px;
+}
