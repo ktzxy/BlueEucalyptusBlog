@@ -32,8 +32,7 @@ group by name;
 select name,group_concat(code) from `user`
 group by name;
 ```
-
-执行结果：![图片](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)使用`group_concat`函数，可以轻松的把分组后，name相同的数据拼接到一起，组成一个字符串，用`逗号`分隔。
+使用`group_concat`函数，可以轻松的把分组后，name相同的数据拼接到一起，组成一个字符串，用`逗号`分隔。
 
 ## 2.char_length
 
@@ -50,7 +49,11 @@ select * from brand where name like '%苏三%'
 order by char_length(name) asc limit 5;
 ```
 
-执行效果如图所示：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172431607.webp)name字段使用关键字`模糊查询`之后，再使用`char_length`函数获取name字段的字符长度，然后按长度`升序`。
+执行效果如图所示：
+
+![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172431607.webp)
+
+name字段使用关键字`模糊查询`之后，再使用`char_length`函数获取name字段的字符长度，然后按长度`升序`。
 
 ## 3.locate
 
@@ -65,7 +68,8 @@ select * from brand where name like '%苏三%'
 order by char_length(name) asc, locate('苏三',name) asc limit 5,5;
 ```
 
-执行结果：![图片](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)先按长度排序，小的排在前面。如果长度相同，则按关键字从左到右进行排序，越靠左的越排在前面。
+
+先按长度排序，小的排在前面。如果长度相同，则按关键字从左到右进行排序，越靠左的越排在前面。
 
 除此之外，我们还可以使用：`instr`和`position`函数，它们的功能跟`locate`函数类似，在这里我就不一一介绍了，感兴趣的小伙伴可以找我私聊。
 
@@ -103,7 +107,9 @@ update brand set name=REPLACE(name,' ','') where name like '% ';
 select now() from brand limit 1;
 ```
 
-返回结果为下面这样的：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172438628.webp)它会包含`年月日时分秒`。
+返回结果为下面这样的：
+![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172438628.webp)
+它会包含`年月日时分秒`。
 
 如果你还想返回`毫秒`，可以使用`now(3)`，例如：
 
@@ -111,7 +117,9 @@ select now() from brand limit 1;
 select now(3) from brand limit 1;
 ```
 
-返回结果为下面这样的：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172444638.webp)使用起来非常方便好记。
+返回结果为下面这样的：
+![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172444638.webp)
+使用起来非常方便好记。
 
 ## 6.insert into ... select
 
@@ -152,7 +160,8 @@ VALUES (123, '108', '苏三', now(3));
 
 肯定不行，因为brand表的name字段创建了唯一索引，同时该表中已经有一条name等于苏三的数据了。
 
-执行之后直接报错了：![图片](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)这就需要在插入之前加一下判断。
+
+这就需要在插入之前加一下判断。
 
 当然很多人通过在sql语句后面拼接`not exists`语句，也能达到防止出现重复数据的目的，比如：
 
@@ -238,7 +247,9 @@ on duplicate key update name='苏三',edit_date=now(3);
 desc `order`;
 ```
 
-结果如图所示：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172452459.webp)确实能够看到order表中的字段名称、字段类型、字段长度、是否允许为空，是否主键、默认值等信息。
+结果如图所示：
+![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172452459.webp)
+确实能够看到order表中的字段名称、字段类型、字段长度、是否允许为空，是否主键、默认值等信息。
 
 但看不到该表的索引信息，如果想看创建了哪些索引，该怎么办呢？
 
@@ -250,7 +261,9 @@ desc `order`;
 show index from `order`;
 ```
 
-也能查出该表所有的索引：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172458173.webp)但查看字段和索引数据呈现方式，总觉得有点怪怪的，有没有一种更直观的方式？
+也能查出该表所有的索引：
+![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172458173.webp)
+但查看字段和索引数据呈现方式，总觉得有点怪怪的，有没有一种更直观的方式？
 
 答：这就需要使用`show create table`命令了。
 
@@ -260,7 +273,11 @@ show index from `order`;
 show create table `order`;
 ```
 
-执行结果如图所示：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172505577.webp)其中`Table`表示`表名`，`Create Table`就是我们需要看的`建表信息`，将数据展开：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172508538.webp)我们能够看到非常完整的建表语句，表名、字段名、字段类型、字段长度、字符集、主键、索引、执行引擎等都能看到。
+执行结果如图所示：
+![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172505577.webp)
+其中`Table`表示`表名`，`Create Table`就是我们需要看的`建表信息`，将数据展开：
+![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172508538.webp)
+我们能够看到非常完整的建表语句，表名、字段名、字段类型、字段长度、字符集、主键、索引、执行引擎等都能看到。
 
 非常直接明了。
 
@@ -318,11 +335,15 @@ explain select * from `order` where code='002';
 
 结果：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172600929.webp)
 
-通过这几列可以判断索引使用情况，执行计划包含列的含义如下图所示：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172526498.webp)如果你想进一步了解explain的详细用法，可以看看我的另一篇文章《[explain | 索引优化的这把绝世好剑，你真的会用吗？](https://mp.weixin.qq.com/s?__biz=MzkwNjMwMTgzMQ==&mid=2247490262&idx=1&sn=a67f610afa984ecca130a54a3be453ab&chksm=c0ebc23ef79c4b2869dea998e413c5cbea6aeeea01ee74efc7c1a5fc228baa7beca215adf3ea&token=751314179&lang=zh_CN&scene=21#wechat_redirect)》
+通过这几列可以判断索引使用情况，执行计划包含列的含义如下图所示：
+![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172526498.webp)
+
 
 说实话，sql语句没有走索引，排除没有建索引之外，最大的可能性是索引失效了。
 
-下面说说索引失效的常见原因：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172532487.webp)如果不是上面的这些原因，则需要再进一步排查一下其他原因。
+下面说说索引失效的常见原因：
+![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172532487.webp)
+如果不是上面的这些原因，则需要再进一步排查一下其他原因。
 
 ## 13.show processlist
 
@@ -332,7 +353,9 @@ explain select * from `order` where code='002';
 
 答：我们可以使用`show processlist`命令查看`当前线程执行情况`。
 
-如图所示：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172539263.webp)从执行结果中，我们可以查看当前的连接状态，帮助识别出有问题的查询语句。
+如图所示：
+![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172539263.webp)
+从执行结果中，我们可以查看当前的连接状态，帮助识别出有问题的查询语句。
 
 - id 线程id
 - User 执行sql的账号
