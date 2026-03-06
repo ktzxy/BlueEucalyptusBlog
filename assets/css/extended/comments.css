@@ -1,6 +1,5 @@
 /* ================================
-   Giscus 评论区高级美化
-   PaperMod 专用
+   Giscus 评论区高级美化（PaperMod 专用）
 ================================ */
 
 /* 评论整体容器 */
@@ -19,7 +18,7 @@
     transition: all 0.3s ease;
 }
 
-/* hover微动 */
+/* hover 微动 */
 .giscus:hover {
     transform: translateY(-3px);
     box-shadow:
@@ -36,7 +35,7 @@
     color: var(--primary);
 }
 
-/* 评论iframe */
+/* 评论 iframe */
 .giscus iframe {
     border-radius: 12px;
 }
