@@ -690,6 +690,8 @@ http {
 
 ## 20.yum源报错
 
+[CentOS镜像-CentOS镜像下载安装-开源镜像站-阿里云](https://developer.aliyun.com/mirror/centos?spm=a2c6h.13651102.0.0.1feb1b11LmEYJg)
+
 问题提出：
 
 ### cannot find a valid baseurl for repo:base/7/x86_64的解决方案

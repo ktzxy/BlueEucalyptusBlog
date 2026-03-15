@@ -40,23 +40,33 @@ docker-compose --version
 ### 安装（以ubuntu）
 
 ```shell
-# 更新系统
-sudo apt update && sudo apt upgrade -y
+# step 1: 安装必要的一些系统工具
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
 
-# 安装 Docker
-# 安装依赖
-sudo apt install -y ca-certificates curl gnupg
-
-sudo mkdir -p /etc/apt/keyrings
+# step 2: 信任 Docker 的 GPG 公钥
+sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
-# 添加仓库
+# Step 3: 写入软件源信息
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-  
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+ 
+# Step 4: 安装Docker
 sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# 安装指定版本的Docker-CE:
+# Step 1: 查找Docker-CE的版本:
+# apt-cache madison docker-ce
+#   docker-ce | 17.03.1~ce-0~ubuntu-xenial | https://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages
+#   docker-ce | 17.03.0~ce-0~ubuntu-xenial | https://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages
+# Step 2: 安装指定版本的Docker-CE: (VERSION例如上面的17.03.1~ce-0~ubuntu-xenial)
+# sudo apt-get -y install docker-ce=[VERSION]
+
 
 # 启动 Docker 并设置开机自启
 sudo systemctl start docker
@@ -82,6 +92,41 @@ newgrp docker
 - 错误："The following signatures couldn't be verified because the public key is not available" - 重新添加GPG密钥
 - 错误："Cannot connect to the Docker daemon" - 检查Docker服务是否启动：`sudo systemctl status docker`
 
+### 安装（以centos）
+
+```shell
+# step 1: 安装必要的一些系统工具
+sudo yum install -y yum-utils
+
+# Step 2: 添加软件源信息
+yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+# Step 3: 安装Docker
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Step 4: 开启Docker服务
+sudo service docker start
+
+# 注意：
+# 官方软件源默认启用了最新的软件，您可以通过编辑软件源的方式获取各个版本的软件包。例如官方并没有将测试版本的软件源置为可用，您可以通过以下方式开启。同理可以开启各种测试版本等。
+# vim /etc/yum.repos.d/docker-ce.repo
+#   将[docker-ce-test]下方的enabled=0修改为enabled=1
+#
+# 安装指定版本的Docker-CE:
+# Step 1: 查找Docker-CE的版本:
+# yum list docker-ce.x86_64 --showduplicates | sort -r
+#   Loading mirror speeds from cached hostfile
+#   Loaded plugins: branch, fastestmirror, langpacks
+#   docker-ce.x86_64            17.03.1.ce-1.el7.centos            docker-ce-stable
+#   docker-ce.x86_64            17.03.1.ce-1.el7.centos            @docker-ce-stable
+#   docker-ce.x86_64            17.03.0.ce-1.el7.centos            docker-ce-stable
+#   Available Packages
+# Step2: 安装指定版本的Docker-CE: (VERSION例如上面的17.03.0.ce.1-1.el7.centos)
+# sudo yum -y install docker-ce-[VERSION]
+```
+
+[Docker CE镜像-Docker CE镜像下载安装-开源镜像站-阿里云](https://developer.aliyun.com/mirror/docker-ce?spm=a2c6h.13651102.0.0.7d911b11DLIc7d)
+
 ### 设置开机自动启动
 
 ```shell
@@ -99,47 +144,3 @@ newgrp docker
 ```shell
 #docker info
 ```
-
-### docker-compose
-
-离线安装
-
-[所有版本预览Releases · docker/compose (github.com)](https://github.com/docker/compose/releases/)
-
-```
-#最好是进入到/usr/local/bin/目录下安装，我第一次在根目录下安装，报错docker-compose: command not found，第二次在上述目录下安装可以成功
-#将文件上传到linux后，重命名
-mv docker-compose-linux-x86_64.docker-compose-linux-x86_64 docker-compose
-
-
-#添加可执行权限
-chmod +x /usr/local/bin/docker-compose
-
-#测试
-docker-compose version
-```
-
-在线安装
-
-```shell
-# 下载 Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-# 设置执行权限
-sudo chmod +x /usr/local/bin/docker-compose
-
-# 验证安装
-docker-compose --version
-```
-
-**说明**：
-
-- `$(uname -s)`：获取操作系统类型（如Linux）
-- `$(uname -m)`：获取硬件架构（如x86_64）
-- `sudo chmod +x`：给文件添加执行权限
-- `docker-compose --version`：验证Docker Compose是否正确安装
-
-**常见错误及解决方法**：
-
-- 错误："Permission denied" - 确保使用sudo执行命令
-- 错误："command not found" - 检查docker-compose是否在PATH中，或尝试使用完整路径`/usr/local/bin/docker-compose --version`
