@@ -1,156 +1,121 @@
 /* ==========================================
-   Hugo 高级标签样式（Glass + 微动 + 数字优化）
+   Hugo 极简意境标签样式 - 紧凑版 (Compact & Zen)
+   风格参考：PaperMod / 现代杂志风 + 智能填充
 ========================================== */
 
 /* 标签容器 */
 .terms-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 8px;
+    /* 缩小间距，更紧凑 */
     margin-top: 24px;
     padding: 0;
     list-style: none;
+
+    /* 关键：允许子项自由伸缩，自动填充满行 */
+    justify-content: flex-start;
 }
 
-/* 单个标签 */
+/* 单个标签项 */
 .terms-tags li {
     margin: 0;
+    /* 不允许换行中断，由父容器控制 */
 }
 
-/* 标签主体 */
+/* 标签主体链接 */
 .terms-tags li a {
     position: relative;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
 
-    padding: 10px 22px;
-    min-width: 80px;
+    /* 核心改动：动态宽度 + 最小限制 */
+    padding: 6px 14px;
+    min-width: 50px;
+    /* 防止过窄 */
+    max-width: 100%;
+    /* 防止溢出 */
 
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-
-    color: rgba(255, 255, 255, 0.95);
+    color: #333;
     text-decoration: none;
+    letter-spacing: 0.3px;
 
-    border-radius: 18px;
+    border-radius: 99px;
+    border: 1px solid #eaeaea;
+    background-color: #fff;
 
-    /* 渐变背景 */
-    background: linear-gradient(135deg,
-            rgba(94, 231, 223, 0.9),
-            rgba(180, 144, 202, 0.9));
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
-    background-size: 200% 200%;
-
-    /* Glass 质感 */
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-
-    /* 多层阴影增强立体 */
-    box-shadow:
-        inset 0 1px 1px rgba(255, 255, 255, 0.4),
-        inset 0 -1px 2px rgba(0, 0, 0, 0.05),
-        0 6px 18px rgba(0, 0, 0, 0.08);
-
-    transition: all 0.25s ease;
-    overflow: visible;
-    /* 🔥 允许数字溢出 */
+    /* 🔥 关键：允许内容撑开，但不强制等宽 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Hover 动效 */
+/* Hover 动效：反色填充 */
 .terms-tags li a:hover {
-    transform: translateY(-4px) scale(1.05);
-
-    box-shadow:
-        inset 0 1px 1px rgba(255, 255, 255, 0.5),
-        0 14px 30px rgba(0, 0, 0, 0.18);
-
-    background-position: 100% 0%;
+    background-color: #222;
+    border-color: #222;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
 }
-
-/* 光泽滑动效果 */
-.terms-tags li a::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -120%;
-    width: 60%;
-    height: 100%;
-
-    background: linear-gradient(120deg,
-            rgba(255, 255, 255, 0.4),
-            rgba(255, 255, 255, 0));
-
-    transform: skewX(-20deg);
-    transition: 0.6s;
-    pointer-events: none;
-}
-
-.terms-tags li a:hover::after {
-    left: 150%;
-}
-
 
 /* ==========================================
-   右上角数量气泡（支持2位数/3位数）
+   数量角标优化 (Badge Style)
 ========================================== */
 
 .terms-tags li a sup {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    transform: translate(45%, -45%);
-
-    display: flex;
+    position: static;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    min-width: 24px;
-    /* 🔥 2位数刚好 */
-    height: 24px;
-    padding: 0 8px;
-    /* 🔥 3位数也能撑开 */
+    margin-left: 6px;
 
-    background: rgba(255, 255, 255, 0.95);
-    color: #333;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 5px;
 
-    font-size: 12px;
+    font-size: 0.7rem;
     font-weight: 600;
     line-height: 1;
+    color: #999;
 
-    white-space: nowrap;
-    /* 永远不换行 */
-    border-radius: 999px;
+    background-color: #f5f5f5;
+    border-radius: 99px;
 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-
-    z-index: 2;
+    transition: all 0.3s ease;
 }
 
+/* Hover 时角标也跟随反色 */
+.terms-tags li a:hover sup {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
 
 /* ==========================================
-   响应式优化
+   响应式适配
 ========================================== */
 
-@media (max-width: 900px) {
-
+@media (max-width: 768px) {
     .terms-tags {
-        gap: 12px;
+        gap: 6px;
     }
 
     .terms-tags li a {
-        padding: 8px 16px;
-        font-size: 0.85rem;
-        border-radius: 14px;
+        padding: 5px 12px;
+        font-size: 0.8rem;
+        min-width: 45px;
     }
 
     .terms-tags li a sup {
-        min-width: 20px;
-        height: 20px;
-        font-size: 10px;
-        padding: 0 6px;
+        min-width: 14px;
+        height: 14px;
+        font-size: 0.65rem;
+        margin-left: 4px;
+        padding: 0 4px;
     }
 }
