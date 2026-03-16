@@ -7,7 +7,7 @@ description = "使用docker部署hugo，部署到云服务器"
 summary = "使用docker部署hugo，部署到云服务器"         
 categories = ["📒博客部署"]                                      
 tags = ["hugo"]    
-comments = true                                              
+comments = true                                           
 +++
 # **一、准备 SSH 密钥**
 
@@ -1169,5 +1169,12 @@ git rm -f themes/PaperMod-PE
 
 # 3. 删除 .git/modules 中残留的配置 (如果存在)
 Remove-Item -Recurse -Force .git/modules/themes/PaperMod-PE -ErrorAction SilentlyContinue
+```
+
+# 添加文章版权声明
+
+参考 [PaperMod 添加文章版权声明 | Tofuwine's Blog](https://tofuwine.github.io/posts/18b224b5/)
+
+```shell
 ```
 

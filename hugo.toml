@@ -45,6 +45,10 @@ enableGitInfo = true
   comments = true                         #启用评论
   ShowAllPagesInArchive = true          # 文章归档显示
   defaultTheme = "auto"               # 自动适配系统暗黑模式。
+  # copyright
+  enableCopyright = true
+  licenseLink = "https://creativecommons.org/licenses/by-nc/4.0/"
+  licenseName = "CC BY-NC 4.0"
   
 
   # Fuse.js 搜索选项

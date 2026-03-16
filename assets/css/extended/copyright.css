@@ -1,0 +1,21 @@
+.pe-copyright {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.pe-copyright hr {
+    border-style: dashed;
+    color: #e26c56;
+}
+
+.pe-copyright blockquote {
+    margin: 10px 0;
+    padding: 0 10px;
+    border-inline-start: 3px solid #e26c56;
+}
+
+.pe-copyright a {
+    box-shadow: 0 1px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
