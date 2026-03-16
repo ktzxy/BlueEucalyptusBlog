@@ -53,10 +53,10 @@ enableGitInfo = true
     shouldSort = true
     location = 0
     distance = 1000
-    threshold = 0.4
-    minMatchCharLength = 1
+    threshold = 0.4  # 0.0 意味着完全精确匹配
+    minMatchCharLength = 2 # 原为 1，避免单字搜索刷屏
     includeMatches = true
-    keys = ["title", "permalink", "summary", "content"]
+    keys = ["title", "tags", "summary"]
   
   [params.cover]
     hidden = true          # 默认隐藏

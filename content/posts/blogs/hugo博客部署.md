@@ -256,7 +256,7 @@ https://your-domain.com
 
 # hugo配置
 
-hugo.toml
+## hugo.toml
 
 ```shell
 baseURL = 'https://ktzxy.top/'
@@ -314,10 +314,10 @@ enableGitInfo = true
     shouldSort = true
     location = 0
     distance = 1000
-    threshold = 0.4
-    minMatchCharLength = 1
+    threshold = 0.4  # 0.0 意味着完全精确匹配
+    minMatchCharLength = 2 # 原为 1，避免单字搜索刷屏
     includeMatches = true
-    keys = ["title", "permalink", "summary", "content"]
+    keys = ["title", "tags", "summary"]
   
   [params.cover]
     hidden = true          # 默认隐藏
@@ -399,31 +399,251 @@ enableGitInfo = true
   minifyOutput = true
 ```
 
+## 搜索
+
 myblog\content\search.md
 
 ```shell
 +++
-date = '2026-02-28T11:36:38+08:00'
 draft = false
 layout = "search"
 title = 'Search'
 summary = "search"
 placeholder = "Search posts..."
+type = "page"
 +++
 
 ```
+
+```shell
+  # Fuse.js 搜索选项
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4  # 0.0 意味着完全精确匹配
+    minMatchCharLength = 2 # 原为 1，避免单字搜索刷屏
+    includeMatches = true
+    keys = ["title", "tags", "summary"]
+```
+
+## 归档
 
 myblog\content\archives.md
 
 ```shell
 +++
-date = '2026-03-02T17:11:30+08:00'
 draft = false
 title = 'Archives'
 layout = "archives"
 url = "/archives/"
+type = "page"
 +++
+
 ```
+
+```shell
+/* ==========================================
+   Hugo「留白诗行」归档样式
+   风格：侘寂 · 诗意 · 静谧高贵
+========================================== */
+
+.archive {
+    position: relative;
+    max-width: 800px;
+    /* 控制宽度，避免过宽失去聚焦感 */
+    margin: 0 auto;
+    padding: 80px 40px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #222;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   年份标题 - 如画卷开篇
+========================================== */
+.archive-year-header {
+    position: relative;
+    display: inline-block;
+    margin: 60px 0 40px 0;
+
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #111;
+}
+
+/* 年份旁的小计数 */
+.archive-year-header span {
+    font-size: 0.9rem;
+    color: #999;
+    font-weight: 400;
+    margin-left: 8px;
+    vertical-align: super;
+    /* 上标效果 */
+    opacity: 0.7;
+}
+
+/* ==========================================
+   月份标题 - 如章节分隔
+========================================== */
+.archive-month-header {
+    position: relative;
+    display: inline-block;
+    margin: 40px 0 20px 0;
+
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* 月份旁的小计数 */
+.archive-month-header span {
+    font-size: 0.8rem;
+    color: #aaa;
+    font-weight: 400;
+    margin-left: 6px;
+    vertical-align: super;
+    opacity: 0.6;
+}
+
+/* ==========================================
+   文章列表 - 诗行式排列
+========================================== */
+.archive-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    /* 增大间距，营造呼吸感 */
+    margin-bottom: 60px;
+}
+
+.archive-entry {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    padding: 16px 0;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    /* 初始状态：轻微透明，营造“未展开”的静谧感 */
+    opacity: 0.9;
+}
+
+/* Hover 效果：完全显现 + 微移 + 墨迹晕染 */
+.archive-entry:hover {
+    opacity: 1;
+    transform: translateX(-4px);
+    /* 向左微移，靠近年份/月份 */
+}
+
+/* ==========================================
+   标题部分 - 如诗句主体
+========================================== */
+.archive-entry-link {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #222;
+    text-decoration: none;
+    line-height: 1.4;
+
+    /* 关键：禁止换行，超长省略 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    transition: color 0.2s ease;
+}
+
+.archive-entry:hover .archive-entry-link {
+    color: #000;
+}
+
+/* ==========================================
+   元信息部分 - 如题跋小字
+========================================== */
+.archive-entry-meta {
+    font-size: 0.8rem;
+    color: #999;
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: 0.3px;
+}
+
+/* ==========================================
+   「墨迹晕染」Hover 特效（可选）
+   使用伪元素模拟毛笔蘸水扩散
+========================================== */
+.archive-entry::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(100, 100, 100, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translateY(-50%) scale(0);
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.archive-entry:hover::before {
+    width: 200px;
+    height: 200px;
+    transform: translateY(-50%) scale(1);
+}
+
+/* ==========================================
+   响应式优化
+========================================== */
+
+@media (max-width: 768px) {
+    .archive {
+        padding: 40px 20px;
+    }
+
+    .archive-year-header {
+        font-size: 1.8rem;
+        margin: 40px 0 30px 0;
+    }
+
+    .archive-month-header {
+        font-size: 1.2rem;
+        margin: 30px 0 15px 0;
+    }
+
+    .archive-posts {
+        gap: 20px;
+    }
+
+    .archive-entry-link {
+        font-size: 1rem;
+        white-space: normal;
+        /* 手机端允许换行 */
+        overflow: visible;
+        text-overflow: clip;
+    }
+
+    .archive-entry-meta {
+        font-size: 0.75rem;
+    }
+
+    .archive-entry:hover {
+        transform: none;
+    }
+
+    .archive-entry::before {
+        display: none;
+        /* 移动端关闭晕染特效 */
+    }
+}
+```
+
+## 标签
 
 myblog\assets\css\extended\tags.css
 
@@ -431,166 +651,131 @@ css样式必须放在该路径下，自动加载不用引入
 
 ```shell
 /* ==========================================
-   Hugo 高级标签样式（Glass + 微动 + 数字优化）
+   Hugo 极简意境标签样式 - 紧凑版 (Compact & Zen)
+   风格参考：PaperMod / 现代杂志风 + 智能填充
 ========================================== */
 
 /* 标签容器 */
 .terms-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 8px;
+    /* 缩小间距，更紧凑 */
     margin-top: 24px;
     padding: 0;
     list-style: none;
+
+    /* 关键：允许子项自由伸缩，自动填充满行 */
+    justify-content: flex-start;
 }
 
-/* 单个标签 */
+/* 单个标签项 */
 .terms-tags li {
     margin: 0;
+    /* 不允许换行中断，由父容器控制 */
 }
 
-/* 标签主体 */
+/* 标签主体链接 */
 .terms-tags li a {
     position: relative;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
 
-    padding: 10px 22px;
-    min-width: 80px;
+    /* 核心改动：动态宽度 + 最小限制 */
+    padding: 6px 14px;
+    min-width: 50px;
+    /* 防止过窄 */
+    max-width: 100%;
+    /* 防止溢出 */
 
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-
-    color: rgba(255, 255, 255, 0.95);
+    color: #333;
     text-decoration: none;
+    letter-spacing: 0.3px;
 
-    border-radius: 18px;
+    border-radius: 99px;
+    border: 1px solid #eaeaea;
+    background-color: #fff;
 
-    /* 渐变背景 */
-    background: linear-gradient(135deg,
-            rgba(94, 231, 223, 0.9),
-            rgba(180, 144, 202, 0.9));
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
-    background-size: 200% 200%;
-
-    /* Glass 质感 */
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-
-    /* 多层阴影增强立体 */
-    box-shadow:
-        inset 0 1px 1px rgba(255, 255, 255, 0.4),
-        inset 0 -1px 2px rgba(0, 0, 0, 0.05),
-        0 6px 18px rgba(0, 0, 0, 0.08);
-
-    transition: all 0.25s ease;
-    overflow: visible;
-    /* 🔥 允许数字溢出 */
+    /* 🔥 关键：允许内容撑开，但不强制等宽 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Hover 动效 */
+/* Hover 动效：反色填充 */
 .terms-tags li a:hover {
-    transform: translateY(-4px) scale(1.05);
-
-    box-shadow:
-        inset 0 1px 1px rgba(255, 255, 255, 0.5),
-        0 14px 30px rgba(0, 0, 0, 0.18);
-
-    background-position: 100% 0%;
+    background-color: #222;
+    border-color: #222;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
 }
-
-/* 光泽滑动效果 */
-.terms-tags li a::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -120%;
-    width: 60%;
-    height: 100%;
-
-    background: linear-gradient(120deg,
-            rgba(255, 255, 255, 0.4),
-            rgba(255, 255, 255, 0));
-
-    transform: skewX(-20deg);
-    transition: 0.6s;
-    pointer-events: none;
-}
-
-.terms-tags li a:hover::after {
-    left: 150%;
-}
-
 
 /* ==========================================
-   右上角数量气泡（支持2位数/3位数）
+   数量角标优化 (Badge Style)
 ========================================== */
 
 .terms-tags li a sup {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    transform: translate(45%, -45%);
-
-    display: flex;
+    position: static;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    min-width: 24px;
-    /* 🔥 2位数刚好 */
-    height: 24px;
-    padding: 0 8px;
-    /* 🔥 3位数也能撑开 */
+    margin-left: 6px;
 
-    background: rgba(255, 255, 255, 0.95);
-    color: #333;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 5px;
 
-    font-size: 12px;
+    font-size: 0.7rem;
     font-weight: 600;
     line-height: 1;
+    color: #999;
 
-    white-space: nowrap;
-    /* 永远不换行 */
-    border-radius: 999px;
+    background-color: #f5f5f5;
+    border-radius: 99px;
 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-
-    z-index: 2;
+    transition: all 0.3s ease;
 }
 
+/* Hover 时角标也跟随反色 */
+.terms-tags li a:hover sup {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
 
 /* ==========================================
-   响应式优化
+   响应式适配
 ========================================== */
 
-@media (max-width: 900px) {
-
+@media (max-width: 768px) {
     .terms-tags {
-        gap: 12px;
+        gap: 6px;
     }
 
     .terms-tags li a {
-        padding: 8px 16px;
-        font-size: 0.85rem;
-        border-radius: 14px;
+        padding: 5px 12px;
+        font-size: 0.8rem;
+        min-width: 45px;
     }
 
     .terms-tags li a sup {
-        min-width: 20px;
-        height: 20px;
-        font-size: 10px;
-        padding: 0 6px;
+        min-width: 14px;
+        height: 14px;
+        font-size: 0.65rem;
+        margin-left: 4px;
+        padding: 0 4px;
     }
 }
 ```
 
-myblog\assets\css\extended\homepage.css
+## 首页
 
-首页样式
+myblog\assets\css\extended\homepage.css
 
 ```shell
 /* =========================
@@ -708,158 +893,12 @@ body.list {
 }
 ```
 
-myblog\assets\css\extended\archive.css
-
-归档样式
-
-```shell
-/* ===================================== */
-/*        Apple 风高级时间轴             */
-/* ===================================== */
-
-.archive {
-    position: relative;
-    max-width: 920px;
-    margin: 0 auto;
-    padding: 120px 0;
-}
-
-/* 中心时间线 */
-.archive::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, #5ee7df, #b490ca);
-    border-radius: 2px;
-    transform: translateX(-50%);
-}
-
-/* ===== 年份 ===== */
-.archive-year-header {
-    position: relative;
-    text-align: center;
-    margin: 140px 0 100px 0;
-    font-size: 2.2rem;
-    font-weight: 500;
-    letter-spacing: 4px;
-    opacity: 0.9;
-    color: #333;
-}
-
-/* 年份圆点 */
-.archive-year-header::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: -40px;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #5ee7df, #b490ca);
-    box-shadow: 0 0 10px rgba(94, 231, 223, 0.4), 0 0 10px rgba(180, 144, 202, 0.4);
-    transform: translateX(-50%);
-}
-
-/* 隐藏月份层级 */
-.archive-month-header {
-    display: none;
-}
-
-/* ===== 文章布局 ===== */
-.archive-entry {
-    position: relative;
-    width: 50%;
-    padding: 20px 40px;
-    box-sizing: border-box;
-    transition: all 0.35s cubic-bezier(.4, 0, .2, 1);
-}
-
-/* 左侧 */
-.archive-entry:nth-of-type(odd) {
-    left: 0;
-    text-align: right;
-}
-
-/* 右侧 */
-.archive-entry:nth-of-type(even) {
-    left: 50%;
-    text-align: left;
-}
-
-/* 中心小节点（渐变 + 微光） */
-.archive-entry::before {
-    content: "";
-    position: absolute;
-    top: 30px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #5ee7df, #b490ca);
-    box-shadow: 0 0 8px rgba(94, 231, 223, 0.4), 0 0 8px rgba(180, 144, 202, 0.4);
-    transition: all 0.35s ease;
-}
-
-/* 左节点位置 */
-.archive-entry:nth-of-type(odd)::before {
-    right: -5px;
-}
-
-/* 右节点位置 */
-.archive-entry:nth-of-type(even)::before {
-    left: -5px;
-}
-
-/* 日期 */
-.archive-entry-link time {
-    display: block;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    opacity: 0.5;
-    margin-bottom: 10px;
-}
-
-/* 标题 */
-.archive-entry-link {
-    font-size: 1.05rem;
-    font-weight: 400;
-    transition: all 0.35s ease;
-    color: #222;
-    /* 确保可读 */
-}
-
-/* ===== Apple 式 Hover 微动 ===== */
-
-/* 左侧向时间线靠近 */
-.archive-entry:nth-of-type(odd):hover {
-    transform: translateX(12px);
-}
-
-/* 右侧向时间线靠近 */
-.archive-entry:nth-of-type(even):hover {
-    transform: translateX(-12px);
-}
-
-/* Hover 节点微放大、高光 */
-.archive-entry:hover::before {
-    transform: scale(1.5);
-    box-shadow: 0 0 15px rgba(94, 231, 223, 0.6), 0 0 15px rgba(180, 144, 202, 0.6);
-}
-
-/* Hover 标题文字高亮 */
-.archive-entry:hover .archive-entry-link {
-    opacity: 1;
-    color: #5ee7df;
-}
-```
+## 关于我
 
 myblog\content\about.md
 
 ```shell
 +++
-date = '2026-02-28T11:36:46+08:00'
 draft = false
 title = 'About'
 description = "技术为术，道在其外；笃行不怠，静水深流。"
@@ -1117,5 +1156,18 @@ myblog\assets\css\extended\comments.css
 .post-content+.giscus {
     margin-top: 80px;
 }
+```
+
+# 卸载主题
+
+```shell
+# 1. 从 .gitmodules 文件中移除记录
+git submodule deinit -f themes/PaperMod-PE
+
+# 2. 从 Git 缓存中移除该模块
+git rm -f themes/PaperMod-PE
+
+# 3. 删除 .git/modules 中残留的配置 (如果存在)
+Remove-Item -Recurse -Force .git/modules/themes/PaperMod-PE -ErrorAction SilentlyContinue
 ```
 

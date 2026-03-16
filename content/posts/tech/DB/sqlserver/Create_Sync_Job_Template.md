@@ -180,3 +180,131 @@ EndRoutine:
 GO
 ```
 
+# 作业清理某表日志
+
+```shell
+/*
+===============================================================================
+脚本功能：创建 SQL Server Agent 作业，自动清理 wtps_middledb..sync_log 的历史日志
+清理策略：保留最近 7 天数据，每天凌晨 02:00 执行
+===============================================================================
+*/
+
+USE msdb;
+GO
+
+-- ================= 配置区域 (请在此处修改) =================
+DECLARE @dbName       NVARCHAR(128) = N'wtps_middledb';
+DECLARE @tableName    NVARCHAR(128) = N'sync_log';
+-- 【重要】请将 'log_time' 修改为你表中真实的时间字段名！
+DECLARE @timeColumn   NVARCHAR(128) = N'end_time'; 
+DECLARE @retainDays   INT           = 7; -- 保留天数
+DECLARE @jobName      NVARCHAR(128) = N'Job_Cleanup_SyncLog';
+DECLARE @scheduleName NVARCHAR(128) = N'Schedule_3Daily_2AM';
+-- ===========================================================
+
+BEGIN TRY
+	DECLARE @jobDescription NVARCHAR(512);
+	SET @jobDescription = N'自动清理 ' + @dbName + '.' + @tableName + N' 中 ' + CAST(@retainDays AS NVARCHAR(10)) + N' 天前的日志';
+    
+	-- 1. 如果作业已存在，先删除以避免冲突
+    IF EXISTS (SELECT 1 FROM msdb.dbo.sysjobs WHERE name = @jobName)
+    BEGIN
+        EXEC msdb.dbo.sp_delete_job @job_name = @jobName;
+        PRINT N'✓ 已删除存在的旧作业：' + @jobName;
+    END
+
+    -- 2. 创建新作业
+    DECLARE @jobId UNIQUEIDENTIFIER;
+    EXEC msdb.dbo.sp_add_job
+        @job_name = @jobName,
+        @enabled = 1,
+        @description = @jobDescription,
+        @start_step_id = 1,
+        @job_id = @jobId OUTPUT;
+    
+    PRINT N'✓ 作业创建成功：' + @jobName;
+
+    -- 3. 构建删除逻辑的 T-SQL 命令
+    DECLARE @sqlCommand NVARCHAR(MAX);
+    SET @sqlCommand = N'
+USE [' + @dbName + N'];
+SET NOCOUNT ON;
+
+DECLARE @CutoffDate DATETIME = DATEADD(DAY, -' + CAST(@retainDays AS NVARCHAR) + N', GETDATE());
+DECLARE @DeletedCount INT = 0;
+
+-- 执行删除
+DELETE FROM [' + @tableName + N']
+WHERE [' + @timeColumn + N'] < @CutoffDate;
+
+SET @DeletedCount = @@ROWCOUNT;
+
+-- 输出信息到作业历史日志
+PRINT N''[清理完成] 表：' + @tableName + N' | 截止期限：'' + CONVERT(NVARCHAR(19), @CutoffDate, 120) + N'' | 删除行数：'' + CAST(@DeletedCount AS NVARCHAR(20));
+';
+
+    -- 4. 添加作业步骤
+    EXEC msdb.dbo.sp_add_jobstep
+        @job_id = @jobId,
+        @step_name = N'Delete Old Logs Step',
+        @subsystem = N'TSQL',
+        @command = @sqlCommand,
+        @database_name = @dbName,
+        @on_fail_action = 2; -- 失败时停止并报告
+
+    PRINT N'✓ 作业步骤已配置';
+
+    -- 5. 创建调度计划 (每天 02:00:00)
+    -- 如果计划已存在则复用，否则创建
+    DECLARE @scheduleId INT;
+    
+    IF EXISTS (SELECT 1 FROM msdb.dbo.sysschedules WHERE name = @scheduleName)
+    BEGIN
+        SELECT @scheduleId = schedule_id FROM msdb.dbo.sysschedules WHERE name = @scheduleName;
+    END
+    ELSE
+    BEGIN
+        EXEC msdb.dbo.sp_add_schedule
+            @schedule_name = @scheduleName,
+            @freq_type = 4,      -- 每天
+            @freq_interval = 3,  -- 每隔 3 天
+            @active_start_time = 20000, -- 02:00:00 (HHMMSS)
+            @schedule_id = @scheduleId OUTPUT;
+    END
+
+    -- 6. 关联作业与计划
+    EXEC msdb.dbo.sp_attach_schedule
+        @job_id = @jobId,
+        @schedule_id = @scheduleId;
+
+    -- 7. 关联作业到当前服务器
+    EXEC msdb.dbo.sp_add_jobserver
+        @job_id = @jobId,
+        @server_name = @@SERVERNAME;
+
+    PRINT N'========================================';
+    PRINT N'🎉 作业部署成功！';
+    PRINT N'作业名称：' + @jobName;
+    PRINT N'目标对象：' + @dbName + '..' + @tableName;
+    PRINT N'时间字段：' + @timeColumn;
+    PRINT N'保留策略：最近 ' + CAST(@retainDays AS NVARCHAR) + N' 天';
+    PRINT N'执行频率：每天凌晨 02:00';
+    PRINT N'========================================';
+    PRINT N'⚠️ 下一步操作建议：';
+    PRINT N'请确保字段 [' + @timeColumn + N'] 上有索引，否则删除大量数据时会锁表！';
+    PRINT N'执行以下 SQL 创建索引（如果尚未存在）：';
+    PRINT N'CREATE INDEX IX_' + @tableName + '_Time ON ' + @dbName + '.dbo.' + @tableName + '(' + @timeColumn + ');';
+    PRINT N'========================================';
+
+END TRY
+BEGIN CATCH
+    PRINT N'❌ 发生错误：' + ERROR_MESSAGE();
+    PRINT N'错误号：' + CAST(ERROR_NUMBER() AS NVARCHAR);
+    -- 如果出错，尝试回滚可能创建的半成品的作业
+    IF EXISTS (SELECT 1 FROM msdb.dbo.sysjobs WHERE name = @jobName)
+        EXEC msdb.dbo.sp_delete_job @job_name = @jobName;
+END CATCH
+GO
+```
+

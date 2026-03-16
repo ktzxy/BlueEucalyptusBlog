@@ -1,10 +1,11 @@
 +++
-date = '2026-02-28T11:36:46+08:00'
 draft = false
 title = 'About'
 description = "技术为术，道在其外；笃行不怠，静水深流。"
 layout = "about"
 showToc = false
+type = "page"
+hidemeta = true
 +++
 ## 👤 个人简介
 
