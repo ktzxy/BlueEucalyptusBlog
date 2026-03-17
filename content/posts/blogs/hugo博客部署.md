@@ -1175,6 +1175,146 @@ Remove-Item -Recurse -Force .git/modules/themes/PaperMod-PE -ErrorAction Silentl
 
 参考 [PaperMod 添加文章版权声明 | Tofuwine's Blog](https://tofuwine.github.io/posts/18b224b5/)
 
+创建 `copyright.html` 文件：
+
+myblog\layouts\partials\copyright.html
+
 ```shell
+<div class="pe-copyright">
+    <hr>
+    <blockquote>
+    {{ if .Param "reposted" }}
+        <p>本文为转载内容，原文信息如下：</p>
+        <p>原文标题：{{- .Param "repostedTitle" -}}</p>
+        <p>原文作者：{{- .Param "repostedAuthor" -}}</p>
+        <p>原文链接：<a href="{{- .Param "repostedLink" -}}" target="_blank">{{- .Param "repostedLink" -}}</a></p>
+        <p>如有侵权，请<a href="mailto://{{ .Param "contactEmail" }}">联系作者</a>删除。</p>
+    {{ else }}
+        <p>本文为原创内容，版权归作者所有。如需转载，请在文章中声明本文标题及链接。</p>
+        <p>文章标题：{{ .Title }} —— {{ .Param "author" }}</p>
+        <p>文章链接：<a href="{{ .Permalink }}" target="_blank">{{ .Permalink }}</a></p>
+        <p>许可协议：<a href="{{- .Param "licenseLink" -}}" target="_blank">{{- .Param "licenseName" -}}</a></p>
+    {{ end }}
+    </blockquote>
+</div>
 ```
 
+`copyright.css` 文件：
+
+myblog\assets\css\extended\copyright.css
+
+```shell
+.pe-copyright {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.pe-copyright hr {
+    border-style: dashed;
+    color: #e26c56;
+}
+
+.pe-copyright blockquote {
+    margin: 10px 0;
+    padding: 0 10px;
+    border-inline-start: 3px solid #e26c56;
+}
+
+.pe-copyright a {
+    box-shadow: 0 1px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+```
+
+在 `footer` 节点上添加如下内容：
+
+这里我是将主题single.html copy一份到myblog\layouts\_default\single.html
+
+```shell
+{{- define "main" }}
+
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title entry-hint-parent">
+      {{ .Title }} {{- if .Draft }}
+      <span class="entry-hint" title="Draft">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="35"
+          viewBox="0 -960 960 960"
+          fill="currentColor"
+        >
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"
+          />
+        </svg>
+      </span>
+      {{- end }}
+    </h1>
+    {{- if .Description }}
+    <div class="post-description">{{ .Description }}</div>
+    {{- end }} {{- if not (.Param "hideMeta") }}
+    <div class="post-meta">
+      {{- partial "post_meta.html" . -}} {{- partial "translation_list.html" .
+      -}} {{- partial "edit_post.html" . -}} {{- partial "post_canonical.html" .
+      -}}
+    </div>
+    {{- end }}
+  </header>
+  {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param
+  "cover.hidden") | default false }} {{- partial "cover.html" (dict "cxt" .
+  "IsSingle" true "isHidden" $isHidden) }} {{- if (.Param "ShowToc") }} {{-
+  partial "toc.html" . }} {{- end }} {{- if .Content }}
+  <div class="post-content">
+    {{- if not (.Param "disableAnchoredHeadings") }} {{- partial
+    "anchored_headings.html" .Content -}} {{- else }}{{ .Content }}{{ end }}
+  </div>
+  {{- end }}
+
+  <!-- Copyright -->
+  {{ if .Param "enableCopyright" }} {{ partial "copyright.html" . }} {{ end }}
+
+  <footer class="post-footer">
+    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+    <ul class="post-tags">
+      {{- range ($.GetTerms $tags) }}
+      <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+      {{- end }}
+    </ul>
+    {{- if (.Param "ShowPostNavLinks") }} {{- partial "post_nav_links.html" . }}
+    {{- end }} {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare
+    true)) }} {{- partial "share_icons.html" . -}} {{- end }}
+  </footer>
+
+  {{- if (.Param "comments") }} {{- partial "comments.html" . }} {{- end }}
+</article>
+
+{{- end }}{{/* end main */}}
+
+```
+
+hugo.toml配置
+
+```shell
+[params]
+ # copyright
+  enableCopyright = true
+  licenseLink = "https://creativecommons.org/licenses/by-nc/4.0/"
+  licenseName = "CC BY-NC 4.0"
+```
+
+转载文章
+
+```shell
++++
+reposted: true
+repostedTitle: "修改为原文章标题"
+repostedAuthor: "修改为原文章作者名"
+repostedLink: "修改为原文章链接"
+contactEmail: your email
++++
+```
+
+# 添加赞赏

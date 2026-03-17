@@ -49,6 +49,16 @@ enableGitInfo = true
   enableCopyright = true
   licenseLink = "https://creativecommons.org/licenses/by-nc/4.0/"
   licenseName = "CC BY-NC 4.0"
+  # 启用赞赏功能
+  enableReward = true
+  # 赞赏按钮显示字符 (可在文章 `frontmatter` 中设置)，默认为赞赏图标
+  # rewardButton = 赞赏
+  # 赞赏描述 (可在文章 `frontmatter` 中设置)
+  rewardDescription = "如果本文对你有所帮助，可以点击上方按钮请作者喝杯咖啡！"
+  # 设置微信收款码图片 (路径相对于博客工程的 static 目录。如下文件在 `static/images/wechat_pay.jpg`)
+  WechatPay = "images/wechat_pay.webp"
+  # 设置支付宝收款码图片 (路径相对于博客工程的 static 目录。如下文件在 `static/images/alipay.jpg`)
+  Alipay = "images/alipay.webp"
   
 
   # Fuse.js 搜索选项
