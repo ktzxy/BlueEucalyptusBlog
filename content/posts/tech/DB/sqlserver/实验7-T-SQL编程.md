@@ -7,6 +7,8 @@ description = "实验7 T SQL编程"
 categories = ["📒数据库"]
 tags = ["sqlserver","sql编程"]
 summary = "实验7 T SQL编程"
+series = ["数据库实验系列"]
+showSeries= true  
 +++
 
 ﻿### 在超市管理数据库SuperMarket的基础上进行实验。

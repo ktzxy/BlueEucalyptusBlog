@@ -7,6 +7,8 @@ description = "17 Kubernetes集群资源监控"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "17 Kubernetes集群资源监控"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes集群资源监控
 

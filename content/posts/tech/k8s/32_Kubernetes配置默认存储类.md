@@ -7,6 +7,8 @@ description = "32 Kubernetes配置默认存储类"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "32 Kubernetes配置默认存储类"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes配置默认存储类
 

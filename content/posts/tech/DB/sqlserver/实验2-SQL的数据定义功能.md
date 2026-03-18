@@ -7,6 +7,8 @@ description = "实验2 SQL的数据定义功能"
 categories = ["📒数据库"]
 tags = ["sqlserver"]
 summary = "实验2 SQL的数据定义功能"
+series = ["数据库实验系列"]
+showSeries= true  
 +++
 
 ﻿### 1、使用SQL Server Management Studio管理平台完成教材例3-7、例3-8、例3-9、例3-10和例3-11，分别为supermarket数据库创建学生表、商品表、商品种类表、供应商表和销售表。

@@ -7,6 +7,8 @@ description = "11 Kubernetes控制器Controller详解"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "11 Kubernetes控制器Controller详解"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes控制器Controller详解
 

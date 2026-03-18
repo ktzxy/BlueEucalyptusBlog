@@ -7,6 +7,8 @@ description = "50 使用Rancher搭建Kubernetes集群"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "50 使用Rancher搭建Kubernetes集群"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # 使用Rancher2.0搭建Kubernetes集群
 

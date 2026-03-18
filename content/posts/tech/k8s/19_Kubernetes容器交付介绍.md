@@ -7,6 +7,8 @@ description = "19 Kubernetes容器交付介绍"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "19 Kubernetes容器交付介绍"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes容器交付介绍
 

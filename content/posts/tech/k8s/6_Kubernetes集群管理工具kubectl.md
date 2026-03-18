@@ -7,6 +7,8 @@ description = "6 Kubernetes集群管理工具kubectl"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "6 Kubernetes集群管理工具kubectl"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes集群管理工具kubectl
 

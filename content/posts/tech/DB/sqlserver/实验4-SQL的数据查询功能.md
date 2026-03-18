@@ -7,6 +7,8 @@ description = "实验4 SQL的数据查询功能"
 categories = ["📒数据库"]
 tags = ["sqlserver"]
 summary = "实验4 SQL的数据查询功能"
+series = ["数据库实验系列"]
+showSeries= true  
 +++
 
 ﻿### 1、使用SQL Server Management Studio管理平台，为supermarket数据库添加如教材P53页图3-4~图3-8所示的示例数据。

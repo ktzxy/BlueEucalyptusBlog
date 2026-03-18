@@ -7,6 +7,8 @@ description = "14 Kubernetes核心技术Ingress"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "14 Kubernetes核心技术Ingress"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes核心技术Ingress
 

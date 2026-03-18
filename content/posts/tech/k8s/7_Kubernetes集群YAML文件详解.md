@@ -7,6 +7,8 @@ description = "7 Kubernetes集群YAML文件详解"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "7 Kubernetes集群YAML文件详解"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes集群YAML文件详解
 

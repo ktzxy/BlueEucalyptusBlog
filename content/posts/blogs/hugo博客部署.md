@@ -1721,7 +1721,7 @@ myblog\assets\css\extended\reward.css
   Alipay = "images/alipay.webp"
 ```
 
-# PaperMod 文章页展示所属系列的文章列表
+# 文章页展示所属系列的文章列表
 
 [PaperMod 文章页展示所属系列的文章列表 | loyayz](https://loyayz.com/website/220612-hugo-papermodx-series-in-post-page/)
 

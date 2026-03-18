@@ -7,6 +7,8 @@ description = "MySQL 性能优化"
 categories = ["📒数据库"]
 tags = ["mysql"]
 summary = "MySQL 性能优化"
+series = ["MySql数据库学习系列"]
+showSeries= true  
 +++
 ## 1. 性能优化总论
 

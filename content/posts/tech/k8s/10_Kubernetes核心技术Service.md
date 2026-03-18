@@ -7,6 +7,8 @@ description = "10 Kubernetes核心技术Service"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "10 Kubernetes核心技术Service"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes核心技术Service
 

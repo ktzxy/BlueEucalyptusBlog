@@ -7,6 +7,8 @@ description = "MySQL 进阶"
 categories = ["📒数据库"]
 tags = ["mysql"]
 summary = "MySQL 进阶"
+series = ["MySql数据库学习系列"]
+showSeries= true  
 +++
 ## 1. MySQL 的视图
 

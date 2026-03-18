@@ -7,6 +7,8 @@ description = "5 Kubeadm和二进制方式对比"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "5 Kubeadm和二进制方式对比"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubeadm和二进制方式对比
 

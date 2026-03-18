@@ -7,6 +7,8 @@ description = "53 Helm入门"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "53 Helm入门"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Heml应用包管理器
 

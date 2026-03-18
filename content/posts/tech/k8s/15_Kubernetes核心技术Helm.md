@@ -7,6 +7,8 @@ description = "15 Kubernetes核心技术Helm"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "15 Kubernetes核心技术Helm"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes核心技术Helm
 

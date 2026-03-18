@@ -7,6 +7,8 @@ description = "16 Kubernetes持久化存储"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "16 Kubernetes持久化存储"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes持久化存储
 

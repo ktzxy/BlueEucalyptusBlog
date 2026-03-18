@@ -7,6 +7,8 @@ description = "31 Kubernetes可视化界面kubesphere"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "31 Kubernetes可视化界面kubesphere"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes可视化界面kubesphere
 

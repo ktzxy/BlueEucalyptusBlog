@@ -7,6 +7,8 @@ description = "MySQL 锁"
 categories = ["📒数据库"]
 tags = ["mysql"]
 summary = "MySQL 锁"
+series = ["MySql数据库学习系列"]
+showSeries= true  
 +++
 ## 1. MySQL 锁机制概述
 

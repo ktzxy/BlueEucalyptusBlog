@@ -7,6 +7,8 @@ description = "MySQL 开发规范"
 categories = ["📒数据库"]
 tags = ["mysql"]
 summary = "MySQL 开发规范"
+series = ["MySql数据库学习系列"]
+showSeries= true  
 +++
 ## 1. 标准 SQL 语言没有规范以下功能
 

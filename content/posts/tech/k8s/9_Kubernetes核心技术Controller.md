@@ -7,6 +7,8 @@ description = "9 Kubernetes核心技术Controller"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "9 Kubernetes核心技术Controller"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes核心技术-Controller
 

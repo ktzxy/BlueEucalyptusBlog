@@ -7,6 +7,8 @@ description = "52 Kubernetes中的CRI"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "52 Kubernetes中的CRI"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes中的CRI
 

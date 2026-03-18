@@ -7,6 +7,8 @@ description = "12 Kubernetes配置管理"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "12 Kubernetes配置管理"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes配置管理
 

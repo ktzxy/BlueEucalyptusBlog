@@ -7,6 +7,8 @@ description = "3 使用kubeadm方式搭建K8S集群"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "3 使用kubeadm方式搭建K8S集群"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # 使用kubeadm方式搭建K8S集群
 

@@ -7,6 +7,8 @@ description = "MySQL 索引"
 categories = ["📒数据库"]
 tags = ["mysql"]
 summary = "MySQL 索引"
+series = ["MySql数据库学习系列"]
+showSeries= true  
 +++
 ## 1. 索引概述
 

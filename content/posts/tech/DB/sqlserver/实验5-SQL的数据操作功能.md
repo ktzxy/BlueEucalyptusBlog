@@ -7,6 +7,8 @@ description = "实验5 SQL的数据操作功能"
 categories = ["📒数据库"]
 tags = ["sqlserver"]
 summary = "实验5 SQL的数据操作功能"
+series = ["数据库实验系列"]
+showSeries= true  
 +++
 
 ﻿### 1、完成教材例3-70~例3-76的操作。

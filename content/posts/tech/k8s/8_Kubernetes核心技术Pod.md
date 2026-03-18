@@ -7,6 +7,8 @@ description = "8 Kubernetes核心技术Pod"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "8 Kubernetes核心技术Pod"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes核心技术Pod
 

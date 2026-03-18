@@ -7,6 +7,8 @@ description = "13 Kubernetes集群安全机制"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "13 Kubernetes集群安全机制"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes集群安全机制
 

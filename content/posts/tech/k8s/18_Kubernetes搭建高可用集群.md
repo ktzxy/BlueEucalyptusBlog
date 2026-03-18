@@ -7,6 +7,8 @@ description = "18 Kubernetes搭建高可用集群"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "18 Kubernetes搭建高可用集群"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes搭建高可用集群
 

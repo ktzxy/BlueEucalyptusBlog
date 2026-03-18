@@ -7,6 +7,8 @@ description = "1 Kubernetes简介"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "1 Kubernetes简介"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # Kubernetes简介
 

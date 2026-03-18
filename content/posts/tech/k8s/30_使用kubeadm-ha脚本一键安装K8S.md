@@ -7,6 +7,8 @@ description = "30 使用kubeadm ha脚本一键安装K8S"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
 summary = "30 使用kubeadm ha脚本一键安装K8S"
+series = ["Kubernetes学习系列"]
+showSeries= true  
 +++
 # 使用kubeadm-ha脚本一键安装K8S
 

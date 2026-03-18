@@ -7,6 +7,8 @@ description = "MySQL SQL示例"
 categories = ["📒数据库"]
 tags = ["mysql"]
 summary = "MySQL SQL示例"
+series = ["MySql数据库学习系列"]
+showSeries= true  
 +++
 # MySQL 数据库 SQL 示例
 
