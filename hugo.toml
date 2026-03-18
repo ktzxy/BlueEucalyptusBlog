@@ -42,7 +42,8 @@ enableGitInfo = true
   ShowToc  = true                        # 页面显示目录
   TocOpen  = false                        # 目录默认折叠
   disableFingerprinting = false          #启用资源指纹识别
-  comments = true                         #启用评论
+  # 启用评论
+  comments = true                         
   ShowAllPagesInArchive = true          # 文章归档显示
   defaultTheme = "auto"               # 自动适配系统暗黑模式。
   # copyright
@@ -59,7 +60,6 @@ enableGitInfo = true
   WechatPay = "images/wechat_pay.webp"
   # 设置支付宝收款码图片 (路径相对于博客工程的 static 目录。如下文件在 `static/images/alipay.jpg`)
   Alipay = "images/alipay.webp"
-  
 
   # Fuse.js 搜索选项
   [params.fuseOpts]
@@ -89,7 +89,7 @@ enableGitInfo = true
     lang = "zh-CN"
     loading = "lazy"
 
-  # 🖼 头像模式配置（参考 RexBlog）
+  #  头像模式配置
   [params.profileMode]
     enabled = true                     # 启用头像模式
     title = "蓝桉の博客"
@@ -105,7 +105,7 @@ enableGitInfo = true
       { name = "About", url = "/about/" }
     ]
 
-  # 📂 社交图标（可自由添加）
+  #  社交图标（可自由添加）
   [[params.socialIcons]]
     name = "github"
     url = "https://github.com/ktzxy"

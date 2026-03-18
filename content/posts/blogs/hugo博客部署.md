@@ -1318,3 +1318,404 @@ contactEmail: your email
 ```
 
 # 添加赞赏
+
+创建 `reward.html` 文件：
+
+myblog\layouts\partials\reward.html
+
+```shell
+{{- $button := .Params.rewardButton | default "" }} {{- $subtitle :=
+.Params.rewardSubtitle | default "如果本文对您有所帮助，欢迎打赏支持作者！" }}
+{{- $title := .Params.rewardTitle | default "赞赏作者" }}
+
+<div class="pe-reward-wrap">
+  <div class="pe-reward-card">
+    <!-- 标题 -->
+    <h3 class="pe-reward-title">{{ $title }}</h3>
+
+    <!-- 副标题 -->
+    {{- if not .Params.hideRewardSubtitle }}
+    <p class="pe-reward-subtitle">{{ $subtitle }}</p>
+    {{ end }}
+
+    <!-- 按钮区域：改为扁平风格 -->
+    <div class="pe-reward-btn-container">
+      <a
+        href="javascript:void(0);"
+        class="pe-reward-trigger"
+        onclick="
+          document
+            .querySelector('.pe-reward-overlay')
+            .classList.remove('hidden')
+        "
+      >
+        {{ if eq $button "" }}
+        <!-- 默认图标：缩小尺寸 -->
+        <svg
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+        >
+          <path
+            d="M835.52 337.824a159.04 159.04 0 0 1 124.544 59.52 155.904 155.904 0 0 1 30.4 134.08l-80.896 341.632a157.952 157.952 0 0 1-56.224 87.68 160.544 160.544 0 0 1-98.688 33.952H166.72c-75.712 0-137.44-60.96-137.44-136.256v-363.84c0-75.296 61.76-136.288 137.44-136.288h80.704c50.176 0 71.232-12.48 85.792-36.544 10.368-17.12 17.472-41.376 23.04-76 1.728-10.656 2.88-19.392 5.408-38.72 11.712-90.944 21.888-124.736 62.528-155.168 25.504-19.072 56.768-25.984 90.72-20.992 64.672 9.504 115.936 43.52 145.824 97.6 23.36 42.272 32.64 95.584 27.904 154.24-1.056 12.832-2.752 25.888-5.12 38.912-0.64 3.68-1.856 9.024-3.712 16.192h155.68z m-261.472 80l14.72-51.104c9.472-32.704 15.04-53.376 16.064-59.2 1.92-10.56 3.264-21.024 4.096-31.296 3.584-43.84-3.04-81.6-18.208-109.056-17.472-31.68-46.88-51.2-87.392-57.12-13.696-2.016-23.456 0.128-31.168 5.888-15.808 11.84-22.4 33.792-31.136 101.312-2.56 20.16-3.84 29.44-5.76 41.248-7.04 43.872-16.704 76.8-33.536 104.64-28.736 47.52-75.424 75.2-154.24 75.2H166.72c-31.744 0-57.44 25.376-57.44 56.224v363.872c0 30.88 25.696 56.256 57.44 56.256h587.904c17.824 0 35.424-6.08 49.344-16.96 13.856-10.848 23.68-26.24 27.712-43.104l80.896-341.6a75.904 75.904 0 0 0-14.944-65.6 79.04 79.04 0 0 0-62.144-29.6H574.08z m-212.8 205.984l97.28 72.64 242.24-209.28s16.224-13.888 30.4-3.008c4.256 3.264 9.12 12.512-1.856 27.008l-252.896 277.856s-19.392 24.864-42.4-0.288l-109.12-138.208s-12.96-18.688 3.264-29.92c5.44-3.744 17.888-9.6 33.12 3.2z"
+            fill="currentColor"
+          ></path>
+        </svg>
+        {{ else }} {{ $button | safeHTML }} {{ end }}
+
+        <span class="pe-reward-btn-text">打赏作者</span>
+      </a>
+    </div>
+
+    <!-- 遮罩层 (保持不变) -->
+    <div class="pe-reward-overlay hidden">
+      <div class="pe-reward-qr-wrap">
+        <div class="pe-reward-img-group">
+          <div class="pe-reward-item">
+            <div class="pe-reward-qr-box">
+              {{- $wechatImg := .Site.Params.WechatPay }} {{- if and $wechatImg
+              (not (hasPrefix $wechatImg "http")) }} {{- $wechatImg =
+              urls.JoinPath $.Site.BaseURL $wechatImg }} {{- end }}
+              <img
+                src="{{ $wechatImg }}"
+                alt="WeChat Pay"
+                onerror="this.style.display = 'none'"
+              />
+            </div>
+            <p>微信</p>
+          </div>
+          <div class="pe-reward-item">
+            <div class="pe-reward-qr-box">
+              {{- $alipayImg := .Site.Params.Alipay }} {{- if and $alipayImg
+              (not (hasPrefix $alipayImg "http")) }} {{- $alipayImg =
+              urls.JoinPath $.Site.BaseURL $alipayImg }} {{- end }}
+              <img
+                src="{{ $alipayImg }}"
+                alt="Alipay"
+                onerror="this.style.display = 'none'"
+              />
+            </div>
+            <p>支付宝</p>
+          </div>
+        </div>
+        <span
+          class="pe-reward-close"
+          onclick="this.closest('.pe-reward-overlay').classList.add('hidden')"
+          >&times;</span
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document
+    .querySelector(".pe-reward-overlay")
+    .addEventListener("click", function (evt) {
+      if (
+        evt.target === this ||
+        evt.target.classList.contains("pe-reward-qr-wrap")
+      ) {
+        this.classList.add("hidden");
+      }
+    });
+</script>
+
+```
+
+添加赞赏按钮及其遮罩层样式。创建 `reward.css` 文件：
+
+myblog\assets\css\extended\reward.css
+
+```shell
+/* 外层包裹 */
+.pe-reward-wrap {
+    margin: 2rem 0;
+    /* 减小上下间距 */
+    width: 100%;
+}
+
+/* 卡片容器 */
+.pe-reward-card {
+    background-color: var(--theme);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    /* 减小内边距 */
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+/* 标题 */
+.pe-reward-title {
+    font-size: 1.2rem;
+    /* 稍微调小标题 */
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--body-font-color);
+}
+
+/* 副标题 */
+.pe-reward-subtitle {
+    font-size: 0.9rem;
+    color: var(--secondary-font-color);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+/* 按钮容器 */
+.pe-reward-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- 核心修改：扁平长方形按钮 --- */
+.pe-reward-trigger {
+    display: inline-flex;
+    /* 改为行内弹性布局，让图标和文字横向排列 */
+    flex-direction: row;
+    /* 横向排列 */
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.5rem 1.2rem;
+    /* 扁平的内边距 */
+    height: auto;
+    /* 高度自适应 */
+    min-width: 120px;
+    /* 最小宽度 */
+
+    background-color: #ff5e5e;
+    /* 纯色背景，去掉渐变 */
+    color: #fff;
+    border-radius: 50px;
+    /* 胶囊形状 (长方形圆角) */
+
+    font-size: 0.9rem;
+    /* 字体调小 */
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 94, 94, 0.3);
+    /* 轻微阴影 */
+    border: 1px solid transparent;
+}
+
+/* 悬停效果 */
+.pe-reward-trigger:hover {
+    background-color: #ff4040;
+    transform: translateY(-2px);
+    /* 轻微上浮 */
+    box-shadow: 0 4px 12px rgba(255, 94, 94, 0.4);
+}
+
+.pe-reward-trigger svg {
+    width: 16px;
+    /* 图标缩小 */
+    height: 16px;
+    fill: currentColor;
+    margin-right: 6px;
+    /* 图标和文字之间的间距 */
+    margin-bottom: 0;
+    /* 移除之前的底部间距 */
+}
+
+.pe-reward-btn-text {
+    line-height: 1;
+    white-space: nowrap;
+    /* 防止文字换行 */
+}
+
+/* --- 遮罩层与二维码 (保持简洁) --- */
+.pe-reward-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pe-reward-overlay.hidden {
+    display: none;
+}
+
+.pe-reward-qr-wrap {
+    background-color: var(--theme);
+    padding: 2rem;
+    border-radius: 12px;
+    position: relative;
+    max-width: 90%;
+    width: 450px;
+    /* 稍微调窄一点 */
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.pe-reward-img-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.pe-reward-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pe-reward-qr-box {
+    width: 140px;
+    height: 140px;
+    border: 1px solid #eee;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+
+.pe-reward-qr-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.pe-reward-item p {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--body-font-color);
+}
+
+.pe-reward-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: #999;
+    cursor: pointer;
+}
+
+.pe-reward-close:hover {
+    color: #333;
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 568px) {
+    .pe-reward-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .pe-reward-qr-wrap {
+        width: 85%;
+        padding: 1.5rem;
+    }
+
+    .pe-reward-qr-box {
+        width: 110px;
+        height: 110px;
+    }
+}
+```
+
+## 将赞赏按钮添加到文章章末
+
+在 `footer` 节点上添加如下内容：
+
+```shell
+{{- define "main" }}
+
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title entry-hint-parent">
+      {{ .Title }} {{- if .Draft }}
+      <span class="entry-hint" title="Draft">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="35"
+          viewBox="0 -960 960 960"
+          fill="currentColor"
+        >
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"
+          />
+        </svg>
+      </span>
+      {{- end }}
+    </h1>
+    {{- if .Description }}
+    <div class="post-description">{{ .Description }}</div>
+    {{- end }} {{- if not (.Param "hideMeta") }}
+    <div class="post-meta">
+      {{- partial "post_meta.html" . -}} {{- partial "translation_list.html" .
+      -}} {{- partial "edit_post.html" . -}} {{- partial "post_canonical.html" .
+      -}}
+    </div>
+    {{- end }}
+  </header>
+  {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param
+  "cover.hidden") | default false }} {{- partial "cover.html" (dict "cxt" .
+  "IsSingle" true "isHidden" $isHidden) }} {{- if (.Param "ShowToc") }} {{-
+  partial "toc.html" . }} {{- end }} {{- if .Content }}
+  <div class="post-content">
+    {{- if not (.Param "disableAnchoredHeadings") }} {{- partial
+    "anchored_headings.html" .Content -}} {{- else }}{{ .Content }}{{ end }}
+  </div>
+  {{- end }}
+
+  <!-- Copyright -->
+  {{ if .Param "enableCopyright" }} {{ partial "copyright.html" . }} {{ end }}
+
+  <!-- Reward -->
+  {{ if .Param "enableReward" }} {{ partial "reward.html" . }} {{ end }}
+
+  <footer class="post-footer">
+    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+    <ul class="post-tags">
+      {{- range ($.GetTerms $tags) }}
+      <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+      {{- end }}
+    </ul>
+    {{- if (.Param "ShowPostNavLinks") }} {{- partial "post_nav_links.html" . }}
+    {{- end }} {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare
+    true)) }} {{- partial "share_icons.html" . -}} {{- end }}
+  </footer>
+
+  {{- if (.Param "comments") }} {{- partial "comments.html" . }} {{- end }}
+</article>
+
+{{- end }}{{/* end main */}}
+
+```
+
+## 启用赞赏
+
+在 hugo 配置文件中添加以下配置：
+
+```shell
+[params]
+ # 启用赞赏功能
+  enableReward = true
+  # 赞赏按钮显示字符 (可在文章 `frontmatter` 中设置)，默认为赞赏图标
+  # rewardButton = 赞赏
+  # 赞赏描述 (可在文章 `frontmatter` 中设置)
+  rewardDescription = "如果本文对你有所帮助，可以点击上方按钮请作者喝杯咖啡！"
+  # 设置微信收款码图片 (路径相对于博客工程的 static 目录。如下文件在 `static/images/wechat_pay.jpg`)
+  WechatPay = "images/wechat_pay.webp"
+  # 设置支付宝收款码图片 (路径相对于博客工程的 static 目录。如下文件在 `static/images/alipay.jpg`)
+  Alipay = "images/alipay.webp"
+```
+
