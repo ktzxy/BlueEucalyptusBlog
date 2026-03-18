@@ -5,7 +5,9 @@ title = 'Typecho博客部署记录'
 description = "typecho博客部署记录"  
 summary = ""         
 categories = ["📒博客部署"]                                      
-tags = ["typecho"]                                                  
+tags = ["typecho"]   
+series = ["博客部署美化系列"]
+showSeries= true                                                 
 +++
 
 ## dockercompose

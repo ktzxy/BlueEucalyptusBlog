@@ -1,0 +1,44 @@
+{{- if .Params.series }}
+<div class="x-post-series">
+  {{- range .Params.series }} {{- $seriesName := . }} {{- /*
+  获取当前系列下的所有页面 */}} {{- $pages := where $.Site.RegularPages
+  "Params.series" "intersect" (slice $seriesName) }} {{- if $pages }}
+  <details open>
+    <summary>
+      <strong>📚 系列文章：{{ $seriesName }}</strong>
+      <span style="font-size: 0.8em; color: var(--secondary)"
+        >({{ len $pages }}篇)</span
+      >
+    </summary>
+    <ol>
+      {{- /* 按日期排序：.ByDate 是升序，.Reverse 是降序（最新的在前面） */}}
+      {{- range $pages.ByDate.Reverse }}
+      <li style="margin-bottom: 8px">
+        <a
+          href="{{ .Permalink }}"
+          style="text-decoration: none; color: var(--primary)"
+        >
+          {{ .LinkTitle }}
+        </a>
+        {{- if eq . $ }}
+        <span style="color: var(--accent); font-weight: bold">
+          &lt;-- 当前阅读</span
+        >
+        {{- end }}
+        <sub
+          style="
+            display: block;
+            font-size: 0.75em;
+            color: var(--secondary);
+            margin-top: 2px;
+          "
+        >
+          {{ .Date.Format "2006-01-02" }}
+        </sub>
+      </li>
+      {{- end }}
+    </ol>
+  </details>
+  {{- end }} {{- end }}
+</div>
+{{- end }}

@@ -46,7 +46,10 @@
   {{ if .Param "enableReward" }} {{ partial "reward.html" . }} {{ end }}
 
   <footer class="post-footer">
-    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+    <!--  添加下面这几行  -->
+    {{- if and site.Params.ShowSeriesInPost (ne .Params.showSeries false ) }}
+    {{- partial "series-posts.html" . -}} {{- end }} {{- $tags :=
+    .Language.Params.Taxonomies.tag | default "tags" }}
     <ul class="post-tags">
       {{- range ($.GetTerms $tags) }}
       <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>

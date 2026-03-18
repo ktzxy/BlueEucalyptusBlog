@@ -60,6 +60,8 @@ enableGitInfo = true
   WechatPay = "images/wechat_pay.webp"
   # 设置支付宝收款码图片 (路径相对于博客工程的 static 目录。如下文件在 `static/images/alipay.jpg`)
   Alipay = "images/alipay.webp"
+  # 是否在文章页显示所属系列的文章列表
+  ShowSeriesInPost = true
 
   # Fuse.js 搜索选项
   [params.fuseOpts]

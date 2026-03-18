@@ -7,7 +7,9 @@ description = "使用docker部署hugo，部署到云服务器"
 summary = "使用docker部署hugo，部署到云服务器"         
 categories = ["📒博客部署"]                                      
 tags = ["hugo"]    
-comments = true                                           
+comments = true  
+series = ["博客部署美化系列"]
+showSeries= true                                         
 +++
 # **一、准备 SSH 密钥**
 
@@ -1717,5 +1719,112 @@ myblog\assets\css\extended\reward.css
   WechatPay = "images/wechat_pay.webp"
   # 设置支付宝收款码图片 (路径相对于博客工程的 static 目录。如下文件在 `static/images/alipay.jpg`)
   Alipay = "images/alipay.webp"
+```
+
+# PaperMod 文章页展示所属系列的文章列表
+
+[PaperMod 文章页展示所属系列的文章列表 | loyayz](https://loyayz.com/website/220612-hugo-papermodx-series-in-post-page/)
+
+新建模板
+
+myblog\layouts\partials\series-posts.html
+
+```shell
+{{- if .Params.series }}
+<div class="x-post-series">
+  {{- range .Params.series }} {{- $seriesName := . }} {{- /*
+  获取当前系列下的所有页面 */}} {{- $pages := where $.Site.RegularPages
+  "Params.series" "intersect" (slice $seriesName) }} {{- if $pages }}
+  <details open>
+    <summary>
+      <strong>📚 系列文章：{{ $seriesName }}</strong>
+      <span style="font-size: 0.8em; color: var(--secondary)"
+        >({{ len $pages }}篇)</span
+      >
+    </summary>
+    <ol>
+      {{- /* 按日期排序：.ByDate 是升序，.Reverse 是降序（最新的在前面） */}}
+      {{- range $pages.ByDate.Reverse }}
+      <li style="margin-bottom: 8px">
+        <a
+          href="{{ .Permalink }}"
+          style="text-decoration: none; color: var(--primary)"
+        >
+          {{ .LinkTitle }}
+        </a>
+        {{- if eq . $ }}
+        <span style="color: var(--accent); font-weight: bold">
+          &lt;-- 当前阅读</span
+        >
+        {{- end }}
+        <sub
+          style="
+            display: block;
+            font-size: 0.75em;
+            color: var(--secondary);
+            margin-top: 2px;
+          "
+        >
+          {{ .Date.Format "2006-01-02" }}
+        </sub>
+      </li>
+      {{- end }}
+    </ol>
+  </details>
+  {{- end }} {{- end }}
+</div>
+{{- end }}
+
+```
+
+添加样式
+
+myblog\assets\css\extended\series-posts.css
+
+```shell
+.x-post-series {
+    padding: 16px 0;
+}
+```
+
+编辑文章模板
+
+myblog\layouts\_default\single.html
+
+```shell
+<footer class="post-footer">
+    <!--  添加下面这2行  -->
+    {{- if and site.Params.ShowSeriesInPost (ne .Params.showSeries false ) }}
+    {{- partial "series-posts.html" . -}} {{- end }} 
+    
+    
+    {{- $tags :=
+    .Language.Params.Taxonomies.tag | default "tags" }}
+```
+
+配置
+
+```shell
+params:
+# 是否在文章页显示所属系列的文章列表
+  ShowSeriesInPost = true
+```
+
+设置文章所属系列
+
+```shell
++++
+date = '2026-01-04T11:02:13+08:00'
+draft = false
+title = 'hugo博客部署'
+slug = "4163nwhh20"
+description = "使用docker部署hugo，部署到云服务器"  
+summary = "使用docker部署hugo，部署到云服务器"         
+categories = ["📒博客部署"]                                      
+tags = ["hugo"]    
+comments = true  
+series = ["博客部署美化系列"]
+showSeries= true                                         
++++
 ```
 
