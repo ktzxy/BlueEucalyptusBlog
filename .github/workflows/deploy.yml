@@ -24,7 +24,7 @@ jobs:
           path: |
             resources
             .hugo_cache
-          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum') }}-${{ hashFiles('**/config.*') }}
+          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum') }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-hugo-
 
@@ -37,13 +37,13 @@ jobs:
 
       # 4️⃣ 构建站点
       - name: Build Hugo site
-        run: hugo --minify --cleanDestinationDir -D
+        run: hugo --minify --cleanDestinationDir --gc
 
       # 5️⃣ 同步 public 到服务器
       - name: Rsync to server
         uses: burnett01/rsync-deployments@v8
         with:
-          switches: -avzr --delete
+          switches: -avzr --delete --checksum
           path: public/
           remote_host: ${{ secrets.ALI_HOST }}
           remote_user: ${{ secrets.ALI_USER }}
