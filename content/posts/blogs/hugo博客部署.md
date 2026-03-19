@@ -1743,16 +1743,39 @@ myblog\layouts\partials\series-posts.html
       >
     </summary>
     <ol>
-      {{- /* 按日期排序：.ByDate 是升序，.Reverse 是降序（最新的在前面） */}}
-      {{- range $pages.ByDate.Reverse }}
+      {{- /* 核心逻辑：自定义排序 1. 提取标题开头的数字部分 2.
+      转换为整数进行排序 3. 如果没数字，则排到最后 */}} {{- $sortedPages := sort
+      $pages "Params.weight" }} {{- /* 如果没有设置 weight
+      参数，我们尝试按标题数字排序 */}} {{- /* 注意：Hugo 原生 sort
+      很难直接解析字符串中的数字，这里用一种变通方法：*/}} {{- /*
+      我们假设用户会在 front matter 中设置 weight，或者我们手动处理 */}} {{- /*
+      【更简单的方案】：利用 Hugo 的 "ByParam" 或手动构建排序列表 由于 Hugo
+      模板语言限制，最稳健的方法是要求用户在 Front Matter 中设置 weight
+      或者我们这里写一段稍微复杂的逻辑来提取数字。
+      下面这段代码尝试提取标题第一个连续数字作为排序依据 */}} {{- /*
+      初始化一个空切片用于存储带排序键的对象 */}} {{- $listWithSortKey := slice
+      }} {{- range $pages }} {{- $title := .LinkTitle }} {{- $sortKey := 9999 }}
+      {{- /* 默认最大值，如果没有数字排最后 */}} {{- /* 尝试提取标题开头的数字
+      (支持 "1 ", "1.", "01 ", "01." 等格式) */}} {{- $matched := findRE
+      "^\\s*(\\d+)" $title }} {{- if $matched }} {{- $numStr := index $matched 0
+      }} {{- /* 去掉可能存在的非数字字符并转为 int */}} {{- $cleanNum :=
+      replaceRE "[^0-9]" "" $numStr }} {{- if $cleanNum }} {{- $sortKey = int
+      $cleanNum }} {{- end }} {{- end }} {{- /* 将页面和排序键打包 */}} {{-
+      $item := dict "Page" . "SortKey" $sortKey }} {{- $listWithSortKey =
+      $listWithSortKey | append $item }} {{- end }} {{- /* 对打包后的列表按
+      SortKey 排序 */}} {{- $sortedList := sort $listWithSortKey "SortKey" }}
+      {{- /* 遍历排序后的列表渲染 */}} {{- range $sortedList }} {{- $p := .Page
+      }}
       <li style="margin-bottom: 8px">
         <a
-          href="{{ .Permalink }}"
+          href="{{ $p.Permalink }}"
           style="text-decoration: none; color: var(--primary)"
         >
-          {{ .LinkTitle }}
+          {{- /* 正则替换：去掉开头的 "数字 + 可选点号 + 可选空格" */}} {{-
+          $cleanTitle := replaceRE "^\\s*\\d+\\.?\\s*" "" $p.LinkTitle }} {{
+          $cleanTitle }}
         </a>
-        {{- if eq . $ }}
+        {{- if eq $p $ }}
         <span style="color: var(--accent); font-weight: bold">
           &lt;-- 当前阅读</span
         >
@@ -1765,7 +1788,7 @@ myblog\layouts\partials\series-posts.html
             margin-top: 2px;
           "
         >
-          {{ .Date.Format "2006-01-02" }}
+          {{ $p.Date.Format "2006-01-02" }}
         </sub>
       </li>
       {{- end }}
@@ -1774,7 +1797,6 @@ myblog\layouts\partials\series-posts.html
   {{- end }} {{- end }}
 </div>
 {{- end }}
-
 ```
 
 添加样式
