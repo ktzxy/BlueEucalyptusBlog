@@ -152,3 +152,7 @@ enableGitInfo = true
 [minify]
   disableXML = true
   minifyOutput = true
+
+[taxonomies]
+    tag = "tags"
+    series = "series"
