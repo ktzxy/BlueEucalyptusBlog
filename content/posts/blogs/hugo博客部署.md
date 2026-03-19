@@ -9,7 +9,11 @@ categories = ["📒博客部署"]
 tags = ["hugo"]    
 comments = true  
 series = ["博客部署美化系列"]
-showSeries= true                                         
+showSeries= true     
+# 1 表示置顶
+weight = 1
+# true 表示是转载
+outer = true                                    
 +++
 # **一、准备 SSH 密钥**
 
@@ -1962,5 +1966,44 @@ myblog\layouts\_default\single.html
 .post-footer > .breadcrumbs {
   justify-content: flex-end;
 }
+```
+
+# 列表文章标题后添加标识
+
+自动为列表中的文章添加对应的标识：`[置顶]`、`[转载]`
+
+myblog\layouts\_default\list.html
+
+替换整个 `<header class="entry-header">` 块：
+
+```shell
+<header class="entry-header">
+  <h2 class="entry-hint-parent">
+    {{- .Title }}
+
+    {{- /* 1. 置顶标识 (权重为 1) */}}
+    {{- if eq .Weight 1 }}
+      <sup>
+        <span class="x-entry-istop" style="font-size: 0.6em; font-weight: bold; color: var(--accent); margin-left: 6px;">[置顶]</span>
+      </sup>
+    {{- end }}
+
+    {{- /* 2. 转载标识 (front matter 中 outer: true) */}}
+    {{- if .Param "outer" }}
+      <sup>
+        <span class="x-entry-isouter" style="font-size: 0.6em; font-weight: bold; color: var(--secondary); margin-left: 6px;">[转载]</span>
+      </sup>
+    {{- end }}
+
+    {{- /* 3. 草稿标识 (保留原有图标逻辑) */}}
+    {{- if .Draft }}
+      <span class="entry-hint" title="Draft" style="margin-left: 6px; vertical-align: middle;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" fill="currentColor">
+          <path d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    {{- end }}
+  </h2>
+</header>
 ```
 
