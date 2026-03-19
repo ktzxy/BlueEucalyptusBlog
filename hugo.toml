@@ -141,6 +141,11 @@ enableGitInfo = true
     lineNos = true
     codeFences = true
     guessSyntax = true
+  
+  [markup.tableOfContents]
+    startLevel = 1  # 从 h1 开始
+    endLevel = 3    # 到 h3 结束 (可根据需要调整，比如 4, 5, 6)
+    ordered = false # 是否使用有序列表 (1. 2. 3.)，false 为无序列表
 
 # Sitemap优化
 [sitemap]

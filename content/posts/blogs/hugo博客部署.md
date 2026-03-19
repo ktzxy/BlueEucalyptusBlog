@@ -10,12 +10,10 @@ tags = ["hugo"]
 comments = true  
 series = ["博客部署美化系列"]
 showSeries= true     
-# 1 表示置顶
 weight = 1
-# true 表示是转载
 outer = true                                    
 +++
-# **一、准备 SSH 密钥**
+# **准备 SSH 密钥**
 
 GitHub Actions 要通过 SSH 上传文件到服务器，需要 **一个公私钥对**：
 
@@ -59,7 +57,7 @@ chmod 600 ~/.ssh/authorized_keys
 
 或者可以直接将本地的公钥上传到服务器，私钥放在github Secrets中
 
-# **二、阿里云服务器初始化**
+# **阿里云服务器初始化**
 
 假设服务器全新（Ubuntu 22.04 举例）：
 
@@ -90,7 +88,7 @@ sudo ufw allow 443/tcp
 sudo ufw enable
 ```
 
-# **三、Hugo 构建部署准备**
+# **Hugo 构建部署准备**
 
 1. 安装 Hugo Extended（支持 PaperMod SCSS）
 
@@ -127,7 +125,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt:ro
 ```
 
-# **四、配置 ssl**
+# **配置 ssl**
 
 ## 安装 Nginx + Certbot
 
@@ -2005,5 +2003,28 @@ myblog\layouts\_default\list.html
     {{- end }}
   </h2>
 </header>
+```
+
+```shell
++++
+title = "测试"
+date = 2026-03-03
+draft = false
+# 1 表示置顶
+weight = 1
+# true 表示是转载
+outer = true
++++
+```
+
+# 文章目录级别设置
+
+hugo.toml
+
+```shell
+[markup.tableOfContents]
+    startLevel = 1  # 从 h1 开始
+    endLevel = 3    # 到 h3 结束 (可根据需要调整，比如 4, 5, 6)
+    ordered = false # 是否使用有序列表 (1. 2. 3.)，false 为无序列表
 ```
 
