@@ -46,6 +46,8 @@
   {{ if .Param "enableReward" }} {{ partial "reward.html" . }} {{ end }}
 
   <footer class="post-footer">
+    <!--  添加下面这行  -->
+    {{ partial "breadcrumbs.html" . }}
     <!--  添加下面这几行  -->
     {{- if and site.Params.ShowSeriesInPost (ne .Params.showSeries false ) }}
     {{- partial "series-posts.html" . -}} {{- end }} {{- $tags :=

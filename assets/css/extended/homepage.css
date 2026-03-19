@@ -111,3 +111,9 @@ body.list {
 .social-icons a:hover {
     opacity: 1;
 }
+
+
+/* 文章页面底部的面包屑居右 */
+.post-footer>.breadcrumbs {
+    justify-content: flex-end;
+}

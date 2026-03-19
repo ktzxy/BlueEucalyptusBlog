@@ -1941,3 +1941,26 @@ myblog\layouts\_default\search.html
 
 ```
 
+# 文章页底部添加面包屑导航
+
+myblog\layouts\_default\single.html
+
+```shell
+<footer class="post-footer">
+    <!--  添加下面这行  -->
+    {{ partial "breadcrumbs.html" . }}
+
+    {{- if (.Param "ShowPostNavLinks") }}
+    {{- partial "post_nav_links.html" . }}
+    {{- end }}
+</footer>
+```
+
+```shell
+# 随便哪个样式页面加入
+/* 文章页面底部的面包屑居右 */
+.post-footer > .breadcrumbs {
+  justify-content: flex-end;
+}
+```
+
