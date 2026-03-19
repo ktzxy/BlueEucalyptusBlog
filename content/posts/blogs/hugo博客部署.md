@@ -2028,3 +2028,292 @@ hugo.toml
     ordered = false # 是否使用有序列表 (1. 2. 3.)，false 为无序列表
 ```
 
+# 添加瞬间
+
+### 创建数据文件 (数据源)
+
+在项目根目录下创建 `data` 文件夹（如果不存在），并在其中创建 `moments.yml`
+
+```shell
+# 格式说明：
+# - date: 时间 (ISO 8601 格式)
+#   tags: [标签列表]
+#   content: | (多行内容，支持 Markdown)
+
+- date: 2024-03-19T16:30:00+08:00
+  tags: ["日常", "心情"]
+  content: |
+    这是第一条瞬间！🎉
+    采用单文件模式，所有数据都在这一个 yaml 文件里。
+    
+    支持代码块：
+    ```go
+    println("Hello World")
+    ```
+
+- date: 2024-03-18T10:00:00+08:00
+  tags: ["技术", "Hugo"]
+  content: "只需复制粘贴一段 YAML 配置，就能新增一条瞬间，太方便了！☕️"
+
+- date: 2024-03-15T09:20:00+08:00
+  content: "没有标签的瞬间也是可以的。"
+```
+
+### 创建页面入口配置
+
+创建瞬间页面的配置文件，定义标题和布局参数。
+
+**路径：** `content/moments/_index.md`
+
+```shell
++++
+title = "🌟 瞬间"
+description = "记录生活中的点滴灵感与碎片化思考"
+date = 2024-01-01T00:00:00+08:00
+draft = false
+
+[build]
+render = "always"
+
+[params]
+ShowToc = false
+ShowShareButtons = false
+DateFormat = "2006-01-02 15:04"
++++
+```
+
+### 创建页面模板
+
+创建渲染逻辑，读取 YAML 数据并生成 HTML。
+
+**路径：** `layouts/moments/list.html`
+
+```shell
+{{- define "main" }}
+{{- $dateFormat := .Params.DateFormat | default site.Params.DateFormat | default "2006-01-02 15:04" }}
+{{- $allMoments := site.Data.moments }}
+{{- /* 按时间倒序排序：最新的在前面 */}}
+{{- $sortedMoments := sort $allMoments "date" "desc" }}
+
+<article class="post-single">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{- if .Description }}
+    <div class="post-description">
+      {{ .Description }}
+    </div>
+    {{- end }}
+  </header>
+
+  <div class="post-content">
+    {{- if not $sortedMoments }}
+      <div style="text-align: center; padding: 4rem 0; color: var(--secondary);">
+        <p>暂无瞬间，快去 <code>data/moments.yml</code> 添加第一条吧！✨</p>
+      </div>
+    {{- else }}
+    <ul class="pe-moments">
+      {{- range $moment := $sortedMoments }}
+      <li class="pe-moment">
+                <!-- 1. 头像区域 (直接读取 hugo.toml 配置) -->
+        <div class="pe-moment-avatar">
+          {{- $avatarUrl := "" }}
+          
+          {{- /* 第一步：直接尝试从 hugo.toml (site.Params) 读取 */}}
+          {{- if site.Params.avatar }}
+            {{- $avatarUrl = site.Params.avatar }}
+          {{- /* 第二步：如果 tom l没配，再尝试从 content/_index.md 读取 (兼容旧模式) */}}
+          {{- else }}
+            {{- with site.GetPage "/_index.md" }}
+              {{- if .Params.avatar }}
+                {{- $avatarUrl = .Params.avatar }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+
+          {{- /* 渲染结果 */}}
+          {{- if $avatarUrl }}
+            <img src="{{ $avatarUrl | relURL }}" alt="Avatar">
+          {{- else }}
+            <div class="pe-moment-avatar-placeholder">
+              {{- with site.Params.author }}{{ substr . 0 1 | upper }}{{ else }}M{{ end }}
+            </div>
+          {{- end }}
+        </div>
+
+        <!-- 2. 内容主体 -->
+        <div class="pe-moment-body">
+          <div class="pe-moment-content">
+            {{- /* 渲染 Markdown 内容 */}}
+            {{- $moment.content | markdownify }}
+          </div>
+
+          <!-- 3. 标签 -->
+          {{- if $moment.tags }}
+          <div class="pe-moment-tags">
+            {{- range $tag := $moment.tags }}
+            <a href="{{ "/tags/" | relURL }}{{ $tag | urlize }}/" class="pe-moment-tag">{{ $tag }}</a>
+            {{- end }}
+          </div>
+          {{- end }}
+
+          <!-- 4. 时间 -->
+          <div class="pe-moment-meta">
+            <span class="pe-moment-time">
+              {{- time.Format $dateFormat (time $moment.date) }}
+            </span>
+          </div>
+        </div>
+      </li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </div>
+</article>
+{{- end }}
+```
+
+### 添加样式 (CSS)
+
+让瞬间页面拥有朋友圈/便签风格的样式，并适配深色模式。
+
+**路径：** `assets/css/extended/moments.css`
+
+```shell
+/* 容器 */
+.pe-moments {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 单条瞬间卡片 */
+.pe-moment {
+  display: flex;
+  gap: 1.2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border-color, #eaeaea);
+  align-items: flex-start;
+  animation: fadeIn 0.5s ease;
+}
+
+.pe-moments li:last-child {
+  border-bottom: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 头像 */
+.pe-moment-avatar img {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-color, #eaeaea);
+  background-color: var(--code-bg, #f5f5f5);
+}
+
+.pe-moment-avatar-placeholder {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background-color: var(--primary, #333);
+  color: var(--theme, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border: 2px solid var(--border-color, #eaeaea);
+}
+
+/* 内容区 */
+.pe-moment-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.pe-moment-content {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--content-color, #333);
+  margin-bottom: 0.8rem;
+  word-wrap: break-word;
+}
+
+/* 标签 */
+.pe-moment-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.pe-moment-tag {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  background-color: var(--code-bg, #f5f5f5);
+  color: var(--secondary, #666);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.pe-moment-tag:hover {
+  background-color: var(--primary, #333);
+  color: var(--theme, #fff);
+}
+
+/* 时间 */
+.pe-moment-meta {
+  font-size: 0.85rem;
+  color: var(--secondary, #999);
+  font-style: italic;
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 768px) {
+  .pe-moment {
+    gap: 0.8rem;
+    padding: 1.2rem 0;
+  }
+  .pe-moment-avatar img,
+  .pe-moment-avatar-placeholder {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+  }
+}
+```
+
+### 添加到导航菜单 (可选)
+
+为了让访客能方便地找到“瞬间”页面，建议在导航栏添加链接。
+
+编辑  `hugo.toml`)：
+
+```shell
+[[menu.main]]
+name = "瞬间"
+url = "/moments/"
+weight = 5  # 调整权重以控制显示顺序
+```
+
+头像配置
+
+hugo.toml
+
+```shell
+[params]
+  # 其他配置...
+  
+  # 添加作者名字（可选，用于显示首字母 fallback）
+  author = "YourName"
+  
+  # 【关键】添加头像路径
+  # 注意：这里写的是相对路径，去掉 "static" 前缀
+  avatar = "images/profile.png"
+```
+

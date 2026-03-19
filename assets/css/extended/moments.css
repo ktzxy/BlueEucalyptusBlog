@@ -1,0 +1,115 @@
+/* 容器 */
+.pe-moments {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 单条瞬间卡片 */
+.pe-moment {
+    display: flex;
+    gap: 1.2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-color, #eaeaea);
+    align-items: flex-start;
+    animation: fadeIn 0.5s ease;
+}
+
+.pe-moments li:last-child {
+    border-bottom: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 头像 */
+.pe-moment-avatar img {
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-color, #eaeaea);
+    background-color: var(--code-bg, #f5f5f5);
+}
+
+.pe-moment-avatar-placeholder {
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    background-color: var(--primary, #333);
+    color: var(--theme, #fff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: 2px solid var(--border-color, #eaeaea);
+}
+
+/* 内容区 */
+.pe-moment-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.pe-moment-content {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--content-color, #333);
+    margin-bottom: 0.8rem;
+    word-wrap: break-word;
+}
+
+/* 标签 */
+.pe-moment-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.pe-moment-tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    background-color: var(--code-bg, #f5f5f5);
+    color: var(--secondary, #666);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.pe-moment-tag:hover {
+    background-color: var(--primary, #333);
+    color: var(--theme, #fff);
+}
+
+/* 时间 */
+.pe-moment-meta {
+    font-size: 0.85rem;
+    color: var(--secondary, #999);
+    font-style: italic;
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 768px) {
+    .pe-moment {
+        gap: 0.8rem;
+        padding: 1.2rem 0;
+    }
+
+    .pe-moment-avatar img,
+    .pe-moment-avatar-placeholder {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+}

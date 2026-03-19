@@ -62,6 +62,7 @@ enableGitInfo = true
   Alipay = "images/alipay.webp"
   # 是否在文章页显示所属系列的文章列表
   ShowSeriesInPost = true
+  avatar = "./images/profile.png"
 
   # Fuse.js 搜索选项
   [params.fuseOpts]
@@ -101,10 +102,10 @@ enableGitInfo = true
     imageHeight = 120
     imageTitle = "头像"
     buttons = [
-      { name = "Posts", url = "/posts/" },
-      { name = "Tags", url = "/tags/" },
-      { name = "Archives", url = "/archives/" },
-      { name = "About", url = "/about/" }
+      { name = "文章", url = "/posts/" },
+      { name = "瞬间", url = "/moments/" },
+      { name = "归档", url = "/archives/" },
+      { name = "关于", url = "/about/" }
     ]
 
   #  社交图标（可自由添加）

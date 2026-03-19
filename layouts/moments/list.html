@@ -1,0 +1,81 @@
+{{- define "main" }}
+{{- $dateFormat := .Params.DateFormat | default site.Params.DateFormat | default "2006-01-02 15:04" }}
+{{- $allMoments := site.Data.moments }}
+{{- /* 按时间倒序排序：最新的在前面 */}}
+{{- $sortedMoments := sort $allMoments "date" "desc" }}
+
+<article class="post-single">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{- if .Description }}
+    <div class="post-description">
+      {{ .Description }}
+    </div>
+    {{- end }}
+  </header>
+
+  <div class="post-content">
+    {{- if not $sortedMoments }}
+      <div style="text-align: center; padding: 4rem 0; color: var(--secondary);">
+        <p>暂无瞬间，快去 <code>data/moments.yml</code> 添加第一条吧！✨</p>
+      </div>
+    {{- else }}
+    <ul class="pe-moments">
+      {{- range $moment := $sortedMoments }}
+      <li class="pe-moment">
+                <!-- 1. 头像区域 (直接读取 hugo.toml 配置) -->
+        <div class="pe-moment-avatar">
+          {{- $avatarUrl := "" }}
+          
+          {{- /* 第一步：直接尝试从 hugo.toml (site.Params) 读取 */}}
+          {{- if site.Params.avatar }}
+            {{- $avatarUrl = site.Params.avatar }}
+          {{- /* 第二步：如果 tom l没配，再尝试从 content/_index.md 读取 (兼容旧模式) */}}
+          {{- else }}
+            {{- with site.GetPage "/_index.md" }}
+              {{- if .Params.avatar }}
+                {{- $avatarUrl = .Params.avatar }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+
+          {{- /* 渲染结果 */}}
+          {{- if $avatarUrl }}
+            <img src="{{ $avatarUrl | relURL }}" alt="Avatar">
+          {{- else }}
+            <div class="pe-moment-avatar-placeholder">
+              {{- with site.Params.author }}{{ substr . 0 1 | upper }}{{ else }}M{{ end }}
+            </div>
+          {{- end }}
+        </div>
+
+        <!-- 2. 内容主体 -->
+        <div class="pe-moment-body">
+          <div class="pe-moment-content">
+            {{- /* 渲染 Markdown 内容 */}}
+            {{- $moment.content | markdownify }}
+          </div>
+
+          <!-- 3. 标签 -->
+          {{- if $moment.tags }}
+          <div class="pe-moment-tags">
+            {{- range $tag := $moment.tags }}
+            <a href="{{ "/tags/" | relURL }}{{ $tag | urlize }}/" class="pe-moment-tag">{{ $tag }}</a>
+            {{- end }}
+          </div>
+          {{- end }}
+
+          <!-- 4. 时间 -->
+          <div class="pe-moment-meta">
+            <span class="pe-moment-time">
+              {{- time.Format $dateFormat (time $moment.date) }}
+            </span>
+          </div>
+        </div>
+      </li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </div>
+</article>
+{{- end }}
