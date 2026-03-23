@@ -31,8 +31,8 @@
   </header>
   {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param
   "cover.hidden") | default false }} {{- partial "cover.html" (dict "cxt" .
-  "IsSingle" true "isHidden" $isHidden) }} {{- if (.Param "ShowToc") }} {{-
-  partial "toc.html" . }} {{- end }} {{- if .Content }}
+  "IsSingle" true "isHidden" $isHidden) }}
+  {{- if .Content }}
   <div class="post-content">
     {{- if not (.Param "disableAnchoredHeadings") }} {{- partial
     "anchored_headings.html" .Content -}} {{- else }}{{ .Content }}{{ end }}
@@ -64,5 +64,11 @@
 
   {{- if (.Param "comments") }} {{- partial "comments.html" . }} {{- end }}
 </article>
+  {{- if (.Param "ShowToc") }}
+  <aside class="toc-sidebar">
+    {{- partial "toc.html" . }}
+  </aside>
+  {{- end }}
+{{- partial "toc-highlight.html" . }}
 
 {{- end }}{{/* end main */}}

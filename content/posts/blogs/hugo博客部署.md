@@ -2049,7 +2049,7 @@ hugo.toml
     支持代码块：
     ```go
     println("Hello World")
-    ```
+```
 
 - date: 2024-03-18T10:00:00+08:00
   tags: ["技术", "Hugo"]
@@ -2315,5 +2315,231 @@ hugo.toml
   # 【关键】添加头像路径
   # 注意：这里写的是相对路径，去掉 "static" 前缀
   avatar = "images/profile.png"
+```
+
+# 目录导航右侧显示
+
+修改 single.html 布局，把 TOC 从文章开头移到右侧悬浮位置
+
+```shell
+ # 删除35行左右的下列代码
+ 	{{- if (.Param "ShowToc") }}
+     {{- partial "toc.html" . }}
+   {{- end }}
+
+#在文章末尾添加 TOC 容器（在第 66 行 </article> 之后，{{- end }} 之前）
+   {{- if (.Param "ShowToc") }}
+   <aside class="toc-sidebar">
+     {{- partial "toc.html" . }}
+   </aside>
+   {{- end }}
+   
+```
+
+创建 CSS 样式文件
+
+myblog\assets\css\extended\toc-sidebar.css
+
+```shell
+/* 右侧悬浮目录容器 */
+.toc-sidebar {
+    position: fixed;
+    top: calc(var(--header-height) + var(--gap));
+    right: 5px;
+    width: 300px;
+    max-height: calc(100vh - var(--header-height) - var(--gap) * 2 - var(--footer-height));
+    overflow-y: auto;
+    z-index: 10;
+    padding: var(--gap);
+}
+
+.toc-sidebar .toc {
+    margin-bottom: 0;
+    border: 1px solid var(--border);
+    background: var(--entry);
+    border-radius: var(--radius);
+    padding: 0.4em;
+    position: sticky;
+    top: 0;
+}
+
+[data-theme="dark"] .toc-sidebar .toc {
+    background: var(--entry);
+}
+
+.toc-sidebar .toc details summary {
+    cursor: zoom-in;
+    margin-inline-start: 10px;
+    user-select: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.toc-sidebar .toc details[open] summary {
+    cursor: zoom-out;
+}
+
+.toc-sidebar .toc .details {
+    display: inline;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.toc-sidebar .toc .inner {
+    margin: 10px 15px;
+    padding: 0 5px;
+    opacity: 0.9;
+}
+
+.toc-sidebar .toc li ul {
+    margin-inline-start: var(--gap);
+}
+
+.toc-sidebar .toc a {
+    display: block;
+    padding: 4px 0;
+    color: var(--secondary);
+    font-size: 13px;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.toc-sidebar .toc a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.toc-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-sidebar::-webkit-scrollbar-thumb {
+    background: var(--tertiary);
+    border-radius: 2px;
+}
+
+.toc-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* 屏幕宽度小于 1200px 时，取消悬浮，放在文章顶部 */
+@media screen and (max-width: 1200px) {
+    .toc-sidebar {
+        position: static;
+        width: 100%;
+        max-width: 720px;
+        margin: 0 auto var(--content-gap) auto;
+        padding: 0;
+    }
+
+    .toc-sidebar .toc {
+        position: static;
+    }
+}
+
+/* 移动端隐藏目录 */
+@media screen and (max-width: 768px) {
+    .toc-sidebar {
+        display: none;
+    }
+}
+
+/* 当前激活的目录项高亮 */
+.toc-sidebar .toc a.active {
+    color: var(--primary);
+    font-weight: 600;
+    position: relative;
+}
+
+/* 添加箭头指示 */
+.toc-sidebar .toc a.active::before {
+    content: '➤';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* 悬停时也显示箭头（可选） */
+.toc-sidebar .toc a:hover::before {
+    content: '→';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: var(--secondary);
+}
+
+/* 确保有足够空间显示箭头 */
+.toc-sidebar .toc a {
+    padding-left: 15px;
+}
+```
+
+创建 JavaScript 文件实现滚动监听
+
+myblog\layouts\partials\toc-highlight.html
+
+```shell
+<script>
+    function initTocHighlight() {
+        const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
+        const tocLinks = document.querySelectorAll('.toc-sidebar .toc a');
+
+        if (headings.length === 0 || tocLinks.length === 0) return;
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -80% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    if (id) {
+                        tocLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + id) {
+                                link.classList.add('active');
+                                link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        headings.forEach(heading => observer.observe(heading));
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTocHighlight);
+    } else {
+        initTocHighlight();
+    }
+</script>
+```
+
+复制主题下 toc.html 到 layouts/partials/
+myblog\layouts\partials\toc.html
+
+```shell
+........
+</div>
+<script>initTocHighlight()</script>   # 在最后添加该行
+{{- end }}
+```
+
+修改配置，改为true，点击文章自动展开目录导航
+
+```shell
+TocOpen  = true                        # 目录默认折叠
 ```
 

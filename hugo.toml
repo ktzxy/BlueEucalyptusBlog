@@ -40,7 +40,7 @@ enableGitInfo = true
   ShowShareButtons = true              # 分享按钮
   UseHugoToc = true                    # 启用 Hugo 内置目录
   ShowToc  = true                        # 页面显示目录
-  TocOpen  = false                        # 目录默认折叠
+  TocOpen  = true                        # 目录默认折叠
   disableFingerprinting = false          #启用资源指纹识别
   # 启用评论
   comments = true                         
