@@ -6,12 +6,9 @@ slug = "r2tu06odzl"
 description = ""
 summary = ""
 categories = ["📒数据库"]
-tags = ["Oracle", "Mysql", "Sqlserver"]
+tags = ["数据库"]
 comments = true
 +++
-
-
-# Oracle、SQL Server、MySQL 常用函数与迁移对照手册
 
 ## 目录
 
