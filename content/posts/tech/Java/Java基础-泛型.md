@@ -576,21 +576,21 @@ public class GenericityDownTest {
 
 ### 8.2. 无限制类型擦除
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037296_6c5868.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037296_6c5868.webp)
 
 ### 8.3. 有限制类型擦除
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037297_b66b78.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037297_b66b78.webp)
 
 ### 8.4. 擦除方法中类型定义的参数
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037298_509f87.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037298_509f87.webp)
 
 ### 8.5. 桥接方法
 
 如果类型擦除和多态性发生了冲突时，则在子类中生成桥方法解决。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037299_39482a.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037299_39482a.webp)
 
 ## 9. 集合中使用泛型-常用案例
 

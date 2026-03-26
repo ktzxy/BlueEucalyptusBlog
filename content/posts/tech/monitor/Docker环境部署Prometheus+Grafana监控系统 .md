@@ -19,13 +19,13 @@ showSeries= true
 
 Prometheus是由SoundCloud开发的开源监控报警系统和时序列数据库(TSDB)。
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281534793_45c998.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281534793_45c998.webp)
 
 Prometheus使用Go语言开发，是Google BorgMon监控系统的开源版本。2016年由Google发起Linux基金会旗下的原生云基金会(Cloud Native Computing Foundation),  将Prometheus纳入其下第二大开源项目。Prometheus目前在开源社区相当活跃。Prometheus和Heapster(Heapster是K8S的一个子项目，用于获取集群的性能数据。)相比功能更完善、更全面。Prometheus性能也足够支撑上万台规模的集群。
 
 #### 1.系统架构图
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281534736_6afeff.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281534736_6afeff.webp)
 
 #### 2.基本原理
 
@@ -825,21 +825,21 @@ $ docker run -d -h grafana139-211  -m 8g   --network trust139  --ip=10.2.139.211
 
 运行后访问IP:3000，user:admin pass:passwd
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281534004_ec37e6.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281534004_ec37e6.webp)
 
 #### 2. 添加Prometheus数据源
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281534525_e7b302.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281534525_e7b302.webp)
 
 #### 3. 导入监控模板
 
 使用编号导入模板，Grafana服务需要联网，否则需要到Grafana模板下载JSON文件导入。
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281535341_fea840.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281535341_fea840.webp)
 
 下面是我使用的几个模板，导入后可以根据自己的情况定义变量值
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281535007_75aa59.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281535007_75aa59.webp)
 
 - 主机监控展示看板Node-exporter导入 8919 模板
 - 容器监控展示看板cadvisor-exporter导入193 模板
@@ -855,7 +855,7 @@ $ docker run -d -h grafana139-211  -m 8g   --network trust139  --ip=10.2.139.211
 
 #### 1. consul 内部原理
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281536997_9df653.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281536997_9df653.webp)
 
 Consul分为Client和Server两种节点（所有的节点也被称为Agent），Server节点保存数据，Client负责健康检查及转发数据请求到Server；Server节点有一个Leader和多个Follower，Leader节点会将数据同步到Follower，Server的数量推荐是3个或者5个，在Leader挂掉的时候会启动选举机制产生一个新的Leader。
 
@@ -883,7 +883,7 @@ docker run -d --name=consul4 -e CONSUL_BIND_INTERFACE=eth0 consul agent --server
 
 浏览器访问容器映射的8900端口：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281536133_8b9350.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281536133_8b9350.webp)
 
 #### 3. 服务注册到Consul
 
@@ -912,7 +912,7 @@ do
 done
 ```
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281536397_aa8e52.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281536397_aa8e52.webp)
 
 #### 4. Prometheus 配置consul 服务发现
 
@@ -959,7 +959,7 @@ curl -X POST http://192.168.16.173:9090/-/reload
 
 访问Prometheus web页面
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281536126_6fe9b4.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281536126_6fe9b4.webp)
 
 应用注册到consul
 
@@ -996,13 +996,13 @@ done < ip
 
 执行脚本注册到consul
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281537917_d754a0.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281537917_d754a0.webp)
 
 配置Grafana JVM 监控模板
 
 Load `8563`模板
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281537862_d76814.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281537862_d76814.webp)
 
 ```
 

@@ -31,7 +31,7 @@ public class HelloWorld {
 }
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040264_6ff8ec.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040264_6ff8ec.webp)
 
 > Notes: <font color=red>**main 是特殊的方法名，但不是关键字**</font>
 
@@ -87,7 +87,7 @@ age、$salary、_value、__1_value
 
 ### 1.5. Java 源程序与编译型运行区别
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040265_08c0dc.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040265_08c0dc.webp)
 
 ## 2. Java 关键字
 
@@ -225,7 +225,7 @@ age、$salary、_value、__1_value
 
 内存管理系统根据变量的类型为变量分配存储空间，分配的空间只能用来储存该类型数据。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040266_135451.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040266_135451.webp)
 
 因此，通过定义不同类型的变量，可以在内存中储存整数、小数或者字符。Java 的两大数据类型:
 
@@ -287,7 +287,7 @@ char 数据类型可以储存任何字符，Java 默认是 Unicode 编码，而 
 
 ### 3.3. 数值类型之间的转换
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040267_23589d.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040267_23589d.webp)
 
 上图是数值类型之间的合法转换，其中6个实心箭头表示无信息丢失的转换；3个虚箭头，表示可能有精度损失的转换。
 
@@ -442,7 +442,7 @@ System.out.println(j);   // 结果是:14
 
 一般地，当需要使用数字的时候，通常使用内置数据类型，如：byte、int、long、double 等。所有数值类型的包装类（Integer、Long、Byte、Double、Float、Short）都是抽象类 Number 的子类，其实就是基本类型对应的引用类型(包装类)。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040268_1996d2.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040268_1996d2.webp)
 
 > Tips: 除了 char 与 int 的包装类之外，其他包装类类名称均为基本类型名称的首字母大写
 
@@ -1156,7 +1156,7 @@ switch (expression) {
 
 switch case 执行时，一定会先进行匹配，匹配成功返回当前 case 的值，再根据是否有 break，判断是否继续输出，或是跳出判断。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040269_29452d.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251040269_29452d.webp)
 
 1. 计算出表达式的值
 2. 拿计算出来的值和 case 后面的值依次比较，一旦有对应的值，就执行该处的语句，在执行过程中，遇到 break，就结束。

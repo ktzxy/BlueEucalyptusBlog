@@ -416,11 +416,11 @@ public class test {
 
 ### 内存分析
 
-![image-20210209174424353](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241626762_a6d829.webp)
+![image-20210209174424353](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241626762_a6d829.webp)
 
-![image-20210209175152547](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241626090_d8c875.webp)
+![image-20210209175152547](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241626090_d8c875.webp)
 
-![image-20210209175931106](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241626206_043b2a.webp)
+![image-20210209175931106](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241626206_043b2a.webp)
 
 ### this的使用
 
@@ -499,11 +499,11 @@ public class demo1 {
 }
 ```
 
-![image-20210209203005814](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241626808_7cd556.webp)
+![image-20210209203005814](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241626808_7cd556.webp)
 
 一般官方的推荐访问方式：可以通过类名.属性名的方式去访问：
 
-![image-20210209203256877](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241626351_d1d6d8.webp)
+![image-20210209203256877](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241626351_d1d6d8.webp)
 
 总结：
 
@@ -993,9 +993,9 @@ public			*			*			*		*
 
 **private**
 
-![image-20210210092650471](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241627686_22e2be.webp)
+![image-20210210092650471](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241627686_22e2be.webp)
 
-![image-20210210092821315](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241627191_fb3fd7.webp)
+![image-20210210092821315](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241627191_fb3fd7.webp)
 
 **default：缺省修饰符**
 
@@ -1015,7 +1015,7 @@ public			*			*			*		*
 
 重写：在不同的类中。子类对父类提供的方法不满意的时候，要对父类的方法进行重写
 
-![image-20210210094952885](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241627056_31f195.webp)
+![image-20210210094952885](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241627056_31f195.webp)
 
 ```java
 //父类
@@ -1127,7 +1127,7 @@ equals可以使用快捷键快速生成
 
 **一、继承关系**   继承指的是一个类（称为子类、子接口）继承另外的一个类（称为父类、父接口）的功能，并可以增加它自己的新功能的能力。在Java中继承关系通过关键字extends明确标识，在设计时一般没有争议性。在UML类图设计中，继承用一条带空心三角箭头的实线表示，从子类指向父类，或者子接口指向父接口。 
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241627882_aff696.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241627882_aff696.webp)
 **二、实现关系**   实现指的是一个class类实现interface接口（可以是多个)的功能，实现是类与接口之间最常见的关系。在Java中此类关系通过关键字implements明确标识，在设计时一般没有争议性。在UML类图设计中，实现用一条带空心三角箭头的虚线表示，从类指向实现的接口。 
 
 ![img](assets/202310241627735_273513.jpeg)
@@ -1579,7 +1579,7 @@ public void eat(){
 
 ### 项目
 
-![image-20210215180014291](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241627965_42be68.webp)
+![image-20210215180014291](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241627965_42be68.webp)
 
 ```java
 package com.zy.test1;

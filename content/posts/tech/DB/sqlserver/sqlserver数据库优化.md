@@ -59,7 +59,7 @@ SqlServer AlwaysOn高可用组
 
 从SqlServer2012开始提供的一项数据库高可用解决方案。
 
-![image-20260215142506227](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304170631671.webp)
+![image-20260215142506227](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304170631671.webp)
 
 核心价值：
 
@@ -269,7 +269,7 @@ Model系统--Raid 0
 
 键查找->标签查找（使用了非聚集索引的语句中，用于查找不包含在当前索引中的字段）
 
-![image-20260218152021942](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304170645345.webp)
+![image-20260218152021942](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304170645345.webp)
 
 Order by->参与排序操作的数据量的大小
 

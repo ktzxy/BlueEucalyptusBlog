@@ -24,7 +24,7 @@ comments = true
 
 ### 1.JVM的位置
 
-![1624091891954](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120941477_b0f3d0.webp)
+![1624091891954](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120941477_b0f3d0.webp)
 
 **三种JVM:**
 
@@ -36,18 +36,18 @@ comments = true
 
 ### 2.JVM的体系结构
 
-![1624171818762](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940033_4be5d2.webp)
+![1624171818762](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940033_4be5d2.webp)
 
 - **jvm调优：99%都是在方法区和堆，大部分时间调堆。** JNI（java native interface）本地方法接口。 
 
- ![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120941138_372936.webp) 
+ ![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120941138_372936.webp) 
 
 ### 3.类加载器
 
 -  作用：加载Class文件——如果new Student();（具体实例在堆里，引用变量名放栈里） 。
 -  先来看看一个类加载到 JVM 的一个基本结构：
 
-![1624172801081](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940042_57d7fe.webp)
+![1624172801081](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940042_57d7fe.webp)
 
 - 类是模板，对象是具体的，通过new来实例化对象。car1，car2，car3，名字在栈里面，真正的实例，具体的数据在堆里面，栈只是引用地址。
 
@@ -149,7 +149,7 @@ public class String {
 
 - idea报了一个错误：
 
-![1624174797480](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940041_eaa8e2.webp)
+![1624174797480](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940041_eaa8e2.webp)
 
 > 这是因为，在运行一个类之前，首先会在应用程序加载器(APP)中找，如果APP中有这个类，继续向上在扩展类加载器EXC中找，然后再向上，在启动类( 根 )加载器BOOT中找。如果在BOOT中有这个类的话，最终执行的就是根加载器中的。如果BOOT中没有的话，就会倒找往回找。
 
@@ -175,7 +175,7 @@ public class String {
 
 - ==例子==：当一个Hello.class这样的文件要被加载时。不考虑我们自定义类加载器，首先会在AppClassLoader中检查是否加载过，如果有那就无需再加载了。如果没有，那么会拿到父加载器，然后调用父加载器的loadClass方法。父类中同理也会先检查自己是否已经加载过，如果没有再往上。注意这个类似递归的过程，直到到达Bootstrap classLoader之前，都是在检查是否加载过，并不会选择自己去加载。直到BootstrapClassLoader，已经没有父加载器了，这时候开始考虑自己是否能加载了，如果自己无法加载，会下沉到子加载器去加载，一直到最底层，如果没有任何加载器能加载，就会抛出ClassNotFoundException。
 
- ![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940046_43ae98.webp) 
+ ![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940046_43ae98.webp) 
 
 ==作用==：
 
@@ -192,19 +192,19 @@ public class String {
 	
 	在]ava中将执行程序分成本地代码和远程代码两种，本地代码默认视为可信任的，而远程代码则被看作是不受信的。对于授信的本地代码，可以访问一切本地资源。而对于非授信的远程代码在早期的ava实现中，安全依赖于沙箱(Sandbox)机制。如下图所示JDK1.0安全模型。
 
-![image-20210410110304887](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940728_29cd6d.webp)
+![image-20210410110304887](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940728_29cd6d.webp)
 
 	 但如此严格的安全机制也给程序的功能扩展带来障碍，比如当用户希望远程代码访问本地系统的文件时候，就无法实现。因此在后续的Java1.1 版本中，针对安全机制做了改进，增加了安全策略，允许用户指定代码对本地资源的访问权限。如下图所示JDK1.1安全模型。
 
-![image-20210410110500553](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121028830_2d92dc.webp)
+![image-20210410110500553](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121028830_2d92dc.webp)
 
 	在Java1.2版本中，再次改进了安全机制，增加了代码签名。不论本地代码或是远程代码，都会按照用户的安全策略设定，由类加载器加载到虚拟机中权限不同的运行空间，来实现差异化的代码执行权限控制。如下图所示JDK1.2安全模型。
 
-![image-20210410110621464](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121028742_eaa069.webp)
+![image-20210410110621464](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121028742_eaa069.webp)
 
 	当前最新的安全机制实现，则引入了域(Domain)的概念。虚拟机会把所有代码加载到不同的系统域和应用域，系统域部分专门负责与关键资源进行交互，而各个应用域部分则通过系统域的部分代理来对各种需要的资源进行访问。虚拟机中不同的受保护域(Protected Domain)，对应不一样的权限(Permission)。存在于不同域中的类文件就具有了当前域的全部权限，如下图所示最新的安全模型(jdk 1.6)。
 
-![image-20210410110904684](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940950_e8279e.webp)
+![image-20210410110904684](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940950_e8279e.webp)
 
 **组成沙箱的基本组件**:
 
@@ -293,7 +293,7 @@ public synchronized void start() {
 
 **Method Area 方法区**
 
-![1624178870929](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940967_39101b.webp)
+![1624178870929](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940967_39101b.webp)
 
 - 方法区是被所有线程共享，所有字段和方法字节码，以及一些特殊方法，如构造函数，接口代码也在此定义，简单说，所有定义的方法的信息都保存在该区域，**此区域属于共享区间;**
 
@@ -310,7 +310,7 @@ public synchronized void start() {
 
 - 队列：先进先出（FIFO : First Input First Output）
 
-![image-20210412153258254](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121029139_adff65.webp)
+![image-20210412153258254](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121029139_adff65.webp)
 
 **栈管理程序运行**
 
@@ -320,7 +320,7 @@ public synchronized void start() {
 
 思考：为什么main方法最后执行！为什么一个test() 方法执行完了，才会继续走main方法！
 
-![image-20210412153612934](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940570_4da14b.webp)
+![image-20210412153612934](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940570_4da14b.webp)
 
 > **喝多了吐就是栈，吃多了拉就是队列**。
 
@@ -348,11 +348,11 @@ public synchronized void start() {
 
 - 遵循 “先进后出” / "后进先出" 的原则。
 
-![image-20210412154905868](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940572_c2d02f.webp)
+![image-20210412154905868](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940572_c2d02f.webp)
 
 - 栈满了，抛出异常：stackOverflowError
 
-![image-20210412160952117](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940606_590413.webp)
+![image-20210412160952117](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940606_590413.webp)
 
 - 对象实例化的过程。
 
@@ -363,7 +363,7 @@ public synchronized void start() {
 - IBM 39 VM
 - 我们学习都是：Hotspot
 
-![1624179540458](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940696_ef298e.webp)
+![1624179540458](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940696_ef298e.webp)
 
 ### 11.堆
 
@@ -379,14 +379,14 @@ public synchronized void start() {
 
 - 堆内存逻辑上分为三部分：新生，养老，永久（元空间 : JDK8 以后名称）。
 
-![image-20210412165729382](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940725_42eb6a.webp)
+![image-20210412165729382](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940725_42eb6a.webp)
 
 **谁空谁是to**
 
-- **GC**垃圾回收主要是在新生区和养老区，又分为轻GC 和 重GC，如果内存不够，或者存在死循环，就会导致![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940878_1d0ff0.webp)
+- **GC**垃圾回收主要是在新生区和养老区，又分为轻GC 和 重GC，如果内存不够，或者存在死循环，就会导致![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940878_1d0ff0.webp)
 - 在JDK8以后，永久存储区改了个名字(元空间)。
 
-![image-20210413192515497](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121029890_fe7188.webp)
+![image-20210413192515497](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121029890_fe7188.webp)
 
 ### 12.新生区、养老区
 
@@ -417,7 +417,7 @@ public synchronized void start() {
 
 - 常量池（Constant Pool）是方法区的一部分，Class文件除了有类的版本，字段，方法，接口描述信息外，还有一项信息就是常量池，这部分内容将在类加载后进入方法区的运行时常量池中存放！
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940415_4cfe65.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940415_4cfe65.webp)
 
 ### 14.堆内存调优
 
@@ -449,9 +449,9 @@ public class Demo01 {
 
 - **IDEA**中进行VM调优参数设置，然后启动。
 
-![1624266807320](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940462_44b41b.webp)
+![1624266807320](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940462_44b41b.webp)
 
-![1624266743537](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940820_3bfd86.webp)
+![1624266743537](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940820_3bfd86.webp)
 
 - 发现，默认的情况下分配的内存是总内存的 1/4，而初始化的内存为 1/64 ！
 
@@ -461,11 +461,11 @@ public class Demo01 {
 
 - VM参数调优：把初始内存，和总内存都调为 1024M，运行，查看结果！
 
-![1624266898950](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940905_91156d.webp)
+![1624266898950](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940905_91156d.webp)
 
 - 来大概计算分析一下！ 
 
-![1624267012539](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940068_4e6d5a.webp)
+![1624267012539](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940068_4e6d5a.webp)
 
 - 再次证明：元空间并不在虚拟机中，而是使用本地内存。
 
@@ -501,7 +501,7 @@ public class Demo02 {
 
 - 测试，查看结果！
 
-![1624267311233](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940187_65d8e4.webp)
+![1624267311233](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940187_65d8e4.webp)
 
 - 这是一个young 区域撑爆的JAVA 内存日志，其中 PSYoungGen 表示 youngGen分区的变化1536k 表示 GC 之前的大小。
 
@@ -509,7 +509,7 @@ public class Demo02 {
 
 - 整个Young区域的大小从 1536K 到 672K , young代的总大小为 7680K。
 
-  ![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940304_625aab.webp) 
+  ![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940304_625aab.webp) 
 
 - user – 总计本次 GC 总线程所占用的总 CPU 时间。
 
@@ -542,25 +542,25 @@ public class Demo02 {
 
 - 采用树形展现对象间相互引用的情况
 
-![image-20210415152719180](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940406_455512.webp)
+![image-20210415152719180](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940406_455512.webp)
 
 > 安装JProﬁler
 
 1. IDEA插件安装
 
-![1624268021039](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940580_ee85d3.webp)
+![1624268021039](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940580_ee85d3.webp)
 
 2. 安装JProﬁler监控软件
 
 - 下载地址：[https://www.ej-technologies.com/download/jproﬁler/version_92](https://www.ej-technologies.com/download/jprofiler/version_92)
 
-![1624267906776](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940680_1048ff.webp)
+![1624267906776](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940680_1048ff.webp)
 
 3. 下载完双击运行，选择自定义目录安装，点击Next。
 
 - 注意：安装路径，**建议选择一个文件名中没有中文，没有空格的路径** ，否则识别不了。然后一直点Next。
 
-![1624268395234](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940865_60d168.webp)
+![1624268395234](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940865_60d168.webp)
 
 4. 注册
 
@@ -577,7 +577,7 @@ L-Larry_Lau@163.com#40775-3wle0g1uin5c1#0674
 
 - Settings–Tools–JProﬂier–JProﬂier executable选择JProﬁle安装可执行文件。（如果系统只装了一个版本， 启动IDEA时会默认选择）保存。
 
-![1624268549728](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940131_14d2c0.webp)
+![1624268549728](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940131_14d2c0.webp)
 
 - 代码测试：
 
@@ -612,21 +612,21 @@ public class Demo03 {
 
 - vm参数 ： `-Xms1m -Xmx8m -XX:+HeapDumpOnOutOfMemoryError`
 
-![1624268764318](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940261_a04060.webp)
+![1624268764318](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940261_a04060.webp)
 
 - 寻找文件：
 
-  ![1624268912503](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940330_3691d7.webp)
+  ![1624268912503](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940330_3691d7.webp)
 
 > 使用 Jproﬁler 工具分析查看
 
 双击这个文件默认使用 Jproﬁler 进行 Open大的对象！
 
-![1624268999291](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121037653_7fe9eb.webp)
+![1624268999291](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121037653_7fe9eb.webp)
 
-![1624269093434](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940460_be579b.webp)
+![1624269093434](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940460_be579b.webp)
 
-![1624270120587](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940712_47ae8e.webp)
+![1624270120587](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940712_47ae8e.webp)
 
 - 从软件开发的角度上，dump文件就是当程序产生异常时，用来记录当时的程序状态信息（例如堆栈的状态），用于程序开发定位问题。
 
@@ -634,7 +634,7 @@ public class Demo03 {
 
 ##### 1.引用计数法
 
-![image-20210415154058132](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940123_67d234.webp)
+![image-20210415154058132](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940123_67d234.webp)
 
 - 每个对象有一个引用计数器，当对象被引用一次则计数器加1，当对象引用失效一次，则计数器减1，对于计数器为0的对象意味着是垃圾对象，可以被GC回收。
 
@@ -646,7 +646,7 @@ public class Demo03 {
 
 **什么是复制算法？**
 
-![image-20210415154352529](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121037299_913366.webp)
+![image-20210415154352529](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121037299_913366.webp)
 
 - Minor GC 会把Eden中的所有活的对象都移到Survivor区域中，如果Survivor区中放不下，那么剩下的活的对象就被移动到Old generation中，**也就是说，一旦收集后，Eden就是变成空的了**
 
@@ -656,7 +656,7 @@ public class Demo03 {
 
 > 面试题：如何判断哪个是to区呢？一句话：**谁空谁是to**
 
-![image-20210415155111210](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940404_30d67e.webp)
+![image-20210415155111210](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940404_30d67e.webp)
 
 **原理解释：**
 
@@ -664,19 +664,19 @@ public class Demo03 {
 
 - HotSpot JVM 把年轻代分为了三部分：一个 Eden 区 和 2 个Survivor区（from区 和 to区）。默认比例为 8:1:1，一般情况下，新创建的对象都会被分配到Eden区（一些大对象特殊处理），这些对象经过第一次Minor GC后，如果仍然存活，将会被移到Survivor区，对象在Survivor中每熬过一次Minor GC ， 年龄就会增加1岁，当它的年龄增加到一定程度时，就会被移动到年老代中，因为年轻代中的对象基本上  都是朝生夕死，所以在年轻代的垃圾回收算法使用的是复制算法！复制算法的思想就是将内存分为两块，每次只用其中一块，当这一块内存用完，就将还活着的对象复制到另外一块上面。复制算法不会产  生内存碎片！
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940439_85ce53.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940439_85ce53.webp)
 
 - 在GC开始的时候，对象只会在Eden区和名为 “From” 的Survivor区，Survivor区“TO” 是空的，紧接着进行GC，Eden区中所有存活的对象都会被复制到 “To”，而在 “From” 区中，仍存活的对象会更具他们的年龄值来决定去向。
 - 年龄达到一定值的对象会被移动到老年代中，没有达到阈值的对象会被复制到  “To 区域”，经过这次GC后，Eden区和From区已经被清空，这个时候， “From” 和 “To” 会交换他们的角色， 也就是新的 “To” 就是GC前的“From” ， 新的 “From” 就是上次GC前的 “To”。
 - 不管怎样，都会保证名为To 的Survicor区域是空的。 Minor GC会一直重复这样的过程。直到 To 区 被填满 ，“To” 区被填满之后，会将所有的对象移动到老年代中。
 
-![image-20210415154806495](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940656_13f406.webp)
+![image-20210415154806495](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940656_13f406.webp)
 
 - 因为Eden区对象一般存活率较低，一般的，使用两块10%的内存作为空闲和活动区域，而另外80%的内存，则是用来给新建对象分配内存的。一旦发生GC，将10%的from活动区间与另外80%中存活的Eden 对象转移到10%的to空闲区域，接下来，将之前的90%的内存，全部释放，以此类推；
 
 - 好处：没有内存碎片；坏处：浪费内存空间。
 
-![image-20210415155511598](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940703_558889.webp)
+![image-20210415155511598](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940703_558889.webp)
 
 **劣势：** 
 
@@ -690,7 +690,7 @@ public class Demo03 {
 
 - 回收不是绿色的对象。
 
-![image-20210415160200159](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940142_6cb3e4.webp)
+![image-20210415160200159](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940142_6cb3e4.webp)
 
 - 当堆中的有效内存空间被耗尽的时候，就会停止整个程序（也被称为stop the world），然后进行两项工作，第一项则是标记，第二项则是清除。
 
@@ -716,9 +716,9 @@ public class Demo03 {
 
 **原理：**
 
-![image-20210415160536353](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940403_54c9fb.webp)
+![image-20210415160536353](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940403_54c9fb.webp)
 
-![image-20210415160646440](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121037501_1a721c.webp)
+![image-20210415160646440](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121037501_1a721c.webp)
 
 - 在整理压缩阶段，不再对标记的对象作回收，而是通过所有存活对象都像一端移动，然后直接清除边界以外的内存。可以看到，标记的存活对象将会被整理，按照内存地址依次排列，而未被标记的内存会被  清理掉，如此一来，当我们需要给新对象分配内存时，JVM只需要持有一个内存的起始地址即可，这比维护一个空闲列表显然少了许多开销。
 
@@ -728,7 +728,7 @@ public class Demo03 {
 
 - 先标记清除几次，再压缩。
 
-![image-20210415160914621](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940593_b88cb8.webp)
+![image-20210415160914621](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940593_b88cb8.webp)
 
 #### 3.总结
 
@@ -766,7 +766,7 @@ public class Demo03 {
 
    - JMM定义了线程工作内存和主内存之间的抽象关系∶线程之间的共享变量存储在主内存(Main Memory)中，每个线程都有一个私有的本地内存（Local Memory)。
 
-![image-20210415165941964](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940624_de02fb.webp)
+![image-20210415165941964](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120940624_de02fb.webp)
 
 - 解决共享对象可见性这个问题：volilate
 

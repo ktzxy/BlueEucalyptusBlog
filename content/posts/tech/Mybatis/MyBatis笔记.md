@@ -23,7 +23,7 @@ iBatis一词来源于“internet”和“abatis”的组合，是一个基于Jav
 4. MyBatis 是一个 半自动的ORM（Object Relation Mapping）框架
 ## 1.3、MyBatis下载
 - [MyBatis下载地址](https://github.com/mybatis/mybatis-3)
-- ![image-20230403195340806](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304031953891_b37b57.webp)
+- ![image-20230403195340806](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304031953891_b37b57.webp)
 ## 1.4、和其它持久化层技术对比
 - JDBC  
 	- SQL 夹杂在Java代码中耦合度高，导致硬编码内伤  
@@ -343,12 +343,12 @@ properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapp
     </mappers>
 </configuration>
 ```
-![image-20230405160649233](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304051606490_8aa7cb.webp)
+![image-20230405160649233](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304051606490_8aa7cb.webp)
 
 # 4、默认的类型别名
-![image-20230405235538938](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304052355626_3090ac.webp)
+![image-20230405235538938](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304052355626_3090ac.webp)
 
-![image-20230405235613429](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304052356545_bfc005.webp)
+![image-20230405235613429](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304052356545_bfc005.webp)
 
 # 5、MyBatis的增删改查
 1. 添加
@@ -964,10 +964,10 @@ public void getEmpAndDeptByStep() {
 ```
 - 关闭延迟加载
 
-  ![image-20230408152042377](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304081520200_526687.webp)
+  ![image-20230408152042377](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304081520200_526687.webp)
 
 - 开启延迟加载，只运行获取emp的SQL语句
-![image-20230408151948946](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304081519796_54202f.webp)
+![image-20230408151948946](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304081519796_54202f.webp)
 - fetchType：当开启了全局的延迟加载之后，可以通过该属性手动控制延迟加载的效果，fetchType="lazy(延迟加载)|eager(立即加载)"
 
   ```xml
@@ -1089,7 +1089,7 @@ public void testDynamicSQLMapper() {
 
 }
 ```
-![image-20230409193101535](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304091931820_881510.webp)
+![image-20230409193101535](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304091931820_881510.webp)
 ## 10.4、choose、when、otherwise
 - `choose、when、otherwise`相当于`if...else if..else`
 - when至少要有一个，otherwise至多只有一个
@@ -1468,13 +1468,13 @@ public void testDynamicSQLMapperByChoose() {
 </generatorConfiguration>
 ```
 ### 12.1.4、执行MBG插件的generate目标
-- ![image-20230410192956551](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304101929375_eca40a.webp)
+- ![image-20230410192956551](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304101929375_eca40a.webp)
 
 - 如果出现报错：`Exception getting JDBC Driver`，可能是pom.xml中，数据库驱动配置错误
 
 - 执行结果
 
-  ![image-20230410222919029](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102229217_f93b8c.webp)
+  ![image-20230410222919029](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102229217_f93b8c.webp)
 ## 12.2、QBC
 ### 查询
 - `selectByExample`：按条件查询，需要传入一个example对象或者null；如果传入一个null，则表示没有条件，也就是查询所有数据
@@ -1490,7 +1490,7 @@ public void testMBG() {
     System.out.println(emp);
 }
 ```
-![image-20230410231322258](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102313806_56b8bf.webp)
+![image-20230410231322258](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102313806_56b8bf.webp)
 
 ```java
 @Test
@@ -1503,7 +1503,7 @@ public void testMBG() {
 }
 ```
 
-![image-20230410231412063](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102314597_fc62bd.webp)
+![image-20230410231412063](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102314597_fc62bd.webp)
 
 ```java
 @Test
@@ -1519,7 +1519,7 @@ public void testMBG() {
 }
 ```
 
-![image-20230410231545624](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102315072_75ec0b.webp)
+![image-20230410231545624](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102315072_75ec0b.webp)
 
 ### 增改
 - `updateByPrimaryKey`：通过主键进行数据修改，如果某一个值为null，也会将对应的字段改为null
@@ -1535,7 +1535,7 @@ public void testMBG() {
 	}
 	```
 	
-	![image-20230410231738110](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102317296_4336ac.webp)
+	![image-20230410231738110](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102317296_4336ac.webp)
 - `updateByPrimaryKeySelective()`：通过主键进行选择性数据修改，如果某个值为null，则不修改这个字段
 	
 	```java
@@ -1549,7 +1549,7 @@ public void testMBG() {
 	}
 	```
 	
-	![image-20230410231931464](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102319639_dff741.webp)
+	![image-20230410231931464](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304102319639_dff741.webp)
 # 13、分页插件
 
 limit index,pageSize

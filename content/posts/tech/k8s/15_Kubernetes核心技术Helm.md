@@ -14,7 +14,7 @@ showSeries= true
 
 Helm就是一个包管理工具【类似于npm】
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530850.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530850.webp)
 
 ## 为什么引入Helm
 
@@ -54,7 +54,7 @@ Helm采用客户端/服务端架构，有如下组件组成
 - Tiller是服务器端组件，在Kubernetes集群上运行，并管理Kubernetes应用程序
 - Repository是Chart仓库，Helm客户端通过HTTP协议来访问仓库中Chart索引文件和压缩包
 
-![image-20201119095458328](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530851.webp)
+![image-20201119095458328](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530851.webp)
 
 ## Helm v3变化
 
@@ -70,11 +70,11 @@ Helm采用客户端/服务端架构，有如下组件组成
 
 V3之前
 
-![image-20201118171523403](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530852.webp)
+![image-20201118171523403](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530852.webp)
 
  V3版本
 
-![image-20201118171956054](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530853.webp)
+![image-20201118171956054](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530853.webp)
 
 ## helm配置
 
@@ -117,7 +117,7 @@ helm repo list
 helm search repo stable
 ```
 
-![image-20201118195732281](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530854.webp)
+![image-20201118195732281](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530854.webp)
 
 或者可以删除我们添加的源
 
@@ -142,7 +142,7 @@ helm repo remove stable
 helm search repo weave
 ```
 
-![image-20201118200603643](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530855.webp)
+![image-20201118200603643](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530855.webp)
 
 ### 根据搜索内容选择安装
 
@@ -164,7 +164,7 @@ kubectl apply -f weave-scope.yaml
 helm list
 ```
 
-![image-20201118203727585](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530856.webp)
+![image-20201118203727585](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530856.webp)
 
 同时可以通过下面命令，查看更新具体的信息
 
@@ -174,7 +174,7 @@ helm status ui
 
 但是我们通过查看 svc状态，发现没有对象暴露端口
 
-![image-20201118205031343](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530857.webp)
+![image-20201118205031343](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530857.webp)
 
 所以我们需要修改service的yaml文件，添加NodePort
 
@@ -182,11 +182,11 @@ helm status ui
 kubectl edit svc ui-weave-scope
 ```
 
-![image-20201118205129431](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530858.webp)
+![image-20201118205129431](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530858.webp)
 
 这样就可以对外暴露端口了
 
-![image-20201118205147631](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530859.webp)
+![image-20201118205147631](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530859.webp)
 
 然后我们通过 ip + 32185 即可访问
 
@@ -200,7 +200,7 @@ helm create mychart
 
 创建完成后，我们就能看到在当前文件夹下，创建了一个 mychart目录
 
-![image-20201118210755621](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530860.webp)
+![image-20201118210755621](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530860.webp)
 
 #### 目录格式
 
@@ -232,7 +232,7 @@ kubectl expose deployment web1 --port=80 --target-port=80 --type=NodePort --dry-
 helm install web1 mychart
 ```
 
-![image-20201118213120916](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530861.webp)
+![image-20201118213120916](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530861.webp)
 
 ### 应用升级
 
@@ -246,7 +246,7 @@ helm upgrade web1 mychart
 
 通过传递参数，动态渲染模板，yaml内容动态从传入参数生成
 
-![image-20201118213630083](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530863.webp)
+![image-20201118213630083](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530863.webp)
 
 刚刚我们创建mychart的时候，看到有values.yaml文件，这个文件就是一些全局的变量，然后在templates中能取到变量的值，下面我们可以利用这个，来完成动态模板
 
@@ -263,7 +263,7 @@ helm upgrade web1 mychart
 
 在values.yaml定义变量和值
 
-![image-20201118214050899](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530864.webp)
+![image-20201118214050899](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530864.webp)
 
 ### 获取变量和值
 
@@ -271,7 +271,7 @@ helm upgrade web1 mychart
 
 例如： `{{.Release.Name}}`
 
-![image-20201118214413203](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530865.webp)
+![image-20201118214413203](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530865.webp)
 
 ### 安装应用
 
@@ -281,4 +281,4 @@ helm upgrade web1 mychart
 helm install --dry-run web2 mychart
 ```
 
-![image-20201118214727058](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530866.webp)
+![image-20201118214727058](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530866.webp)

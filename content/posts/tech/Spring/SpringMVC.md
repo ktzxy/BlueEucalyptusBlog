@@ -114,7 +114,7 @@ Spring版本：5.3.1
 
 传递性导入。
 
-![image-20230420110135250](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304201101483_66ee4c.webp)
+![image-20230420110135250](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304201101483_66ee4c.webp)
 
 > 注意：手动创建web，在创建web.xml时，将路径添加完整
 >
@@ -270,9 +270,9 @@ SpringMVC的配置文件默认的位置和名称：
 
 **配置tomcat**
 
-![image-20230420115835241](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304201158330_856c4e.webp)
+![image-20230420115835241](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304201158330_856c4e.webp)
 
-![image-20230420115810842](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304201158994_7a76c5.webp)
+![image-20230420115810842](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304201158994_7a76c5.webp)
 
 ### ①实现对首页的访问
 
@@ -616,7 +616,7 @@ public String testPOJO(User user){
 
 tomcat7.x中配置server.xml后，改为get请求，则无乱码
 
-![image-20230422215351515](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304222153794_78727d.webp)
+![image-20230422215351515](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304222153794_78727d.webp)
 
 tomcat8.x以后，post还有乱码，则需要添加下列配置
 
@@ -656,17 +656,17 @@ tomcat8.x以后，post还有乱码，则需要添加下列配置
 
 2.File Encodings设置
 
-![image-20230422232050195](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304222320421_cdbbc8.webp)
+![image-20230422232050195](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304222320421_cdbbc8.webp)
 
 3.tomcat内配置
 
-![image-20230422232142065](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304222321189_6241f2.webp)
+![image-20230422232142065](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304222321189_6241f2.webp)
 
-![image-20230422232229756](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304222322856_66e623.webp)
+![image-20230422232229756](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304222322856_66e623.webp)
 
 4.tomcat->conf->server.xml内配置
 
-![image-20230422232339238](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304222323305_401b61.webp)
+![image-20230422232339238](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304222323305_401b61.webp)
 
 # 5、域对象共享数据
 
@@ -802,7 +802,7 @@ public String testHello(){
 }
 ```
 
-![image-20230423200923712](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232009065_914b14.webp)
+![image-20230423200923712](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232009065_914b14.webp)
 
 ## 6.2、转发视图
 
@@ -821,7 +821,7 @@ public String testForward(){
 }
 ```
 
-![image-20230423200942031](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232009089_4b6300.webp)
+![image-20230423200942031](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232009089_4b6300.webp)
 
 ## 6.3、重定向视图
 
@@ -840,7 +840,7 @@ public String testRedirect(){
 }
 ```
 
-![image-20230423201006201](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232010256_21770f.webp)
+![image-20230423201006201](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232010256_21770f.webp)
 
 > 注：
 >
@@ -1943,7 +1943,7 @@ RedirectView
 
 DispatcherServlet 本质上是一个 Servlet，所以天然的遵循 Servlet 的生命周期。所以宏观上是 Servlet生命周期来进行调度。
 
-![image-20230423201039448](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232010521_545ca6.webp)
+![image-20230423201039448](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232010521_545ca6.webp)
 
 ### ①初始化WebApplicationContext
 
@@ -2298,17 +2298,17 @@ i. 再判断是否配置了mvc:default-servlet-handler
 
 ii. 如果没配置，则控制台报映射查找不到，客户端展示404错误
 
-![image-20230423201104813](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232011880_e4b9ee.webp)
+![image-20230423201104813](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232011880_e4b9ee.webp)
 
-![image-20230423201115492](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232011562_b565b4.webp)
+![image-20230423201115492](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232011562_b565b4.webp)
 
 iii. 如果有配置，则访问目标资源（一般为静态资源，如：JS,CSS,HTML），找不到客户端也会展示404
 
 错误
 
-![image-20230423201129909](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232011980_e877cb.webp)
+![image-20230423201129909](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232011980_e877cb.webp)
 
-![image-20230423201137355](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232011429_027d92.webp)
+![image-20230423201137355](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202304232011429_027d92.webp)
 
 b) 存在则执行下面的流程
 

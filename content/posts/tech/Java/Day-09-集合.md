@@ -41,8 +41,8 @@ comments = true
 
 - 集合的使用场景
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931056_c9343c.webp)
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931092_39e5f3.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931056_c9343c.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931092_39e5f3.webp)
 
 #### 2.集合框架涉及到的API
 
@@ -54,11 +54,11 @@ comments = true
 
 - **Collection接口继承树**
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120932456_d0f9d9.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120932456_d0f9d9.webp)
 
 - **Map接口继承树**
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931032_5f5deb.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931032_5f5deb.webp)
 
 ```java
 /**
@@ -546,7 +546,7 @@ public class CollectinoTest {
 - **Iterator 仅用于遍历集合**，Iterator本身并不提供承装对象的能力。如果需要创建Iterator 对象，则必须有一个被迭代的集合。
 - **集合对象每次调用iterator()方法都得到一个全新的迭代器对象**，默认游标都在集合的第一个元素之前。
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120933958_a41740.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120933958_a41740.webp)
 
 #### 使用Iterator遍历Collection
 
@@ -602,7 +602,7 @@ public class IteratorTest {
 
 #### 迭代器Iterator的执行原理
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931099_1a7e47.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931099_1a7e47.webp)
 
 #### Iterator遍历集合的两种错误写法
 
@@ -711,7 +711,7 @@ public class IteratorTest {
 - 遍历集合的底层调用Iterator完成操作。
 - foreach还可以用来遍历数组。
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931045_578c7b.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931045_578c7b.webp)
 
 ```java
 import org.junit.Test;
@@ -836,7 +836,7 @@ public class ForTest {
 - 对于频繁的插入或删除元素的操作，建议使用LinkedList类，效率较高
 - LinkedList：双向链表，内部没有声明数组，而是定义了Node类型的first和last，用于记录首末元素。同时，定义内部类Node，作为LinkedList中保存数据的基本结构。
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931048_fb2a6c.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931048_fb2a6c.webp)
 
 > ```java
 > /**
@@ -1242,7 +1242,7 @@ public class User{
 >      */
 > ```
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931120_421475.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931120_421475.webp)
 
 - 底层也是数组，初始容量为16，当如果使用率超过0.75，（16*0.75=12）就会扩大容量为原来的2倍。（16扩容为32，依次为64,128....等）
 
@@ -1286,7 +1286,7 @@ public class User{
 - **LinkedHashSet插入性能略低于HashSet**，但在迭代访问Set 里的全部元素时有很好的性能。
 - LinkedHashSet不允许集合元素重复。
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931152_89e320.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931152_89e320.webp)
 
 ```java
 import org.junit.Test;
@@ -1406,7 +1406,7 @@ public class User{
 - TreeSet和后面要讲的TreeMap采用红黑树的存储结构
 - 特点：有序，查询速度比List快
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931181_4ab611.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931181_4ab611.webp)
 
 ------
 
@@ -1703,7 +1703,7 @@ public class User implements Comparable{
 
 #### TreeSet的课后练习
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931208_4cd037.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931208_4cd037.webp)
 
 - MyDate类
 
@@ -2091,7 +2091,7 @@ public class Person {
 
 ### 6.Map接口
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931664_982a7c.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931664_982a7c.webp)
 
 #### Map接口及其多个实现类的对比
 
@@ -2144,7 +2144,7 @@ public class MapTest {
 - key 和value 之间存在单向一对一关系，即通过指定的key 总能找到唯一的、确定的value
 - Map接口的常用实现类：HashMap、TreeMap、LinkedHashMap和Properties。其中，HashMap是Map 接口使用频率最高的实现类
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931746_ee0676.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931746_ee0676.webp)
 
 ```java
  /**
@@ -2174,8 +2174,8 @@ public class MapTest {
 >
 > JDK 8版本发布以后：HashMap是数组+链表+红黑树实现。
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931828_b12fef.webp)
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120934346_e43613.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931828_b12fef.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120934346_e43613.webp)
 
 - HashMap源码中的重要常量
 
@@ -2277,11 +2277,11 @@ public class MapTest {
 
 - HashMap中的内部类：Node
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931142_3603af.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931142_3603af.webp)
 
 - LinkedHashMap中的内部类：Entry
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931403_f5c938.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931403_f5c938.webp)
 
 ```java
 /*
@@ -2702,11 +2702,11 @@ public class TreeMapTest {
 
 1. 新建jdbc.properties文件
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120934443_0e61b8.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120934443_0e61b8.webp)
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120934186_97635c.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120934186_97635c.webp)
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120934198_ab76bc.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120934198_ab76bc.webp)
 
 2. 编写源代码
 
@@ -2752,11 +2752,11 @@ public class PropertiesTest {
 >
 > 防止jdbc.properties出现中文乱码，可根据如下解决：
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931886_35e3d1.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931886_35e3d1.webp)
 
 2.新建jdbc.properties
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931913_838c4e.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931913_838c4e.webp)
 
 ### 7.Collections工具类
 
@@ -2866,7 +2866,7 @@ public class CollectionTest {
 
 - Enumeration 接口是Iterator迭代器的“古老版本”
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931065_bbcad1.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410120931065_bbcad1.webp)
 
 ```java
 Enumeration stringEnum = new StringTokenizer("a-b*c-d-e-g", "-");

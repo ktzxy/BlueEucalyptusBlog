@@ -92,7 +92,7 @@ npm install hexo-cli -g  或者npm install -g hexo
 
 解决：
 
-![image-20230918204513690](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110634340.webp)
+![image-20230918204513690](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110634340.webp)
 
 
 
@@ -785,9 +785,9 @@ index_img: xxx.png
 
    ```
    default_cover:
-     - https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png
-     - https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg2.png
-     - https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg3.png
+     - https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png
+     - https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg2.png
+     - https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg3.png
    ```
 
 ## 文章页相关配置
@@ -840,10 +840,10 @@ reward:
   enable: true
   coinAudio: https://cdn.cbd.int/akilar-candyassets@1.0.36/audio/aowu.m4a
   QR_code:
-    - img: https://cdn.jsdelivr.net/gh/shaunzhao-yu/img@main/photos/202310072330878.png
+    - img: https://fastly.jsdelivr.net/gh/shaunzhao-yu/img@main/photos/202310072330878.png
       link:
       text: wechat
-    - img: https://cdn.jsdelivr.net/gh/shaunzhao-yu/img@main/photos/202310072330877.png
+    - img: https://fastly.jsdelivr.net/gh/shaunzhao-yu/img@main/photos/202310072330877.png
       link:
       text: alipay
 ```
@@ -3032,7 +3032,7 @@ swiper_index: 1 #置顶轮播图顺序，非负整数，数字越大越靠前
 
 3. 这时候插件有个bug，就是最后一页文章数目为奇数的时候，会出现这种情况
 
-   ![image](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110734307.webp)
+   ![image](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110734307.webp)
 
    会显得很不舒服，感谢[唐志远大佬](https://tzy1997.com/)修复了这个bug，只需要在`custom.css`文件添加以下代码即可：
 
@@ -3147,13 +3147,13 @@ swiper_index: 1 #置顶轮播图顺序，非负整数，数字越大越靠前
 将此项目`fork`到你的Github仓库
 
 1. 访问[Vercel官网](https://vercel.com/)，点击右上角的sign up进行注册，注册并登录后点击右上角创建一个项目，并选择以Github继续。
-   [![pp](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110743689.webp)](assets/13d509ad17d44a5ebf60d6bd7cde05f4)
+   [![pp](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110743689.webp)](assets/13d509ad17d44a5ebf60d6bd7cde05f4)
 
 2. 此时应该会看到你刚刚`fork`过来的你仓库的项目，看不到就输入关键字进行搜索。
 
 3. 点击该仓库右边的`Import`进行导入，`Vercel`的`PROJECT NAME`可以自定义，不用太过在意，但是之后不支持修改，若要改名，只能删除`PROJECT`以后重建一个了，下方三个选项保持默认就好，点击`Deploy`进行部署。
 
-   ![image-20221029221751149](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110753780.webp)
+   ![image-20221029221751149](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110753780.webp)
 
 4. 到此时，`Vercel`的部署已经完成，可以使用`Vercel`提供的默认域名来访问`api`链接。例如我获取到的默认域名为`github-calendar-api.vercel.app`,则用它来替换冰老师教程中的自建API，填写到`[BlogRoot]\_config.butterfly.yml`中关于`gitcalendar`的`apiurl`中。注意源码修改版不要带协议，不要带后缀。就填写给你的默认域名就好。`而插件版需要带协议`
 
@@ -3192,7 +3192,7 @@ gitcalendar:
 
 此时我们的手机端子菜单默认是展开显示的，如下图所示：
 
-[![image-20221112140953381](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110801382.webp)](https://s1.vika.cn/space/2022/11/12/0e03923bd55641ff871392ceb360eff7)
+[![image-20221112140953381](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110801382.webp)](https://s1.vika.cn/space/2022/11/12/0e03923bd55641ff871392ceb360eff7)
 
 此时我们只需要在主题配置文件`_config.butterfly.yml`中列表对应的地方加一个`hide`即可，如下图的列表选项：
 
@@ -3864,13 +3864,13 @@ iconfont选项，可将font自行下载放在source/js/目录下，新建目录
 
 3. 选择完毕后点击右上角的购物车图标，打开侧栏，选择添加到项目，如果没有项目就新建一个。
 
-   ![p4](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110817875.webp)
+   ![p4](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110817875.webp)
 
 4. 可以通过上方顶栏菜单->资源管理->我的项目，找到之前添加的图标项目。(现在的iconfont可以在图标库的项目设置里直接打开彩色设置，然后采用fontclass的引用方式即可使用多彩图标。但是**单一项目彩色图标上限是40个图标**，酌情采用。)
 
-   ![image-20221029212836645](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110826160.webp)
+   ![image-20221029212836645](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110826160.webp)
 
-   ![image-20221029212857202](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110832460.webp)
+   ![image-20221029212857202](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304110832460.webp)
 
 ### 引入图标
 
@@ -3916,7 +3916,7 @@ iconfont选项，可将font自行下载放在source/js/目录下，新建目录
 inject:
   head:
     #动画标签anima的依赖
-    - <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'">
+    - <link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'">
   bottom:
     # 阿里矢量图标,这串是我的图标库，你的链接会有所不同。
     - <script async src="//at.alicdn.com/t/font_2032782_ev6ytrh30f.js"></script>
@@ -5810,10 +5810,10 @@ git push origin main
 
 [Typora到CSDN博客图片上传问题-CSDN博客](https://blog.csdn.net/qq_46087070/article/details/113099353?spm=1001.2014.3001.5501)
 
-![image-20231007204523369](https://cdn.jsdelivr.net/gh/shaunzhao-yu/img@main/photos/202310072045455.png)
+![image-20231007204523369](https://fastly.jsdelivr.net/gh/shaunzhao-yu/img@main/photos/202310072045455.png)
 
 ```
-https://cdn.jsdelivr.net/gh/shaunzhao-yu/img@main
+https://fastly.jsdelivr.net/gh/shaunzhao-yu/img@main
 ```
 
 # github faster

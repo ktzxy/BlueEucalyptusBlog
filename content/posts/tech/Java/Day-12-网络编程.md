@@ -18,15 +18,15 @@ comments = true
 
 设备之间在网络中进行数据的传输，发送/接收数据。
 
-![image-20210223165944493](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637406_37f07e.webp)
+![image-20210223165944493](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637406_37f07e.webp)
 
 【2】通信的两个重要要素：IP+PORT
 
-![image-20210223170238557](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637141_e8d12e.webp)
+![image-20210223170238557](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637141_e8d12e.webp)
 
 【3】设备之间进行传输的时候，必须遵照一定的规则--》通信协议
 
-![image-20210223170531905](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637879_8b8526.webp)
+![image-20210223170531905](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637879_8b8526.webp)
 
 
 
@@ -88,7 +88,7 @@ public class Test2 {
 
 ### 套接字
 
-![image-20210223172415111](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637032_9d7ac8.webp)
+![image-20210223172415111](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637032_9d7ac8.webp)
 
 ### 基于TCP的网络编程
 

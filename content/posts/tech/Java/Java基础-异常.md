@@ -19,11 +19,11 @@ Java 异常是 Java 提供的一种识别及响应错误的一致性机制。Jav
 
 ### 1.2. 异常的继承体系
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251039513_0e22e2.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251039513_0e22e2.webp)
 
 > 异常体系思维导图详见《01-Java SE 知识体系.xmind》
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251039515_dfa8a9.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251039515_dfa8a9.webp)
 
 #### 1.2.1. Throwable
 
@@ -436,7 +436,7 @@ try (Scanner scanner = new Scanner(new FileInputStream("c:/abc"), "UTF‐8")) {
 
 可以根据下图来选择是捕获异常，声明异常还是抛出异常
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251039516_395fde.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251039516_395fde.webp)
 
 相关异常处理选择的问题：
 

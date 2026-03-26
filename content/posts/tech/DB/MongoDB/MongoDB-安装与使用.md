@@ -24,31 +24,31 @@ MongoDB 的下载地址：
 
 运行 mongodb-win32-x86_64-2008plus-ssl-4.0.8-signed.msi 安装
 
-![安装MongoDB](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174559873.webp)
+![安装MongoDB](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174559873.webp)
 
-![安装MongoDB](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174608168.webp)
+![安装MongoDB](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174608168.webp)
 
-![安装MongoDB](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174613931.webp)
+![安装MongoDB](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174613931.webp)
 
 直接默认即可，点击next
 
-![安装MongoDB](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174625029.webp)
+![安装MongoDB](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174625029.webp)
 
 取消勾选，不安装图形化工具，否则时间非常非常长。
 
-![安装MongoDB](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174714139.webp)
+![安装MongoDB](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174714139.webp)
 
 ### 2.2. zip 解压安装
 
 下载 zip 包后，解压即可。与安装版一样，其中 bin 目录包含了所有 mongodb 的可执行命令。mongodb 在运行时需要指定一个数据存储的目录，所以创建一个数据存储目录，通常放置在安装目录中，此处创建 data 的目录用来存储数据。解压缩与创建完毕后会得到如下文件：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174722146.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174722146.webp)
 
 ### 2.3. 安装过程可能出现的问题
 
 在 win7 系统安装 mongodb 需要 vc++ 运行库，如果没有则会提示“无法启动此程序，因为计算机中丢失“VCRUNTIME140.dll”。上网查找安装
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174727452.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174727452.webp)
 
 在浏览器中搜索提示缺少的名称对应的文件，并下载，将下载的文件拷贝到 windows 安装目录的 system32 目录下，然后在命令行中执行 `regsvr32` 命令注册此文件。根据下载的文件名不同，执行命令前更改对应名称。
 
@@ -66,7 +66,7 @@ regsvr32 vcruntime140_1.dll
 - 日志路径（log目录）
 - 日志文件（log目录下，创建mongo.log文件）
 
-![MongoDB目录结构](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174732110.webp)
+![MongoDB目录结构](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174732110.webp)
 
 #### 2.4.2. 创建配置文件mongo.conf
 
@@ -138,7 +138,7 @@ net start MongoDB
 
 启动 mongodb 服务，命令执行后，浏览器中输入 http://127.0.0.1:27017 看到如下界面即说明启动成功
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174738364.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174738364.webp)
 
 #### 2.4.8. 启动客户端
 
@@ -180,7 +180,7 @@ docker run -id --name mongo -v /usr/local/software/mongodb/data/db:/usr/local/so
 docker ps -a
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174745131.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174745131.webp)
 
 ### 3.3. 进入容器
 
@@ -191,7 +191,7 @@ docker ps -a
 docker exec -it mongo /bin/bash
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174750587.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174750587.webp)
 
 - 修改配置文件
 
@@ -217,7 +217,7 @@ security：
 
 > 注：以下配置文件的格式是v4.0版本以后的配置
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174800556.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174800556.webp)
 
 - 重启容器
 
@@ -246,7 +246,7 @@ db.auth('root', '123')
 exit
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174807492.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174807492.webp)
 
 - 开放27017端口
 
@@ -256,7 +256,7 @@ firewall-cmd --zone=public --add-port=27017/tcp --permanent
 
 ### 3.5. 测试docker容器是否已经对外开放服务
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174814566.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174814566.webp)
 
 ## 4. studio3t 客户端使用
 
@@ -264,37 +264,37 @@ studio3t 是 mongodb 优秀的客户端工具。官方网站：https://studio3t.
 
 - 下载安装后运行程序，创建一个新连接：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174820213.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174820213.webp)
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174827263.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174827263.webp)
 
 - 填写连接信息：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174835710.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174835710.webp)
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174843022.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174843022.webp)
 
 - 修改字体：默认Studio3t的字体太小，需要修改字体。点击菜单：Edit --> Preferences
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174849486.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174849486.webp)
 
 ## 5. Robot3t 客户端使用
 
 Robot3t 是一款绿色软件，无需安装，解压缩即可。解压缩完毕后进入安装目录双击 robot3t.exe 即可使用。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174858487.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174858487.webp)
 
 打开软件首先要连接 MongoDB 服务器，选择【File】菜单，选择【Connect...】
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174905685.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174905685.webp)
 
 进入连接管理界面后，选择左上角的【Create】链接，创建新的连接设置
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174911034.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174911034.webp)
 
 如果输入设置值即可连接（默认不修改即可连接本机 27017 端口）
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174917102.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304174917102.webp)
 
 连接成功后在命令输入区域输入命令即可操作 MongoDB
 

@@ -106,7 +106,7 @@ public @interface T_T {
 }
 ```
 
-![注解使用案例](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041953_046872.webp)
+![注解使用案例](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041953_046872.webp)
 
 ## 5. 元注解
 

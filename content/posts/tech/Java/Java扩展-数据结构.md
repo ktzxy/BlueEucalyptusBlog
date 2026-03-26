@@ -15,7 +15,7 @@ comments = true
 
 数据存储的常用结构有：**数组、栈、队列、链表**、二叉树、红黑树、散列表和位图。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043031_46b1f0.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043031_46b1f0.webp)
 
 ## 2. 数组结构
 
@@ -38,7 +38,7 @@ comments = true
 - **进栈（压栈）**：就是存元素。即，把元素存储到栈的顶端位置，栈中已有元素依次向栈底方向移动一个位置。
 - **出栈（弹栈、退栈）**：就是取元素。即，把栈的顶端位置元素取出，栈中已有元素依次向栈顶方向移动一个位置。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043033_398d79.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043033_398d79.webp)
 
 ### 3.2. 栈结构的核心方法
 
@@ -68,7 +68,7 @@ comments = true
 
 队列的入口、出口各占一侧，并且只允许在队头删除，在队尾插入，就可以实现先进先出的效果。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043034_75b14b.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043034_75b14b.webp)
 
 ### 4.2. 队列结构的核心方法
 
@@ -106,7 +106,7 @@ comments = true
 
 链表有 3 种不同的类型：单向链表、双向链表及循环链表。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043035_39fdd2.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043035_39fdd2.webp)
 
 ### 5.2. 单向链表
 
@@ -117,18 +117,18 @@ comments = true
 - 第1部分为数据区（data），用于保存节点的数据信息
 - 第2部分为指针区，用于存储下一个节点的地址，最后一个节点的指针指向null。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043036_7b9270.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043036_7b9270.webp)
 
 #### 5.2.2. 单向链表的操作
 
 - 查找：单向链表只可向一个方向遍历，一般在查找一个节点时需要从单向链表的第1个节点开始依次访问下一个节点，一直访问到需要的位置。
 - 插入：对于单向链表的插入，只需将当前插入的节点设置为头节点，将 Next 指针指向原来的头节点即可。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043037_5a3277.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043037_5a3277.webp)
 
 - 删除：对于单向链表的删除，只需将该节点的上一个节点的 Next 指针指向该节点的下一个节点，然后删除该节点即可。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043038_0e2f72.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043038_0e2f72.webp)
 
 #### 5.2.3. 单向链表的 Java 实现
 
@@ -140,7 +140,7 @@ comments = true
 
 双向链表的每个数据节点中都有 `Prev` 和 `Next` 两个指针，分别指向其上一个节点和下一个节点。因此双向链表中的任意一个节点都很方便访问其前后的节点，出方便从两个方向遍历并处理节点的数据。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043039_64cb6a.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043039_64cb6a.webp)
 
 #### 5.3.2. 双向链表的 Java 实现
 
@@ -150,7 +150,7 @@ comments = true
 
 循环链表的链式存储结构的特点是：链表中最后一个节点的指针域指向头节点，整个链表形成一个环。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043040_a5de32.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043040_a5de32.webp)
 
 循环节点的实现和单向链表十分相似，只是在链表中，尾部元素的 Next 指针不再是 null，而是指向头部节点，其他实现和单向链表相同。
 
@@ -162,7 +162,7 @@ comments = true
 
 散列表通过映射函数把关键码值（key）映射到表中的一个位置来加快查找。这个映射函数叫作散列函数（可用 `h(key)` 表示），存放记录的数组叫作散列表。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043041_247f6e.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043041_247f6e.webp)
 
 散列表算法通过在数据元素的存储位置和它的关键字（可用 key 表示）之间建立一个确定的对应关系，使每个关键字和散列表中唯一的存储位置相对应。在查找时只需根据这个对应关系找到给定关键字在散列表中的位置即可，真正做到一次查找命中。
 
@@ -206,7 +206,7 @@ comments = true
 2. 如果小于当前节点，则到左子树中 寻找，如果左子树为空则当前节点为要找的父节点，新节点插入到当前节点的左子树即可；
 3. 如果大于当前节点，则到右子树中寻找，如果右子树为空则当前节点为要找的父节点，新节点插入到当前节点的右子树即可。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043042_efdb19.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043042_efdb19.webp)
 
 ### 7.3. 删除操作
 
@@ -216,7 +216,7 @@ comments = true
 2. 对于要删除的节点只有一个子节点，则替换要删除的节点为其子节点。
 3. 对于要删除的节点有两个子节点，则首先找该节点的替换节点（即右子树中最小的节点），接着替换要删除的节点为替换节点，然后删除替换节点。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043043_7ab06a.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043043_7ab06a.webp)
 
 ### 7.4. 查询操作
 
@@ -228,7 +228,7 @@ comments = true
 
 下图展示了“top”, “thus”和“their”三个单词在前缀树中如何存储：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043044_83efe2.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251043044_83efe2.webp)
 
 ## 9. 红黑树（待整理）
 

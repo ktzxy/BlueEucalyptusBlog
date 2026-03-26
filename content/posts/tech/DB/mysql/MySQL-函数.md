@@ -54,11 +54,11 @@ select department,group_concat(emp_name order by salary desc separator ';' ) fro
 
 表数据：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142153043.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142153043.webp)
 
 查询结果：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142159570.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142159570.webp)
 
 ## 3. 数学函数
 
@@ -984,11 +984,11 @@ MySQL 8.0 新增窗口函数，又被称为开窗函数、分析函数，与 Ora
 - 非聚合函数一次只会处理一行数据。
 - 窗口聚合函数在行记录上计算某个字段的结果时，可将窗口范围内的数据输入到聚合函数中，并不改变行数。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142222275.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142222275.webp)
 
 ### 7.2. 窗口函数分类
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142228678.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142228678.webp)
 
 - 序号函数：`ROW_NUMBER()`、`RANK()`、`DENSE_RANK()`
 - 分布函数：`PERCENT_RANK()`、`CUME_DIST()`
@@ -1049,7 +1049,7 @@ FROM
 	employee;
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142243717.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142243717.webp)
 
 使用子查询的方式，获取分组的前3的记录
 
@@ -1066,7 +1066,7 @@ WHERE
 	t.rn <= 3;
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142250253.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142250253.webp)
 
 不加`partition by`表示全局排序
 
@@ -1078,7 +1078,7 @@ from
     employee;
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142257099.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142257099.webp)
 
 ### 7.5. 开窗聚合函数（SUM,AVG,MIN,MAX）
 
@@ -1142,7 +1142,7 @@ FROM
 	employee;
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142307404.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142307404.webp)
 
 #### 7.6.2. PERCENT_RANK
 
@@ -1165,7 +1165,7 @@ FROM
 	employee;
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142314260.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142314260.webp)
 
 ### 7.7. 前后函数（LAG,LEAD）
 
@@ -1194,7 +1194,7 @@ FROM
 	employee;
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142328653.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142328653.webp)
 
 ```sql
 -- lead 函数的用法
@@ -1206,7 +1206,7 @@ FROM
 	employee;
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142320403.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142320403.webp)
 
 ### 7.8. 头尾函数（FIRST_VALUE,LAST_VALUE）
 
@@ -1224,7 +1224,7 @@ FROM
 	employee;
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142337618.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142337618.webp)
 
 ### 7.9. 其他函数（NTH_VALUE,NTILE）
 
@@ -1243,7 +1243,7 @@ FROM
 	employee
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142344865.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142344865.webp)
 
 #### 7.9.2. NTILE
 
@@ -1259,7 +1259,7 @@ FROM
 	employee;
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142347737.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260306142347737.webp)
 
 ## 8. 其他函数
 

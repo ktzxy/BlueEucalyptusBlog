@@ -74,7 +74,7 @@ docker run \
 
 访问prometheus targets，确保是up状态
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631089_145c49.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631089_145c49.webp)
 
  
 
@@ -84,19 +84,19 @@ docker run \
 
 推荐图标ID：https://grafana.com/dashboards/193
 
- ![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631752_d88de5.webp)
+ ![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631752_d88de5.webp)
 
  
 
 输入导入图标ID等待3秒弹出如下，修改后保存
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631153_965d72.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631153_965d72.webp)
 
  
 
 查看图标监控仪表盘
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631397_162271.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631397_162271.webp)
 
  
 

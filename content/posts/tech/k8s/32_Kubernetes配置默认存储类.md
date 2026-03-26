@@ -16,11 +16,11 @@ showSeries= true
 
 今天在配置Kubesphere的时候，出现了下面的错误
 
-![image-20201123095552088](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537214.webp)
+![image-20201123095552088](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537214.webp)
 
 经过排查，发现是这个原因
 
-![image-20201123095637801](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537215.webp)
+![image-20201123095637801](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537215.webp)
 
 我通过下面命令，查看Kubernetes集群中的默认存储类
 
@@ -217,7 +217,7 @@ kubectl get pods
 kubectl get storageclass
 ```
 
-![image-20201123104358758](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537216.webp)
+![image-20201123104358758](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537216.webp)
 
 我们可以设置这个 course-nfs-storage 的 StorageClass 为 Kubernetes 的默认存储后端，我们可以用 kubectl patch 命令来更新
 

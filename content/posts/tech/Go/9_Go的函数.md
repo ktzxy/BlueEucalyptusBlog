@@ -299,7 +299,7 @@ func main() {
 
 在Go语言的函数中return语句在底层并不是原子操作，它分为返回值赋值和RET指令两步。而defer语句执行的时机就在返回值赋值操作后，RET指令执行前，具体如下图所示
 
-![image-20200720220700249](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291431238_0328fd.webp)
+![image-20200720220700249](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291431238_0328fd.webp)
 
 ## panic/revocer处理异常
 

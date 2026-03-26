@@ -47,7 +47,7 @@ showSeries= true
 
 第一步，准备java项目，把java进行打包【jar包或者war包】
 
-![image-20201121213239222](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533566.webp)
+![image-20201121213239222](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533566.webp)
 
 ### 依赖环境
 
@@ -62,7 +62,7 @@ showSeries= true
 mvn clean install
 ```
 
-![image-20201121213654216](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533567.webp)
+![image-20201121213654216](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533567.webp)
 
 ### 编写Dockerfile文件
 
@@ -81,7 +81,7 @@ ENTRYPOINT ["java","-jar","/demojenkins.jar", "&"]
 
 我们首先将我们的项目，放到我们的服务器上
 
-![image-20201121214251023](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533568.webp)
+![image-20201121214251023](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533568.webp)
 
 然后执行下面命令打包镜像
 
@@ -91,7 +91,7 @@ docker build -t java-demo-01:latest .
 
 等待一段后，即可制作完成我们的镜像
 
-![image-20201121214701015](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533569.webp)
+![image-20201121214701015](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533569.webp)
 
 最后通过下面命令，即可查看我们的镜像了
 
@@ -119,15 +119,15 @@ http://192.168.177.130:8111/user
 
 首先我们需要到 阿里云 [容器镜像服务](https://cr.console.aliyun.com/cn-hangzhou/instances/repositories)，然后开始创建镜像仓库
 
-![image-20201121223435851](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533570.webp)
+![image-20201121223435851](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533570.webp)
 
 然后选择本地仓库
 
-![image-20201121223516789](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533571.webp)
+![image-20201121223516789](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533571.webp)
 
 我们点击我们刚刚创建的镜像仓库，就能看到以下的信息
 
-![image-20201121224233092](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533572.webp)
+![image-20201121224233092](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533572.webp)
 
 #### 登录镜像服务器
 
@@ -153,7 +153,7 @@ docker tag 33f11349c27d registry.cn-shenzhen.aliyuncs.com/mogublog/java-project-
 
 操作完成后
 
-![image-20201121224609890](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533573.webp)
+![image-20201121224609890](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533573.webp)
 
 #### 推送镜像
 
@@ -163,11 +163,11 @@ docker tag 33f11349c27d registry.cn-shenzhen.aliyuncs.com/mogublog/java-project-
 docker push registry.cn-shenzhen.aliyuncs.com/mogublog/java-project-01:1.0.0
 ```
 
-![image-20201121224714068](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533574.webp)
+![image-20201121224714068](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533574.webp)
 
 操作完成后，我们在我们的阿里云镜像服务，就能看到推送上来的镜像了
 
-![image-20201121224858651](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533575.webp)
+![image-20201121224858651](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533575.webp)
 
 ### 控制器部署镜像
 
@@ -218,7 +218,7 @@ kubectl apply -f javademo1.yaml
 # 查看 pods
 ```
 
-![image-20201121225413122](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533576.webp)
+![image-20201121225413122](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533576.webp)
 
 或者我们可以进行扩容，多创建几个副本
 
@@ -226,7 +226,7 @@ kubectl apply -f javademo1.yaml
 kubectl scale deployment javademo1 --replicas=3
 ```
 
-![image-20201121225600554](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533577.webp)
+![image-20201121225600554](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533577.webp)
 
 然后我们还需要对外暴露端口【通过service 或者 Ingress】
 
@@ -237,7 +237,7 @@ kubectl expose deployment javademo1 --port=8111  --target-port=8111 --type=NodeP
 kubectl get svc
 ```
 
-![image-20201121225818003](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533578.webp)
+![image-20201121225818003](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533578.webp)
 
 然后通过下面的地址访问
 

@@ -348,7 +348,7 @@ http://192.168.177.130:32567/
 
 页面如下所示：
 
-![image-20210107211525789](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291534377.webp)
+![image-20210107211525789](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291534377.webp)
 
 第一次访问需要输入token 我们获取一下 **token**， `在master节点执行`
 
@@ -365,7 +365,7 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6ImY1eUZlc0RwUlZha0E3LWZhWXUzUGljNDM3SE0zU0Q4dzd5R3JT
 
 最后即可进入 **kuboard** 的 **dashboard** 界面
 
-![image-20210107211713726](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291534378.webp)
+![image-20210107211713726](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291534378.webp)
 
 ### 卸载Kuboard
 

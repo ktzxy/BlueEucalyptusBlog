@@ -343,13 +343,13 @@ goto MENU
 
 注册表中用户变量所在位置：`HKEY_CURRENT_USER\Environment`
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304154423279.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304154423279.webp)
 
 #### 3.1.2. 系统变量
 
 注册表中系统变量所在位置：`HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment`
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304154430816.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304154430816.webp)
 
 在原有变量 `Path` 的基础上添加英文状态下的分号，然后添加路径名。*不要删除原先的系统变量，只要用分号隔开，然后添加路径名，最后也要加上分号。*
 

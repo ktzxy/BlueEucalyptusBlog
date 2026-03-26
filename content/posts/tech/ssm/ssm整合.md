@@ -351,7 +351,7 @@ public interface EmployeeMapper {
 
 ### ⑤框架结构
 
-![image-20230424142203802](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304161452072.webp)
+![image-20230424142203802](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304161452072.webp)
 
 
 

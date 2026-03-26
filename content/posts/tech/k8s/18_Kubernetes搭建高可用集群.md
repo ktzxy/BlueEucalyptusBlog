@@ -16,7 +16,7 @@ showSeries= true
 
 之前我们搭建的集群，只有一个master节点，当master节点宕机的时候，通过node将无法继续访问，而master主要是管理作用，所以整个集群将无法提供服务
 
-![image-20201121164522945](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533945.webp)
+![image-20201121164522945](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533945.webp)
 
 ## 高可用集群
 
@@ -27,7 +27,7 @@ showSeries= true
 - 负载
 - 检查master节点的状态
 
-![image-20201121164931760](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533946.webp)
+![image-20201121164931760](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533946.webp)
 
 对外有一个统一的VIP：虚拟ip来对外进行访问
 
@@ -35,7 +35,7 @@ showSeries= true
 
 高可用集群技术细节如下所示：
 
-![image-20201121165325194](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533947.webp)
+![image-20201121165325194](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533947.webp)
 
 - keepalived：配置虚拟ip，检查节点的状态
 - haproxy：负载均衡服务【类似于nginx】
@@ -48,7 +48,7 @@ showSeries= true
 
 我们采用2个master节点，一个node节点来搭建高可用集群，下面给出了每个节点需要做的事情
 
-![image-20201121170351461](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533948.webp)
+![image-20201121170351461](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533948.webp)
 
 ## 初始化操作
 
@@ -213,7 +213,7 @@ systemctl status keepalived.service
 ip a s ens33
 ```
 
-![image-20201121171619497](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533949.webp)
+![image-20201121171619497](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533949.webp)
 
 
 
@@ -240,7 +240,7 @@ systemctl enable haproxy
 netstat -tunlp | grep haproxy
 ```
 
-![image-20201121181803128](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533950.webp)
+![image-20201121181803128](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533950.webp)
 
 ### 配置
 
@@ -457,7 +457,7 @@ kubeadm init --config kubeadm-config.yaml
 
 执行完成后，就会在拉取我们的进行了【需要等待...】
 
-![image-20201121194928988](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533951.webp)
+![image-20201121194928988](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533951.webp)
 
 按照提示配置环境变量，使用kubectl工具
 

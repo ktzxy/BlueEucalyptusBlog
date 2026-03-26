@@ -135,7 +135,7 @@ http://192.168.31.34:9001/minio/prometheus/metrics
 
 效果如下：
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631336_f9e75a.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631336_f9e75a.webp)
 
 将端口改为9002~9004，也是同样的结果。
 
@@ -168,7 +168,7 @@ http://192.168.31.34:9001/minio/prometheus/metrics
 
 导入模板后，效果如下：
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281632960_00f0c3.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281632960_00f0c3.webp)
 
 但是发现关于s3相关图表，数据是空的。
 
@@ -197,7 +197,7 @@ http://192.168.31.34:9004/minio/prometheus/metrics
 
 发现只有第一个才有s3_requests_total的值。
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281632729_d8a7e4.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281632729_d8a7e4.webp)
 
  
 
@@ -209,7 +209,7 @@ sum(s3_requests_total{api="listobjectsv1"}) by (api)
 
 修改完成之后，图表数据就有了。
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281632106_bee422.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281632106_bee422.webp)
 
  
 
@@ -232,13 +232,13 @@ s3_ttfb_seconds_sum{api="listobjectsv1"}
 
 对于S3接口总错误请求数，需要修改一下Legend，做一下标识区分。
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281632976_32f257.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281632976_32f257.webp)
 
  
 
 最终总体效果如下：
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281632367_596137.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281632367_596137.webp)
 
  
 

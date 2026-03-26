@@ -37,7 +37,7 @@ kubectl get pods pod1
 kubectl get po pod1
 ```
 
-![image-20201114095544185](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523394.webp)
+![image-20201114095544185](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523394.webp)
 
 - name：指定资源的名称，名称也是大小写敏感的，如果省略名称，则会显示所有的资源，例如
 

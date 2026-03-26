@@ -205,19 +205,19 @@ public final class CodeSample {
 
 1. 利用运算符`&&`（或`||`）直接拼接，这种做法会导致条件判断过长，不利于后期维护。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041881_c455f4.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041881_c455f4.webp)
 
 2. 利用运算符`=`和`&&`（或`||`）级联拼接。就把`&&`（或`||`）连接符拆开，利用运算符`=`和`&&`（或`||`）级联进行拼接。这种方式并不能减少方法的圈复杂度。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041882_58940d.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041882_58940d.webp)
 
 3. 利用动态无参数 Lambda 表达式列表。即把每个条件表达式作为 `BooleanSupplier` 对象存在列表中，然后依次执行条件表达式得出最后结果。通过 SonarLint 插件扫描，没有提示任何问题。但是，每次都动态添加 Lambda 表达式，就会导致程序效率低下。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041883_af11d6.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041883_af11d6.webp)
 
 4. 利用静态有参数 Lambda 表达式列表。要想固化 Lambda 表达式，就必须动态传入 `AuditDataVO` 对象。这里，采用 `Predicate<AuditDataVO>` 来接收 Lambda 表达式，在 Lambda 表达式中指定 `AuditDataVO` 对象 data。然后在 for 循环中，依次指定 `AuditDataVO` 对象 data，并计算表达式的值。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041884_674a5f.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041884_674a5f.webp)
 
 态有参数 Lambda 表达式列表这种方式的适用条件：
 
@@ -270,11 +270,11 @@ public final class CodeSample {
 
 1. 对于固定上下限范围的 if-else 语句，可以用数组+循环来简化。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041885_d96db8.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041885_d96db8.webp)
 
 2. 对于映射关系的 if-else 语句，可以用 Map 来简化。此外，此规则同样适用于简化映射关系的 switch 语句。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041886_9d39fb.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041886_9d39fb.webp)
 
 3. 利用容器类简化。Java 不像 Python 和 Go，方法不支持返回多个对象。如果需要返回多个对象，就必须自定义类，或者利用容器类。常见的容器类有 Apache 的 `Pair` 类和 `Triple` 类，`Pair` 类支持返回 2 个对象，`Triple` 类支持返回 3 个对象。
 4. `ThreadLocal` 提供了线程专有对象，可以在整个线程生命周期中随时取用。利用 `ThreadLocal` 保存线程上下文对象，可以避免不必要的参数传递。*注意：`ThreadLocal`有一定的内存泄露的风险，尽量在业务代码结束前调用 `remove` 方法进行数据清除。*
@@ -348,7 +348,7 @@ int num2 = a >> 2;
 4. **不要使用`"" +`转化字符串**。此方式使用方便但是效率低，建议使用 `String.valueOf` 方法。
 5. **尽量预编译正则表达式**。`Pattern.compile` 方法的性能开销很大。但这个方法隐藏在很多常用的方法里。比如：`String.matches`、`String.replaceAll`、`String.split` 等函数。对于多次调用这些方法，可以考虑预编译正则表达式以提高执行效率，并参考原有实现代码编写优化后的代码。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041887_f7e3c1.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041887_f7e3c1.webp)
 
 ### 3.6. 数组
 
@@ -378,7 +378,7 @@ int num2 = a >> 2;
 1. **初始化时尽量指定缓冲区大小**，避免多次扩容浪费时间和空间。
 2. **尽量重复使用同一缓冲区**。针对缓冲区，Java 虚拟机需要花时间生成对象，还要花时间进行垃圾回收处理。因此尽量重复利用缓冲区。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041888_043a24.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251041888_043a24.webp)
 
 3. **尽量设计使用同一缓冲区**。去掉每个转化方法中的缓冲区申请，申请一个缓冲区给每个转化方法使用。从时间上来说，节约了大量缓冲区的申请释放时间；从空间上来说，节约了大量缓冲区的临时存储空间
 4. **尽量使用缓冲流减少 IO 操作**。使用缓冲流 `BufferedReader`、 `BufferedWriter`、 `BufferedInputStream`、 `BufferedOutputStream` 等，可以大幅减少 IO 次数并提升 IO 速度。可以根据实际情况手动指定缓冲流的大小，把缓冲流的缓冲作用发挥到最大。

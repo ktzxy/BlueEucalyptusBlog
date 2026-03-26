@@ -18,7 +18,7 @@ comments = true
 
 **对应关系**
 
-![image-20210215213419566](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241628076_73e319.webp)
+![image-20210215213419566](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241628076_73e319.webp)
 
 **已经有基本数据类型了，为什么要封装为包装类?**
 
@@ -36,23 +36,23 @@ comments = true
 
 【1】直接使用，无需导包
 
-![image-20210217161003738](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241628108_20337a.webp)
+![image-20210217161003738](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241628108_20337a.webp)
 
 【2】类的继承关系
 
-![image-20210217161043650](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629677_4cfc0d.webp)
+![image-20210217161043650](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629677_4cfc0d.webp)
 
 【3】实现接口
 
-![image-20210217161204797](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629917_42960c.webp)
+![image-20210217161204797](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629917_42960c.webp)
 
 【4】这个类被final修饰，那么这个类不能有子类，不能被继承
 
-![image-20210217161340952](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629236_bc9280.webp)
+![image-20210217161340952](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629236_bc9280.webp)
 
 【5】包装类是对基本数据类型的封装：对int类型封装产生了Integer
 
-![image-20210217161515176](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/fd3eb3e14972561b1750cc77b3e7065b_222512.webp)
+![image-20210217161515176](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/fd3eb3e14972561b1750cc77b3e7065b_222512.webp)
 
 【6】属性
 
@@ -74,7 +74,7 @@ Integer i1 = new Integer(10);
 System.out.println(i1.toString()); //10
 ```
 
-![image-20210217163602384](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629191_a0d97d.webp)
+![image-20210217163602384](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629191_a0d97d.webp)
 
 （2）String类型作为构造器的参数
 
@@ -85,7 +85,7 @@ Integer i3 = new Integer("abc");
 System.out.println(i3);  //NumberFormatException: For input string: "abc"
 ```
 
-![image-20210217163829934](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629408_23be7b.webp)
+![image-20210217163829934](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629408_23be7b.webp)
 
 【8】包装类特有的机制：自动装箱  自动拆箱
 
@@ -107,7 +107,7 @@ System.out.println(num);
 
 valueOf方法的底层：
 
-![image-20210217171307108](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629585_e40513.webp)
+![image-20210217171307108](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629585_e40513.webp)
 
 ```java
 //comparable:只返回三个值：0  -1   1
@@ -217,7 +217,7 @@ System.out.println(format);
 
 【2】日期格式：
 
-![image-20210217180806443](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629394_5f85ff.webp)
+![image-20210217180806443](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629394_5f85ff.webp)
 
 ##### Calendar
 
@@ -255,7 +255,7 @@ System.out.println(cal);
 
 需求：
 
-![image-20210218100602247](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629517_ec37ac.webp)
+![image-20210218100602247](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629517_ec37ac.webp)
 
 ```java
 package com.zy.test1;
@@ -431,17 +431,17 @@ System.out.println(parse2);
 
 【1】直接使用，无需导包
 
-![image-20210218165357133](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/4a267e8785b8fb80e112c42eebaed80c_83e63f.webp)
+![image-20210218165357133](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/4a267e8785b8fb80e112c42eebaed80c_83e63f.webp)
 
 【2】这个类被final修饰，那么这个类不能有子类，不能被继承
 
-![image-20210218165445501](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629729_0ac314.webp)
+![image-20210218165445501](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629729_0ac314.webp)
 
 【3】构造器私有化，不能创建Math类的对象：
 
-![image-20210218165622174](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629263_5c8901.webp)
+![image-20210218165622174](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629263_5c8901.webp)
 
-![image-20210218165716202](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/ad28902700b4b1646fac4c8e23345897_eb8e75.webp)
+![image-20210218165716202](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/ad28902700b4b1646fac4c8e23345897_eb8e75.webp)
 
 【4】Math内部的所有的属性，方法都被static修饰：类名.直接调用，无需创建对象。
 
@@ -514,7 +514,7 @@ System.out.println(r2.nextDouble()); //在 0.0 和 1.0 之间均匀分布的 dou
 
 【3】String底层是一个char类型的数组
 
-![image-20210218172741163](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629544_270263.webp)
+![image-20210218172741163](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241629544_270263.webp)
 
 【4】构造器：底层就是给对象底层的value数组进行赋值操作
 
@@ -551,7 +551,7 @@ String s7 = new String("abc");
 System.out.println(s6.equals(s7));
 ```
 
-![image-20210218181048503](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630402_85dcaf.webp)
+![image-20210218181048503](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630402_85dcaf.webp)
 
 【7】String类实现了Comparable，里面有一个抽象方法叫compareTo，所以String中一定要对这个方法重写：
 
@@ -561,7 +561,7 @@ String s9 = new String("abcdef");
 System.out.println(s8.compareTo(s9));
 ```
 
-![image-20210218183239196](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630737_1bb9d3.webp)
+![image-20210218183239196](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630737_1bb9d3.webp)
 
 【8】常用方法：
 
@@ -616,13 +616,13 @@ public class Demo3 {
 
 上面的字符串，会进行编译器优化，直接合并成为完整的字符串，我们可以反编译验证：
 
-![image-20210218190215340](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630304_d446a5.webp)
+![image-20210218190215340](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630304_d446a5.webp)
 
 然后在常量池中，常量池的特点是第一次如果没有这个字符串，就放进去，如果有这个字符串，就直接从常量池中取。
 
 内存分析：
 
-![image-20210218185304098](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630019_5691f1.webp)
+![image-20210218185304098](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630019_5691f1.webp)
 
 【2】new关键字创建对象：
 
@@ -632,7 +632,7 @@ String s6 = new String("abc");
 
 内存：开辟两个空间（1.字符串常量池中的字符串 2. 堆中的开辟的空间）
 
-![image-20210218190531709](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630642_e50289.webp)
+![image-20210218190531709](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630642_e50289.webp)
 
 【3】有变量参与的字符串拼接：
 
@@ -645,9 +645,9 @@ System.out.println(b);
 a变量在编译的时候不知道a是“abc”字符串，所以不会进行编译期优化，不会直接合并为“abcdef"
 反汇编过程:为了更好的帮我分析字节码文件是如何进行解析的:
 
-![image-20210218191722202](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630722_0ddecc.webp)
+![image-20210218191722202](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630722_0ddecc.webp)
 
-![image-20210218191642430](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630371_7abcf9.webp)
+![image-20210218191642430](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630371_7abcf9.webp)
 
 ### StringBuilder类
 
@@ -657,7 +657,7 @@ a变量在编译的时候不知道a是“abc”字符串，所以不会进行编
 
 【2】StringBuilder底层：非常重要的两个属性。
 
-![image-20210220211444870](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630781_351a8a.webp)
+![image-20210220211444870](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241630781_351a8a.webp)
 
 ```java
 //创建StringBuilder的对象：

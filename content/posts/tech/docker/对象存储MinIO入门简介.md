@@ -81,7 +81,7 @@ minio/minio server /data
 
 运行成功后，我们就能看到我们下面的提示信息
 
-![image-20201015150408263](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163418891.webp)
+![image-20201015150408263](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163418891.webp)
 
 如果需要后台运行，使用这条语句
 
@@ -111,13 +111,13 @@ http://192.168.1.101:9000
 
 我们创建一个叫 mogublog 的桶，创建完成后，在侧边栏就能够看到我们刚刚创建的了
 
-![image-20201015151202753](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163430106.webp)
+![image-20201015151202753](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163430106.webp)
 
 ## 上传文件
 
 然后我们选中我们的桶，在点击加号，选择 upload file进行文件上传
 
-![image-20201015151340507](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163438000.webp)
+![image-20201015151340507](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163438000.webp)
 
 上传成功后，即可看到我们刚刚上传的文件列表了~
 
@@ -129,7 +129,7 @@ http://192.168.1.101:9000
 
 如果要使用SDK，比如Java客户端来操作我们的minio的话，那么我们还需要修改一下我们的bucket权限
 
-![image-20201015151639447](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163443138.webp)
+![image-20201015151639447](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163443138.webp)
 
 首先点击我们的mogublog的右边区域，点击Edit policy，然后添加我们的权限为 可读可写，保存即可
 
@@ -230,15 +230,15 @@ Content-Type  multipart/form-data
 
 
 
-![image-20201018222200593](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163451051.webp)
+![image-20201018222200593](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163451051.webp)
 
 然后在选择我们的图片上传
 
-![image-20201018222251132](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163456423.webp)
+![image-20201018222251132](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163456423.webp)
 
 最后在刷新MinIO，就能够看到我们刚刚上传的文件了
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163504164.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163504164.webp)
 
 我们可以通过下面的地址直接访问我们的图片
 

@@ -26,7 +26,7 @@ JAVA_HOME = C:\Program Files\Java\jdk1.8.0_91
 %JAVA_HOME%\bin  相等于 --> C:\Program Files\Java\jdk1.8.0_91\bin
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251036131_6f1ab8.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251036131_6f1ab8.webp)
 
 ### 2.2. 安装多个 JDK
 
@@ -38,7 +38,7 @@ JAVA_HOME_11 = D:\development\Java\jdk-11.0.13
 JAVA_HOME = %JAVA_HOME_8%
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251036132_73dbed.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251036132_73dbed.webp)
 
 ### 2.3. JDK 11 手动生成 jre 目录
 

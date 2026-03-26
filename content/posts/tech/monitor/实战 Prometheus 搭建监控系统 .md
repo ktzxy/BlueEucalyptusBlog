@@ -53,7 +53,7 @@ Prometheus 是一款基于时序数据库的开源监控告警系统，说起 Pr
 
 下图是 Prometheus 的整体架构图:
 
-![图片](data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==)![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634991_98726c.webp)
+![图片](data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==)![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634991_98726c.webp)
 
 从上图可以看出，Prometheus 生态系统包含了几个关键的组件：Prometheus server、Pushgateway、Alertmanager、Web UI  等，但是大多数组件都不是必需的，其中最核心的组件当然是 Prometheus  server，它负责收集和存储指标数据，支持表达式查询，和告警的生成。接下来我们就来安装 Prometheus server。
 
@@ -175,7 +175,7 @@ scrape_configs:
 
 通过上面的步骤安装好 Prometheus 之后，我们现在可以开始体验 Prometheus 了。Prometheus 提供了可视化的 Web UI 方便我们操作，直接访问 `http://localhost:9090/` 即可，它默认会跳转到 Graph 页面：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634378_69ac58.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634378_69ac58.webp)
 
 第一次访问这个页面可能会不知所措，我们可以先看看其他菜单下的内容，比如：Alerts 展示了定义的所有告警规则，Status 可以查看各种 Prometheus 的状态信息，有 Runtime & Build  Information、Command-Line Flags、Configuration、Rules、Targets、Service  Discovery 等等。
 
@@ -183,11 +183,11 @@ scrape_configs:
 
 我们上面说过，Prometheus 自身也暴露了很多的监控指标，也可以在 Graph 页面查询，展开 Execute 按钮旁边的下拉框，可以看到很多指标名称，我们随便选一个，譬如：`promhttp_metric_handler_requests_total`，这个指标表示 `/metrics` 页面的访问次数，Prometheus 就是通过这个页面来抓取自身的监控数据的。在 Console 标签中查询结果如下：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634539_e3c92e.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634539_e3c92e.webp)
 
 上面在介绍 Prometheus 的配置文件时，可以看到 `scrape_interval` 参数是 15s，也就是说 Prometheus 每 15s 访问一次 `/metrics` 页面，所以我们过 15s 刷新下页面，可以看到指标值会自增。在 Graph 标签中可以看得更明显：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634712_da01b8.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634712_da01b8.webp)
 
 ## 3.1 数据模型
 
@@ -308,11 +308,11 @@ $ docker run -d -p 3000:3000 grafana/grafana
 
 运行上面的 docker 命令，Grafana 就安装好了！你也可以采用其他的安装方式，参考 官方的安装文档。安装完成之后，我们访问 `http://localhost:3000/` 进入 Grafana 的登陆页面，输入默认的用户名和密码（admin/admin）即可。
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634101_2aaed5.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634101_2aaed5.webp)
 
 要使用 Grafana，第一步当然是要配置数据源，告诉 Grafana 从哪里取数据，我们点击 Add data source 进入数据源的配置页面：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635826_117a43.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635826_117a43.webp)
 
 我们在这里依次填上：
 
@@ -325,11 +325,11 @@ $ docker run -d -p 3000:3000 grafana/grafana
 
 配置好数据源，Grafana 会默认提供几个已经配置好的面板供你使用，如下图所示，默认提供了三个面板：Prometheus Stats、Prometheus 2.0  Stats 和 Grafana metrics。点击 Import 就可以导入并使用该面板。
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635285_491e1d.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635285_491e1d.webp)
 
 我们导入 Prometheus 2.0 Stats 这个面板，可以看到下面这样的监控面板。如果你的公司有条件，可以申请个大显示器挂在墙上，将这个面板投影在大屏上，实时观察线上系统的状态，可以说是非常 cool 的。
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635061_a9dd06.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635061_a9dd06.webp)
 
 # 5 使用 Exporter 收集指标
 
@@ -380,15 +380,15 @@ $ killall -HUP prometheus
 
 在 Prometheus Web UI 的 Status -> Targets 中，可以看到新加的服务器：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635231_f4de3f.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635231_f4de3f.webp)
 
 在 Graph 页面的指标下拉框可以看到很多名称以 node 开头的指标，譬如我们输入 `node_load1` 观察服务器负载：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635256_c04137.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635256_c04137.webp)
 
 如果想在 Grafana 中查看服务器的指标，可以在 Grafana 的 Dashboards 页面 搜索 `node exporter`，有很多的面板模板可以直接使用，譬如：Node Exporter Server Metrics 或者 Node Exporter Full 等。我们打开 Grafana 的 Import  dashboard 页面，输入面板的 URL（https://grafana.com/dashboards/405）或者 ID（405）即可。
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635809_9b8344.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635809_9b8344.webp)
 
 ### 注意事项
 
@@ -533,11 +533,11 @@ groups:
 
 配置好后，需要重启下 Prometheus server，然后访问 `http://localhost:9090/rules` 可以看到刚刚配置的规则：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635065_32d9b5.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635065_32d9b5.webp)
 
 访问 `http://localhost:9090/alerts` 可以看到根据配置的规则生成的告警：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635724_c6ea78.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635724_c6ea78.webp)
 
 这里我们将一个实例停掉，可以看到有一条 alert 的状态是 `PENDING`，这表示已经触发了告警规则，但还没有达到告警条件。这是因为这里配置的 `for` 参数是 5m，也就是 5 分钟后才会触发告警，我们等 5 分钟，可以看到这条 alert 的状态变成了 `FIRING`。
 
@@ -571,7 +571,7 @@ $ ./prometheus -alertmanager.url=http://192.168.0.107:9093
 
 这个时候再访问 Alertmanager，可以看到 Alertmanager 已经接收到告警了：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635793_4e8bfd.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281635793_4e8bfd.webp)
 
 下面的问题就是如何让 Alertmanager 将告警信息发送给我们了，我们打开默认的配置文件 `alertmanager.ym`：
 

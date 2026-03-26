@@ -2578,7 +2578,7 @@ set pget:default-n 5
 - NFS 全称是 Network FileSystem，NFS 和其他文件系统一样，是在 Linux 内核中实现的，因此 NFS 很难做到与 Windows 兼容。NFS 共享出的文件系统会被客户端识别为一个文件系统，客户端 可以直接挂载并使用。 
 - NFS 的实现使用了 RPC（Remote Procedure Call） 的机制，远程过程调用使得客户端可以调用 服务端的函数。由于有 VFS 的存在，客户端可以像使用其他普通文件系统一样使用 NFS 文件系 统，由操作系统内核将 NFS 文件系统的调用请求通过 TCP/IP 发送至服务端的 NFS 服务，执行相 关的操作，之后服务端再讲操作结果返回客户端。
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304154808936.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304154808936.webp)
 
 - NFS 文件系统仅支持基于 IP 的用户访问控制，NFS 是在内核实现的，因此 NFS 服务由内核监听在 TCP 和 UDP 的 2049 端口，对于 NFS 服务的支持需要在内核编译时选择。它同时还使用了几个用 户空间进程用于访问控制，用户映射等服务，这些程序由 nfs-utils 程序包提供。 
 - RPC 服务在 CentOS 6.5 之后改名为 portmapper，它监听在 TCP/UDP 的 111 端口，其他基于 RPC 的服务进程需要监听时，先像 RPC 服务注册，RPC 服务为其分配一个随机端口供其使用。客 户端在请求时，先向 RPC 服务请求对应服务监听的端口，然后再向改服务发出调用请求。 
@@ -2790,7 +2790,7 @@ FQDN：(Fully Qualified Domain Name)完全合格域名/全称域名。
 
 命名空间：
 
-![image-20231015210632640](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304154819850.webp)
+![image-20231015210632640](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304154819850.webp)
 
 ## DNS解析流程
 

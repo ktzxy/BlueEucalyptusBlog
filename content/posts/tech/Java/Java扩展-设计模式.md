@@ -255,7 +255,7 @@ class EnumSingleton extends Enum {
 
 单例注册表来实现单例模式，Spring框架就是最有代表性的使用者。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042834_709c1b.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042834_709c1b.webp)
 
 其实实现原理很容易理解，以一个`HashMap`（Spring 是使用了线程安全的`ConcurrentHashMap`）来存储目前已生成的类的实例，如果可以根据类名找到对象，就返回这个对象，不再创建新对象。如果找不到，就利用反射机制创建一个，并加入到 Map 中。以上只是一个示意代码，作为 Spring 核心理念IoC的重要部分，单例注册表在 Spring 中的源码要复杂的多，也做了很多性能上的优化，具体可以参考 Spring 中`AbstractBeanFactory`类的源码。
 
@@ -282,7 +282,7 @@ class EnumSingleton extends Enum {
 
 ## 2. 模式的结构
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042835_f31295.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042835_f31295.webp)
 
 ## 3. 基础实现
 
@@ -326,7 +326,7 @@ class EnumSingleton extends Enum {
 
 ### 2.3. 模板方法模式的结构图
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042836_6986ec.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042836_6986ec.webp)
 
 ## 3. 基础实现
 
@@ -449,11 +449,11 @@ public class TemplateMethodPattern {
 
 **类适配器模式的结构图**
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042837_b446e8.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042837_b446e8.webp)
 
 **对象适配器模式的结构图**
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042838_e76bed.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042838_e76bed.webp)
 
 ## 3. 基础实现
 
@@ -593,7 +593,7 @@ public static void main(String[] args) {
 
 具体类的设计如下：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042839_6f54ad.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042839_6f54ad.webp)
 
 > 类图的元素说明：
 >
@@ -727,7 +727,7 @@ public class CoffeeStore {
 
 使用简单工厂模式对上面案例进行改进，类图如下：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042840_a96b37.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042840_a96b37.webp)
 
 - 创建静态工厂类
 
@@ -802,7 +802,7 @@ public class CoffeeStore {
 
 使用工厂方法模式对上例进行改进，类图如下：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042841_ce2e8c.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042841_ce2e8c.webp)
 
 - 抽象工厂
 
@@ -894,7 +894,7 @@ public class CoffeeStore {
 - 产品族：一个品牌下面的所有产品；例如华为下面的电脑、手机称为华为的产品族。
 - 产品等级：多个品牌下面的同种产品；例如华为和小米都有手机电脑为一个产品等级。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042842_c17a56.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042842_c17a56.webp)
 
 ## 1. 概念
 
@@ -924,13 +924,13 @@ public class CoffeeStore {
 
 如果按照工厂方法模式，需要定义提拉米苏类、抹茶慕斯类、提拉米苏工厂、抹茶慕斯工厂、甜点工厂类，很容易发生类爆炸情况。所以这个案例可以使用抽象工厂模式实现。类图如下：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042843_a1ce96.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042843_a1ce96.webp)
 
 > Tips: 实现关系使用带空心三角箭头的虚线来表示
 
 整体调用思路：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042844_523b32.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042844_523b32.webp)
 
 ## 4. 优缺点
 
@@ -965,7 +965,7 @@ public class CoffeeStore {
 
 案例（促销活动）需求：一家百货公司在定年度的促销活动。针对不同的节日（春节、中秋节、圣诞节）推出不同的促销活动，由促销员将促销活动展示给客户。类图如下：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042845_1e70e1.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042845_1e70e1.webp)
 
 > Tips: 聚合关系可以用带空心菱形的实线来表示
 
@@ -1050,7 +1050,7 @@ public class SalesMan {
 
 不在 service 中写业务分支逻辑，而去调用工厂，然后通过 service 传递不同的参数来获取不同的登录策略（登录方式）。流程图如下：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042846_791075.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042846_791075.webp)
 
 #### 4.2.2. 具体实现
 
@@ -1246,7 +1246,7 @@ public class LoginController {
 
 使用 postman 请求测试
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042847_ab349d.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042847_ab349d.webp)
 
 使用了工厂+策略设计模式之后，业务层的代码不需要使用大量的 if...else，如果后期有新的需求改动，比如加入了QQ登录，只需要添加对应的策略就可以，无需再改动业务层代码。
 
@@ -1302,9 +1302,9 @@ public class LoginController {
 
 ### 3.2. 结构图
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042848_832c6f.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042848_832c6f.webp)
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042849_e0468c.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042849_e0468c.webp)
 
 ## 4. 基础实现
 
@@ -1392,13 +1392,13 @@ public void chainOfResponsibilityPatternTest() {
 
 综上分析，可以**使用责任链模式优化**：创建商品的每个校验步骤都可以作为一个单独的处理器，抽离为一个单独的类，便于复用。这些处理器形成一条链式调用，请求在处理器链上传递，如果校验条件不通过，则处理器不再向下传递请求，直接返回错误信息；若所有的处理器都通过检验，则执行保存商品步骤。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042850_59d6d4.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042850_59d6d4.webp)
 
 ### 5.2. 接口设计分析
 
 UML 图：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042851_cbb67a.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042851_cbb67a.webp)
 
 `AbstractCheckHandler` 为处理器抽象类，负责抽象处理器行为。定义了处理器的抽象方法 `handle()`，其子类需要重写 `handle()` 方法以实现特殊的处理器校验逻辑。其有 3 个子类，分别是：
 
@@ -1685,11 +1685,11 @@ private ProductCheckHandlerConfig getHandlerConfigFile() {
 
 ConfigJson 存储的处理器链路配置 JSON 串，使用 json.cn 等格式化如下，配置的整个调用链路规则特别清晰
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042853_bcd374.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042853_bcd374.webp)
 
 `getHandlerConfigFile()` 获到配置类方法，只是把在配置中心储存的配置规则，转换成配置类 `ProductCheckHandlerConfig` 对象，用于程序处理。结构如下：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042854_615505.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042854_615505.webp)
 
 > Notes: 此时配置类中存储的仅仅是处理器 Spring Bean 的 name 而已，并非实际处理器对象。
 
@@ -1701,7 +1701,7 @@ ConfigJson 存储的处理器链路配置 JSON 串，使用 json.cn 等格式化
 
 注入进来的 handlerMap 中 Key 对应 Bean 的 name，Value 是对应的 Bean 实例，也就是实际的处理器，这里指空值校验处理器、价格校验处理器、库存校验处理器。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042855_8ac0ec.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042855_8ac0ec.webp)
 
 ###### 5.3.5.1.2. 步骤2-2：保存处理器规则
 
@@ -1715,7 +1715,7 @@ abstractCheckHandler.setNextHandler(this.getHandler(config.getNext()));
 
 以上方法是递归设置链路上的处理器，结合 ConfigJson 配置的规则来看：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042856_873623.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042856_873623.webp)
 
 1. 由上而下，NullValueCheckHandler 空值校验处理器通过 `setNextHandler()` 方法法设置自己持有的下一节点的处理器，也就是价格处理器 PriceCheckHandler。
 2. 接着，PriceCheckHandler 价格处理器，同样需要经过步骤2-1配置检查、步骤2-2保存配置规则，并且最重要的是，它也需要设置下一节点的处理器 StockCheckHandler 库存校验处理器。
@@ -1723,7 +1723,7 @@ abstractCheckHandler.setNextHandler(this.getHandler(config.getNext()));
 
 通过递归调用 `getHandler()` 获取处理器方法，就将整个处理器链路对象串联起来了。如下：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042857_f6e99b.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042857_f6e99b.webp)
 
 实际上，`getHandler()` 获取处理器对象的代码就是把在配置中心配置的规则 `ConfigJson`，转换成配置类 `ProductCheckHandlerConfig` 对象，再根据配置类对象，转换成实际的处理器对象，这个处理器对象持有整个链路的调用顺序。
 
@@ -1812,7 +1812,7 @@ ProductVO param = ProductVO.builder()
 
 测试结果
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042858_2951db.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042858_2951db.webp)
 
 场景2：创建商品价格参数异常（如下price参数），被价格处理器截断，返回错误信息
 
@@ -1826,7 +1826,7 @@ ProductVO param = ProductVO.builder()
 
 测试结果
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042859_b35860.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042859_b35860.webp)
 
 场景 3：创建商品库存参数异常（如下stock参数），被库存处理器截断，返回错误信息。
 
@@ -1840,7 +1840,7 @@ ProductVO param = ProductVO.builder()
 
 测试结果
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042860_faa33c.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042860_faa33c.webp)
 
 场景4：创建商品所有处理器校验通过，保存商品。
 
@@ -1853,7 +1853,7 @@ ProductVO param = ProductVO.builder()
 
 测试结果
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042861_0169e0.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251042861_0169e0.webp)
 
 # 门面模式（整理中！）
 

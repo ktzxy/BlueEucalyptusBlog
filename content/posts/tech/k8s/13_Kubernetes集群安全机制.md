@@ -25,7 +25,7 @@ showSeries= true
 - 访问过程中，需要证书、token、或者用户名和密码
 - 如果访问pod需要serviceAccount
 
-![image-20201118092356107](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529044.webp)
+![image-20201118092356107](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529044.webp)
 
 ### 认证
 
@@ -51,7 +51,7 @@ showSeries= true
 
 基于角色的访问控制，为某个角色设置访问内容，然后用户分配该角色后，就拥有该角色的访问权限
 
-![image-20201118093949893](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529045.webp)
+![image-20201118093949893](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529045.webp)
 
 k8s中有默认的几个角色
 
@@ -83,7 +83,7 @@ k8s中有默认的几个角色
 kubectl get namespace
 ```
 
-![image-20201118094516426](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529046.webp)
+![image-20201118094516426](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529046.webp)
 
 然后我们创建一个自己的命名空间  roledemo
 
@@ -103,7 +103,7 @@ kubectl run nginx --image=nginx -n roledemo
 
 我们通过 rbac-role.yaml进行创建
 
-![image-20201118094851338](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529047.webp)
+![image-20201118094851338](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529047.webp)
 
 tip：这个角色只对pod 有 get、list权限
 
@@ -116,13 +116,13 @@ kubectl apply -f rbac-role.yaml
 kubectl get role -n roledemo
 ```
 
-![image-20201118095141786](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529048.webp)
+![image-20201118095141786](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529048.webp)
 
 ### 创建角色绑定
 
 我们还是通过 role-rolebinding.yaml 的方式，来创建我们的角色绑定
 
-![image-20201118095248052](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529049.webp)
+![image-20201118095248052](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529049.webp)
 
 然后创建我们的角色绑定
 
@@ -133,15 +133,15 @@ kubectl apply -f rbac-rolebinding.yaml
 kubectl get role, rolebinding -n roledemo
 ```
 
-![image-20201118095357067](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529050.webp)
+![image-20201118095357067](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529050.webp)
 
 ### 使用证书识别身份
 
 我们首先得有一个 rbac-user.sh 证书脚本
 
-![image-20201118095541427](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529051.webp)
+![image-20201118095541427](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529051.webp)
 
-![image-20201118095627954](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529052.webp)
+![image-20201118095627954](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529052.webp)
 
 这里包含了很多证书文件，在TSL目录下，需要复制过来
 
@@ -160,4 +160,4 @@ kubectl get pods -n roledemo
 kubectl get svc -n roledmeo
 ```
 
-![image-20201118100051043](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529053.webp)
+![image-20201118100051043](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529053.webp)

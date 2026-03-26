@@ -681,7 +681,7 @@ if语句的三种形式
 
 1. 单行格式if语句：`if(条件){ 条件满足执行的语句 }`
 
-   ![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151459428.webp)
+   ![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151459428.webp)
 
    示例：
 
@@ -710,7 +710,7 @@ int main(){
 
 2. 多行格式if语句：`if(条件){ 条件满足执行的语句 }else{ 条件不满足执行的语句 };`
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151505187.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151505187.webp)
 
 
 
@@ -735,7 +735,7 @@ int main(){
 
 3. 多条件的if语句：`if(条件1){ 条件1满足执行的语句 }else if(条件2){条件2满足执行的语句}... else{ 都不满足执行的语句}`
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151511146.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151511146.webp)
 
 
 
@@ -949,7 +949,7 @@ int main(){
 
 **解释：**==只要循环条件的结果为真，就执行循环语句==
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151520914.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151520914.webp)
 
 
 
@@ -1020,7 +1020,7 @@ int main()
 
 **注意：**与while的区别在于==do...while会先执行一次循环语句==，再判断循环条件
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151528955.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151528955.webp)
 
 
 
@@ -1097,7 +1097,7 @@ int main(){
 
 **详解：**
 
-![1541673704101](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151536108.webp)
+![1541673704101](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151536108.webp)
 
 
 
@@ -1133,7 +1133,7 @@ int main()
 
 例如我们想在屏幕中打印如下图片，就需要利用嵌套循环
 
-![1541676003486](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151542466.webp)
+![1541676003486](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151542466.webp)
 
 **示例：**
 
@@ -1456,9 +1456,9 @@ int main()
 2. 对每一对相邻元素做同样的工作，执行完毕后，找到第一个最大值。
 3. 重复以上的步骤，每次比较次数-1，直到不需要比较
 
-![1541905327273](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151601739.webp)
+![1541905327273](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151601739.webp)
 
-![image-20240617232311696](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151555834.webp)
+![image-20240617232311696](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151555834.webp)
 
 **示例：** 将数组 { 4,2,8,0,5,7,1,3,9 } 进行升序排序
 
@@ -3303,7 +3303,7 @@ int main()
 
 分别用全局函数和成员函数判断两个立方体是否相等。
 
-![1545533548532](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151659061.webp)
+![1545533548532](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151659061.webp)
 
 ```c++
 #include <iostream>
@@ -3388,7 +3388,7 @@ int main()
 
 设计一个圆形类（Circle），和一个点类（Point），计算点和圆的关系。
 
-![1545533829184](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151713609.webp)
+![1545533829184](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151713609.webp)
 
 ```c++
 #include <iostream>
@@ -3778,7 +3778,7 @@ int main()
 
 深拷贝：在堆区重新申请空间，进行拷贝操作
 
-![image-20240712153039770](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151730817.webp)
+![image-20240712153039770](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151730817.webp)
 
 **示例：**
 
@@ -4380,7 +4380,7 @@ c++编译器至少给一个类添加4个函数
 
 有些类与类之间存在特殊的关系，例如下图中：
 
-![1544861202252](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151801053.webp)
+![1544861202252](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151801053.webp)
 
 我们发现，定义这些类时，下级别的成员除了拥有上一级的共性，还有自己的特性。
 
@@ -4428,7 +4428,7 @@ B 类称为父类 或 基类
 * 保护继承
 * 私有继承
 
-![clip_image002](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151810606.webp)
+![clip_image002](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151810606.webp)
 
 **示例：**
 
@@ -4534,7 +4534,7 @@ C++允许**一个类继承多个类**
 
 **典型的菱形继承案例：**
 
-![clip_image002](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151823210.webp)
+![clip_image002](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304151823210.webp)
 
 **菱形继承问题：**
 

@@ -34,7 +34,7 @@ comments = true
 ### Spring能做什么
 
 #### Spring的能力
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282211704_49e6bb.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282211704_49e6bb.webp)
 
 #### Spring的生态
 
@@ -53,7 +53,7 @@ comments = true
 
 - 响应式编程
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212655_bd1d0e.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212655_bd1d0e.webp)
 
 - 内部源码设计
 
@@ -108,7 +108,7 @@ comments = true
 - 去中心化，服务自治。服务可以使用不同的语言、不同的存储技术
 
 ### 分布式
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212047_776108.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212047_776108.webp)
 
 #### 分布式的困难
 
@@ -127,7 +127,7 @@ comments = true
 
 - SpringBoot + SpringCloud
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212600_a4b6f1.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212600_a4b6f1.webp)
 
 ### 云原生
 
@@ -150,12 +150,12 @@ comments = true
 - [Spring Boot官方文档](https://docs.spring.io/spring-boot/docs/)
 
 ### 官网文档架构
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212428_6ea675.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212428_6ea675.webp)
 ![在这里插入图片描述](image/20210205004828702.png)
 
 [查看版本新特性](https://github.com/spring-projects/spring-boot/wiki#release-notes)
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212316_4c2e41.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212316_4c2e41.webp)
 
 
 ## 05、基础入门-SpringBoot-HelloWorld
@@ -546,7 +546,7 @@ System.out.println(bean1);
 
 **条件装配：满足Conditional指定的条件，则进行组件注入**
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212687_82b54f.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212687_82b54f.webp)
 
 
 用@ConditionalOnMissingBean举例说明
@@ -819,7 +819,7 @@ public @interface AutoConfigurationPackage {
     - 默认扫描我们当前系统里面所有`META-INF/spring.factories`位置的文件
     - `spring-boot-autoconfigure-2.3.4.RELEASE.jar`包里面也有`META-INF/spring.factories`
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212480_9202d3.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282212480_9202d3.webp)
 
 ```properties
 # 文件里面写死了spring-boot一启动就要给容器中加载的所有配置类
@@ -1669,10 +1669,10 @@ protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Ex
 
 `this.handlerMappings`在Debug模式下展现的内容：
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282213821_184006.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282213821_184006.webp)
 其中，保存了所有`@RequestMapping` 和`handler`的映射规则。
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282213116_3766b7.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282213116_3766b7.webp)
 
 所有的请求映射都在HandlerMapping中：
 
@@ -1963,7 +1963,7 @@ public class DispatcherServlet extends FrameworkServlet {
 
 有这些`HandlerAdapter`：
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282213151_3c5fda.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282213151_3c5fda.webp)
 
 
 0. 支持方法上标注`@RequestMapping` 
@@ -2847,7 +2847,7 @@ public class ModelMethodProcessor implements HandlerMethodArgumentResolver, Hand
 
 `return mavContainer.getModel();`这跟`MapMethodProcessor`的一致
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282213731_99cf63.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282213731_99cf63.webp)
 
 
 `Model`也是另一种意义的`Map`。
@@ -3152,7 +3152,7 @@ public class ServletModelAttributeMethodProcessor extends ModelAttributeMethodPr
 
 
 ## 37、响应处理-【源码分析】-ReturnValueHandler原理
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282213398_204c4a.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282213398_204c4a.webp)
 
 假设给前端自动返回json数据，需要引入相关的依赖
 
@@ -3507,7 +3507,7 @@ public interface HttpMessageConverter<T> {
 
 例子：`Person`对象转为JSON，或者 JSON转为`Person`，这将用到`MappingJackson2HttpMessageConverter`
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282214150_0adaa1.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202311282214150_0adaa1.webp)
 
 ```java
 public class MappingJackson2HttpMessageConverter extends AbstractJackson2HttpMessageConverter {

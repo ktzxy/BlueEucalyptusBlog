@@ -528,7 +528,7 @@ MyBatis默认的事务管理器就是JDBC ,连接池：POOLED
 
 这些属性可以在外部进行配置，并可以进行动态替换。你既可以在典型的 Java 属性文件中配置这些属性，也可以在 properties 元素的子元素中设置。【db.properties】【log4j.properties】
 
-![image-20220412233939838](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251424621_c1ba1a.webp)
+![image-20220412233939838](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251424621_c1ba1a.webp)
 
 编写一个配置文件db.properties
 
@@ -593,9 +593,9 @@ public class User{}
 - 懒加载
 - 日志实现
 
-![image-20220412234007388](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251424007_c2d193.webp)
+![image-20220412234007388](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251424007_c2d193.webp)
 
-![image-20220412234027248](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/image-20220412234027248_437978.webp)
+![image-20220412234027248](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/image-20220412234027248_437978.webp)
 
 #### 4.6 映射器（mappers）
 
@@ -650,7 +650,7 @@ MapperRegistry：注册绑定我们的Mapper文件；
 
 **作用域**和**生命周期**是至关重要的，因为错误的使用会导致非常严重的**并发问题**。
 
-![image-20220412234044432](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251424729_de5ae9.webp)
+![image-20220412234044432](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251424729_de5ae9.webp)
 
 **SqlSessionFactoryBuilder**
 
@@ -670,7 +670,7 @@ MapperRegistry：注册绑定我们的Mapper文件；
 - 连接到连接池的一个请求！
 - 用完之后需要赶紧关闭，否则资源被占用！
 
-![image-20220412234101440](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425314_fa73be.webp)
+![image-20220412234101440](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425314_fa73be.webp)
 
 这里的每一个mapper都代表一个业务！
 
@@ -682,7 +682,7 @@ MapperRegistry：注册绑定我们的Mapper文件；
 
 1、 数据库的字段名
 
-![image-20220412234119168](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425023_ec8dde.webp)
+![image-20220412234119168](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425023_ec8dde.webp)
 
 2、Java中的实体类
 
@@ -792,7 +792,7 @@ id	name	password   (实体类的)
 
 现在：日志工厂！
 
-![image-20220412234138009](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425858_6e86fc.webp)
+![image-20220412234138009](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425858_6e86fc.webp)
 
 - LOG4J【掌握】
 - STDOUT_LOGGING   【掌握】
@@ -809,7 +809,7 @@ id	name	password   (实体类的)
 
 **STDOUT_LOGGING**   标准日志输出
 
-![image-20220412234156100](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425219_bfdf6e.webp)
+![image-20220412234156100](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425219_bfdf6e.webp)
 
 #### 6.2 Log4j
 
@@ -869,7 +869,7 @@ log4j.logger.java.sql.PreparedStatement=DEBUG
 
 4、Log4j日志输出
 
-![image-20220412234214170](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425653_d2b877.webp)
+![image-20220412234214170](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425653_d2b877.webp)
 
 5、**简单使用log4j**
 
@@ -1058,17 +1058,17 @@ List<User> getUsers();
 
 4、利用dubug查看本质：反射机制实现
 
-![image-20220412234300527](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425414_087b4b.webp)
+![image-20220412234300527](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251425414_087b4b.webp)
 
 5、底层：本质上利用了jvm的动态代理机制！
 
-![image-20220412234411674](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251426408_319c7d.webp)
+![image-20220412234411674](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251426408_319c7d.webp)
 
 
 
 #### 8.3 Mybatis详细执行流程
 
-![image-20220412234437474](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251426275_34395e.webp)
+![image-20220412234437474](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251426275_34395e.webp)
 
 
 
@@ -1888,9 +1888,9 @@ public void testQueryUserById(){
 
 #### 13.6 缓存原理
 
-![image-20220412234523329](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251427730_b59c9a.webp)
+![image-20220412234523329](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251427730_b59c9a.webp)
 
-![image-20220412234538673](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251427135_d23d11.webp)
+![image-20220412234538673](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202408251427135_d23d11.webp)
 
 注意：
 

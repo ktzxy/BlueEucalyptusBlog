@@ -32,13 +32,13 @@ comments = true
 
 ### 层次结构
 
-![image-20210215204604180](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241628904_c97bb7.webp)
+![image-20210215204604180](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241628904_c97bb7.webp)
 
 ### 异常体系结构
 
 Java把异常当作对象来处理，并定义一个基类java.lang.Throwable作为所有异常的超类。在Java API中已经定义了许多异常类，这些异常类分为两大类，错误Error和异常Exception.
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241628392_8c060a.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241628392_8c060a.webp)
 
 ### Error
 
@@ -162,7 +162,7 @@ public class demo2 {
 	重载:在同一个类中，当方法名相同，形参列表不同的时候多个方法构成了重载
 	重写:在不同的类中，子类对父类提供的方法不满意的时候，要对父类的方法进行重写。
 
-![image-20210215205724248](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241628837_d46b4d.webp)
+![image-20210215205724248](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241628837_d46b4d.webp)
 
 ### 自定义异常
 

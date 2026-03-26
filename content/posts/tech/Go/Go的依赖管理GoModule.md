@@ -21,7 +21,7 @@ https://www.liwenzhou.com/posts/Go/go_dependency/
 
 如果是使用Go1.11和Go1.12版本，需要手动开启Go module支持
 
-![image-20200906202108891](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291455476_710425.webp)
+![image-20200906202108891](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291455476_710425.webp)
 
 ## 为什么需要依赖管理
 

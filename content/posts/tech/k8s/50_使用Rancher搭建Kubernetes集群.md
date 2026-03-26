@@ -25,7 +25,7 @@ docker run -d -p 80:80 -p 443:443 rancher/rancher:v2.0.0
 docker ps -a
 ```
 
-![image-20201123160929063](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537379.webp)
+![image-20201123160929063](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537379.webp)
 
 我们可以来查看我们的日志
 
@@ -39,11 +39,11 @@ docker logs  eloquent_curie
 https://192.168.177.150/
 ```
 
-![image-20201123161958206](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537380.webp)
+![image-20201123161958206](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537380.webp)
 
 第一次登录，需要我们填写密码，我们自己的密码后，点击下一步，完成后即可进入到我们的控制台
 
-![image-20201123180845117](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537381.webp)
+![image-20201123180845117](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537381.webp)
 
 ## 导入K8S集群
 
@@ -51,11 +51,11 @@ https://192.168.177.150/
 
 首先我们点击 Add Cluster ，然后选择 IMPORT 导入我们的集群
 
-![image-20201123194902242](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537382.webp)
+![image-20201123194902242](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537382.webp)
 
 然后会有Add Cluster页面，下面我们通过命令来添加
 
-![image-20201123194958021](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537383.webp)
+![image-20201123194958021](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537383.webp)
 
 我们首先选择上面这条，在我们的master节点上执行，将我们的集群被Rancher接管
 
@@ -69,13 +69,13 @@ kubectl apply -f https://192.168.177.130/v3/import/6pqf9w75fmx4pt94tpbpklxd2t5qk
 kubectl apply -f rancher.yaml
  ```
 
-![image-20201123200210728](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537384.webp)
+![image-20201123200210728](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537384.webp)
 
 在执行上述命令，可能会出现这个问题，我们只需要把里面的 extensions/v1beta1 修改成  apps/v1 即可
 
 修改完成后，再次执行即可
 
-![image-20201123200337426](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537385.webp)
+![image-20201123200337426](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537385.webp)
 
 我们通过下面命令，查看我们创建的pods
 
@@ -83,8 +83,8 @@ kubectl apply -f rancher.yaml
 kubectl get pods  -n cattle-system
 ```
 
-![image-20201123200558313](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537386.webp)
+![image-20201123200558313](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537386.webp)
 
 执行完上述操作后，我们到Rancher的UI界面，点击Done，即可看到我们的集群被成功导入
 
-![image-20201123200834363](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537387.webp)
+![image-20201123200834363](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291537387.webp)

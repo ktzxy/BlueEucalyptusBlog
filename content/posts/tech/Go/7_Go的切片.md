@@ -148,11 +148,11 @@ fmt.Printf("长度%d 容量%d\n", len(sss), cap(sss))
 
 举个例子，现在有一个数组 a := [8]int {0,1,2,3,4,5,6,7}，切片 s1 := a[:5]，相应示意图如下
 
-![image-20200720094247624](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291430115_4957de.webp)
+![image-20200720094247624](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291430115_4957de.webp)
 
 切片 s2 := a[3:6]，相应示意图如下：
 
-![image-20200720094336749](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291430116_823319.webp)
+![image-20200720094336749](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291430116_823319.webp)
 
 ## 使用make函数构造切片
 

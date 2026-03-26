@@ -100,10 +100,10 @@ public class Springboot2PrometheusApplication {
 **开启 actuator 后要注意要防护，请勿将开启 actuator 的服务直接对外。如果你需要这么做，可以新增一个过滤器对 /actuator 进行过滤，只允许内网IP地址访问。**
 
 SpringBoot项目到这里就配置完成了，启动项目，访问http://localhost:8080/actuator/prometheus，如图所示，可以看到一些度量指标。
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633785_26a355.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633785_26a355.webp)
 
 包含但不限于以下接口都是在开启 actuator 之后可以访问的（默认统一前缀 /actuator）：
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633815_91be32.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633815_91be32.webp)
 
 
 ## 1.4 Prometheus配置
@@ -177,13 +177,13 @@ public class OperationController {
 
 ## 2.1 模拟调用
 通过postman进行调用接口，如下图所示：
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633558_615eea.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633558_615eea.webp)
 
 ## 2.2 Grafana监控视图的制作
 在grafana页面新增dashboard之后，便进入下图所示：
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633858_c30603.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633858_c30603.webp)
 然后选中数据源，并进行metrics语句编写，如下图所示，sum(request_add_total) ,其中sum函数中的字段可以模糊搜索，只要prometheus中的服务是up的。然后图就如下所示，可以看出，调用情况：
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633294_be51cd.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633294_be51cd.webp)
 
 # 三、SpringBoot应用实现案例
 
@@ -245,10 +245,10 @@ monitor.getRequestErrorCount().increment();
 ```
 
 规则文件配置如下:
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634450_21ebe1.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634450_21ebe1.webp)
 
 ## 3.6 在prometheus监控即可查看
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634432_2a9c41.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634432_2a9c41.webp)
 企业微信告警效果图:
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634787_9596ff.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281634787_9596ff.webp)

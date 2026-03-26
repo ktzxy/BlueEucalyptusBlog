@@ -147,7 +147,7 @@ redis_exporter 在 Grafana 上为我们提供好了 Dashboard 模板：[https://
 
 下载后在 Grafana 中导入 json 模板就可以看到官方这样的示例截图啦：
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633419_91893d.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281633419_91893d.webp)
 
  
 

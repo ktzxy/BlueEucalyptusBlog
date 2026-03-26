@@ -13,34 +13,34 @@ comments = true
 
 ### 1.设置主题
 
-![image-20210203155447990](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241621425_6463f8.webp)
+![image-20210203155447990](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241621425_6463f8.webp)
 
 ### 2.编辑区的字体变大或者变小：（ctrl+鼠标滚轮）
 
-![image-20210203155701923](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/32481c032626fa423c0fa32011790a1f_d641cd.webp)
+![image-20210203155701923](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/32481c032626fa423c0fa32011790a1f_d641cd.webp)
 
 ### 3.鼠标悬浮在代码上有提示：
 
-![image-20210203155807587](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241621228_418dcd.webp)
+![image-20210203155807587](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241621228_418dcd.webp)
 
 ### 4.自动导包和优化多余的包：
 
 手动导包：快捷键：alt+enter
 自动导包和优化多余的包：
 
-![image-20210203155935111](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/0efe9b1f914b651c666dfd85b43453d0_fde84d.webp)
+![image-20210203155935111](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/0efe9b1f914b651c666dfd85b43453d0_fde84d.webp)
 
 ### 5.显示行号 ，  方法和方法间的分隔符：
 
-![image-20210203160134360](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241621910_81d340.webp)
+![image-20210203160134360](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241621910_81d340.webp)
 
 ### 6.忽略大小写，进行提示：
 
-![image-20210203160331324](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241621601_d43fcd.webp)
+![image-20210203160331324](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241621601_d43fcd.webp)
 
 ### 7.修改代码中注释的字体颜色：
 
-![image-20210203160649569](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241621788_f794d3.webp)
+![image-20210203160649569](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241621788_f794d3.webp)
 
 8.修改类头的文档注释信息：注意：对新建的类才有效
 /**
@@ -51,11 +51,11 @@ comments = true
 * @version: 1.0
 */
 
-![image-20210203161132148](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622146_7968bb.webp)
+![image-20210203161132148](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622146_7968bb.webp)
 
 ### 8.自动编译：
 
-![image-20210203161338692](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622228_7e3dca.webp)
+![image-20210203161338692](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622228_7e3dca.webp)
 
 ### 9.常用快捷键
 
@@ -132,15 +132,15 @@ comments = true
 设置Debug连接方式，默认是Socket。 Shared memory是Windows 特有的一个属性，一般在Windows系统下建议使用此设置，
 内存占用相对较少。
 
-![image-20210203162123277](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622587_8c617b.webp)
+![image-20210203162123277](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622587_8c617b.webp)
 
 【2】常用断点调试快捷键：
 
-![image-20210203162236689](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622541_f92136.webp)一步一步的向下运行代码，不会走入任何方法中。
-![image-20210203162310424](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622014_bc61f8.webp)一步一步的向下运行代码，不会走入系统类库的方法中，但是会走入自定义的方法中。
-![image-20210203162323520](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622129_df6e74.webp)一步一步的向下运行代码，会走入系统类库的方法中，也会走入自定义的方法中。
-![image-20210203162335089](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622889_93559a.webp)跳出方法
-![image-20210203162358567](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622944_55a559.webp)结束程序
-![image-20210203162417023](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241623226_af6d8a.webp)进入到下一个断点，如果没有下一个断点了，就直接运行到程序结束。
+![image-20210203162236689](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622541_f92136.webp)一步一步的向下运行代码，不会走入任何方法中。
+![image-20210203162310424](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622014_bc61f8.webp)一步一步的向下运行代码，不会走入系统类库的方法中，但是会走入自定义的方法中。
+![image-20210203162323520](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622129_df6e74.webp)一步一步的向下运行代码，会走入系统类库的方法中，也会走入自定义的方法中。
+![image-20210203162335089](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622889_93559a.webp)跳出方法
+![image-20210203162358567](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241622944_55a559.webp)结束程序
+![image-20210203162417023](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241623226_af6d8a.webp)进入到下一个断点，如果没有下一个断点了，就直接运行到程序结束。
 
-![image-20210203162435472](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241623957_2f316b.webp) 在当前次取消未执行的断点。
+![image-20210203162435472](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241623957_2f316b.webp) 在当前次取消未执行的断点。

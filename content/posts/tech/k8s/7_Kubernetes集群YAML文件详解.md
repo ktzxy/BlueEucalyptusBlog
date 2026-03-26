@@ -69,7 +69,7 @@ People: [Tom, Jack]
 
 ### 控制器的定义
 
-![image-20201114110444032](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523695.webp)
+![image-20201114110444032](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523695.webp)
 
 
 
@@ -77,7 +77,7 @@ People: [Tom, Jack]
 
 包含一些 镜像，版本、端口等
 
-![image-20201114110600165](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523696.webp)
+![image-20201114110600165](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523696.webp)
 
 ### 属性说明
 
@@ -127,7 +127,7 @@ kubectl create deployment web --image=nginx -o yaml --dry-run > hello.yaml
 kubectl get deploy
 ```
 
-![image-20201114113115649](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523697.webp)
+![image-20201114113115649](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523697.webp)
 
 然后我们导出 nginx的配置
 
@@ -137,5 +137,5 @@ kubectl get deploy nginx -o=yaml --export > nginx.yaml
 
 然后会生成一个 `nginx.yaml` 的配置文件
 
-![image-20201114184538797](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523698.webp)
+![image-20201114184538797](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523698.webp)
 

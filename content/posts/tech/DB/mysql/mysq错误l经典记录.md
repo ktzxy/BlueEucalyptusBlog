@@ -107,7 +107,7 @@ default-character-set=utf8
 最关键的一项是[mysqld] character-set-server=utf8，其它两项，对于my.cnf只需要追加[mysql] character-set-server=utf8就可以改变 character_set_client、character_set_connection、character_set_results这三项的值.
 
 **character_set_client/connection/results变量**
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172246824.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172246824.webp)
 
 
 

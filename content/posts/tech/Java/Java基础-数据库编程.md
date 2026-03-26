@@ -15,7 +15,7 @@ JDBC（Java DataBase Connectivity, java数据库连接）是一种用于执行 S
 
 JDBC 需要连接驱动，驱动是两个设备要进行通信，满足一定通信数据格式，数据格式由设备提供商规定，设备提供商为设备提供驱动软件，通过软件可以与该设备进行通信。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251038796_9aac62.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251038796_9aac62.webp)
 
 ### 1.1. MySQL 数据库 JDBC 相关资源
 
@@ -30,7 +30,7 @@ MySQL 驱动官网下载地址：https://dev.mysql.com/downloads/connector/j/
 
 ### 2.1. JDBC 执行流程
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251038797_cd6fd3.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251038797_cd6fd3.webp)
 
 使用 JDBC 连接数据库的四个参数：
 

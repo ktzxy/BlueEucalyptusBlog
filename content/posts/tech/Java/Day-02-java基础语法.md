@@ -95,9 +95,9 @@ Java的数据类型分为两大类
 
 ​	引用类型(reference type)
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241623163_9c2e67.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241623163_9c2e67.webp)
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241623591_4ac425.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241623591_4ac425.webp)
 
 ```java
 //八大基本数据类型
@@ -421,39 +421,39 @@ System.out.println(2<<3);  //16
 
 有符号左移
 
-![image-20210203152638207](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241623612_7fc63f.webp)
+![image-20210203152638207](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241623612_7fc63f.webp)
 
 有符号右移
 
-![image-20210203153200629](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624606_d3768d.webp)
+![image-20210203153200629](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624606_d3768d.webp)
 
 无符号右移
 
-![image-20210203153307938](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624538_832f5d.webp)
+![image-20210203153307938](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624538_832f5d.webp)
 
 &与
 
 6&3=2
 
-![image-20210203153602467](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624034_29b581.webp)
+![image-20210203153602467](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624034_29b581.webp)
 
 |或
 
 6|3=7
 
-![image-20210203153720828](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624110_158020.webp)
+![image-20210203153720828](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624110_158020.webp)
 
 ^异或
 
 6^3=3
 
-![image-20210203153859643](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624781_3be9a3.webp)
+![image-20210203153859643](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624781_3be9a3.webp)
 
 ~反
 
 ~6=-7
 
-![image-20210203154041652](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624518_b0ff7b.webp)
+![image-20210203154041652](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241624518_b0ff7b.webp)
 
 ```java
 拓展赋值运算符

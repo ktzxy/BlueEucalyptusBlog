@@ -180,7 +180,7 @@ public enum ColorEnum {
 
 使用命令`javac ColorEnum.java`进行编译生成class文件，然后再用命令`javap -p ColorEnum.class`进行反编译。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251038713_3ffccf.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251038713_3ffccf.webp)
 
 去掉包名，反编译后的内容如下：
 

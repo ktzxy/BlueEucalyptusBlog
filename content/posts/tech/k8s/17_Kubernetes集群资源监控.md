@@ -40,7 +40,7 @@ showSeries= true
   - 开源的数据分析和可视化工具
   - 支持多种数据源
 
-![image-20201120082257441](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532128.webp)
+![image-20201120082257441](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532128.webp)
 
 
 
@@ -48,7 +48,7 @@ showSeries= true
 
 首先需要部署一个守护进程
 
-![image-20201120083606298](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532129.webp)
+![image-20201120083606298](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532129.webp)
 
 ```bash
 ---
@@ -102,7 +102,7 @@ kubectl create -f node-exporter.yaml
 
 执行完，发现会报错
 
-![image-20201120084034160](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532130.webp)
+![image-20201120084034160](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532130.webp)
 
 这是因为版本不一致的问题，因为发布的正式版本，而这个属于测试版本
 
@@ -117,13 +117,13 @@ apiVersion: apps/v1
 
 创建完成后的效果
 
-![image-20201120085721454](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532131.webp)
+![image-20201120085721454](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532131.webp)
 
 
 
 然后通过yaml的方式部署prometheus
 
-![image-20201120083107594](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532132.webp)
+![image-20201120083107594](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532132.webp)
 
 - configmap：定义一个configmap：存储一些配置文件【不加密】
 - prometheus.deploy.yaml：部署一个deployment【包括端口号，资源限制】
@@ -138,7 +138,7 @@ apiVersion: apps/v1
 kubectl create -f rbac-setup.yaml
 ```
 
-![image-20201120090002150](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532133.webp)
+![image-20201120090002150](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532133.webp)
 
 然后分别部署
 
@@ -157,7 +157,7 @@ kubectl create -f prometheus.svc.yml
 kubectl get pods -n kube-system
 ```
 
-![image-20201120093213576](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532134.webp)
+![image-20201120093213576](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532134.webp)
 
 在我们部署完成后，即可看到 prometheus 的 pod了，然后通过下面命令，能够看到对应的端口
 
@@ -165,7 +165,7 @@ kubectl get pods -n kube-system
 kubectl get svc -n kube-system
 ```
 
-![image-20201121091348752](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532135.webp)
+![image-20201121091348752](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532135.webp)
 
 通过这个，我们可以看到 `prometheus` 对外暴露的端口为 30003，访问页面即可对应的图形化界面
 
@@ -173,7 +173,7 @@ kubectl get svc -n kube-system
 http://192.168.177.130:30003
 ```
 
-![image-20201121091508851](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532136.webp)
+![image-20201121091508851](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532136.webp)
 
 在上面我们部署完prometheus后，我们还需要来部署grafana
 
@@ -215,7 +215,7 @@ kubectl create -f grafana-ing.yaml
 
 我们能看到，我们的grafana正在
 
-![image-20201120110426534](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532137.webp)
+![image-20201120110426534](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532137.webp)
 
 ### 配置数据源
 
@@ -225,36 +225,36 @@ kubectl create -f grafana-ing.yaml
 kubectl get svc -n kube-system
 ```
 
-![image-20201120111949197](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532138.webp)
+![image-20201120111949197](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532138.webp)
 
 我们可以通过 ip + 30431 访问我们的 grafana 图形化页面
 
-![image-20201120112048887](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532139.webp)
+![image-20201120112048887](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532139.webp)
 
 然后输入账号和密码：admin admin
 
 进入后，我们就需要配置 prometheus 的数据源
 
-![image-20201121092012018](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532140.webp)
+![image-20201121092012018](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532140.webp)
 
  和 对应的IP【这里IP是我们的ClusterIP】
 
-![image-20201121092053215](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532141.webp)
+![image-20201121092053215](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532141.webp)
 
 ### 设置显示数据的模板
 
 选择Dashboard，导入我们的模板
 
-![image-20201121092312118](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532142.webp)
+![image-20201121092312118](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532142.webp)
 
 然后输入 315 号模板
 
-![image-20201121092418180](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532143.webp)
+![image-20201121092418180](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532143.webp)
 
 然后选择 prometheus数据源 mydb，导入即可
 
-![image-20201121092443266](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532144.webp)
+![image-20201121092443266](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532144.webp)
 
 导入后的效果如下所示
 
-![image-20201121092610154](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532145.webp)
+![image-20201121092610154](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291532145.webp)

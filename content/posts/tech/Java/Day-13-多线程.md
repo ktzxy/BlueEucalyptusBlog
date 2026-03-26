@@ -75,9 +75,9 @@ public class TestThread01 extends Thread {
 
 准备：commons-io-2.8.0.jar包
 
-![image-20210306160457937](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637584_4d0f23.webp)
+![image-20210306160457937](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637584_4d0f23.webp)
 
-![image-20210306160626061](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637346_bd4e42.webp)
+![image-20210306160626061](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241637346_bd4e42.webp)
 
 ```java
 package com.zy.thread_num;
@@ -532,9 +532,9 @@ interface ILove{
 
 ### 线程状态
 
-![image-20210307142626501](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241638368_4fd120.webp)
+![image-20210307142626501](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241638368_4fd120.webp)
 
-![image-20210307200157860](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241638373_4db6be.webp)
+![image-20210307200157860](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241638373_4db6be.webp)
 
 线程状态。线程可以处于下列状态之一： 
 
@@ -814,7 +814,7 @@ public class TestState {
 除了可以直接使用数字表示线程的优先级，还可以使用Thread类中提供的三个
 静态常量表示线程的优先级。
 
-![image-20210308221536373](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241638559_f3f0d3.webp)
+![image-20210308221536373](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241638559_f3f0d3.webp)
 
 ```java
 package com.zy.thread_num3;
@@ -1491,7 +1491,7 @@ class Makeup extends Thread{
 
 Java在Object类中提供了wait()、notify()、notifyAll()等方法用于解决线程间的通信问题，因为Java中所有类都是Object类的子类或间接子类，因此任何类的实例对象都可以直接使用这些方法。
 
-![image-20210313164903582](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241638613_d79491.webp)
+![image-20210313164903582](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241638613_d79491.webp)
 
 说明︰其中wait()方法用于使当前线程进入等待状态,notify()和notifyAll()方法用于唤醒当前处于等待状态的线程。
 

@@ -19,13 +19,13 @@ comments = true
 - 了解过Dubbo + Zookeeper 分布式基础
 - 电脑配置内存不低于8G(个人是16G)
 
-![image-20220210221321005](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106424_a0673e.webp)
+![image-20220210221321005](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106424_a0673e.webp)
 
 > SpringCloud五大组件
 
 - 参考CSDN博文：https://blog.csdn.net/weixin_41217541/article/details/104718834
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106426_70f859.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106426_70f859.webp)
 
 | 组件           | 选型                    | 备注                                                         |
 | -------------- | ----------------------- | ------------------------------------------------------------ |
@@ -65,7 +65,7 @@ comments = true
 
 微服务（Microservice Architecture）是近几年流行的一种架构思想，关于它的概念很 难一言以蔽之。究竟什么是微服务呢？我们在此引用 ThoughtWorks 公司的首席科学家 Martin Fowler 于2014年提出的一段话：
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106427_3c49c6.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106427_3c49c6.webp)
 
 - 原文：https://martinfowler.com/articles/microservices.html 
 - 汉化：https://www.cnblogs.com/liuning8023/p/4493156.html
@@ -132,7 +132,7 @@ comments = true
 
 - Spring Cloud Alibaba
 
-![Spring Cloud Alibaba](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106428_c2bd25.webp)
+![Spring Cloud Alibaba](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106428_c2bd25.webp)
 
 > 为什么选择SpringCloud作为微服务架构？
 
@@ -176,9 +176,9 @@ comments = true
 - Spring官网:https://spring.io/
 - 地址：[Spring (xy2401.com)](https://spring.io.xy2401.com/)
 
-![image-20220210213122366](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106429_fe3b7c.webp)
+![image-20220210213122366](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106429_fe3b7c.webp)
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106430_b4f7dd.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106430_b4f7dd.webp)
 
 - SpringCloud, 基于SpringBoot提供了一套微服务解决方案，包括服务注册与发现，配置中心，全链路监控，服务网关，负载均衡，熔断器等组件，除了基于NetFlix的开源组件做高度抽象封装之外，还有一些选型中立的开源组件。 
 
@@ -197,7 +197,7 @@ comments = true
 
 - 目前成熟的互联网架构，应用服务化拆分 + 消息中间件。
 
-![image-20220214150037631](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106431_4aa33c.webp)
+![image-20220214150037631](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106431_4aa33c.webp)
 
 > Dubbo和SpringCloud对比
 
@@ -255,7 +255,7 @@ comments = true
 - 官网：http://projects.spring.io/spring-cloud/
 - 它的版本号有点特别：
 
-![image-20220210215814438](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106432_67aad7.webp)
+![image-20220210215814438](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106432_67aad7.webp)
 
 - Spring Cloud是一个由众多独立子项目组成的大型综合项目，每个子项目有不同的发行节奏，都维护着自己的发布版本号。Spring Cloud通过一个资源清单BOM（Bill of Materials）来管理每个版本的子项目清单。为避免与子项目的发布号混淆，所以`没有采用版本号的方式，而是通过命名的方式`。
 - 这些版本名称的命名方式`采用了伦敦地铁站的名称，同时根据字母表的顺序来对应版本时间顺序`，比如：最早的Release版本：Angel，第二个Release版本：Brixton，然后是Camden、Dalston、Edgware，Finchley,目前最新的是Hoxton 版本。 
@@ -329,7 +329,7 @@ SpringCloud父工程（Project）下初次带着3个子模块（Module）
 - 新建父工程Maven项目 springcloud-parent，切记Packageing是pom模式。
 - 主要是定义POM文件，将后续各个子模块公用的jar包等统一提取出来，类似一个抽象父类。
 
-![image-20220211120018667](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106433_b4f295.webp)
+![image-20220211120018667](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106433_b4f295.webp)
 
 - pom.xml
 
@@ -431,11 +431,11 @@ SpringCloud父工程（Project）下初次带着3个子模块（Module）
 
 - 新建springcloud-api模块
 
-![image-20220213093123243](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106434_41c724.webp)
+![image-20220213093123243](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106434_41c724.webp)
 
 - 可以观察发现，在父工程中多了一个Modules。
 
-![image-20220213093440880](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106435_75cab2.webp)
+![image-20220213093440880](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106435_75cab2.webp)
 
 - 编写springcloud-api 的 pom.xml
 
@@ -642,7 +642,7 @@ spring:
 
 - 根据配置新建mybatis-config.xml文件
 
-![image-20220213102426606](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106436_459312.webp)
+![image-20220213102426606](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106436_459312.webp)
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -764,9 +764,9 @@ public class DeptProvider8001 {
 
 - 启动测试，注意编写细节：
 
-![image-20220213104354049](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106437_2ccf15.webp)
+![image-20220213104354049](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106437_2ccf15.webp)
 
-![image-20220213103228463](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106438_1cfc5e.webp)
+![image-20220213103228463](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106438_1cfc5e.webp)
 
 > 创建consumer模块
 
@@ -882,9 +882,9 @@ public class DeptConsumer80 {
 
 - 测试访问，`先启动服务方：DeptProvider8001，再启动消费方：DeptConsumer80`：
 
-![image-20220213112941611](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106439_268d60.webp)
+![image-20220213112941611](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106439_268d60.webp)
 
-![image-20220213115009217](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106440_b605c5.webp)
+![image-20220213115009217](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106440_b605c5.webp)
 
 ## 5.Eureka服务注册与发现
 
@@ -902,11 +902,11 @@ public class DeptConsumer80 {
 - Eureka采用了C-S的架构设计，EurekaServer作为服务注册功能的服务器，他是服务注册中心。
 - 而系统中的其他微服务，使用Eureka的客户端连接到EurekaServer并维持心跳连接。这样系统的维护人员就可以通过EurekaServer来监控系统中各个微服务是否正常运行，Springcloud 的一些其他模块 (比如Zuul) 就可以通过EurekaServer来发现系统中的其他微服务，并执行相关的逻辑。
 
-![image-20220213163150726](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106441_219f39.webp)
+![image-20220213163150726](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106441_219f39.webp)
 
 - 和Dubbo架构对比：
 
-![//imgs/architecture.png](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106442_b419c2.webp)
+![//imgs/architecture.png](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106442_b419c2.webp)
 
 - Eureka包含两个组件：Eureka Server和Eureka Client。
 - Eureka Server提供服务注册服务，各个节点启动后，会在Eureka Server中进行注册，这样EurekaServer中的服务注册表中将会存储所有可用服务节点的信息，服务节点的信息可以在界面中直观的看到。
@@ -998,7 +998,7 @@ public class EurekaServer7001 {
 
 - 启动，访问测试：
 
-![image-20220213203915542](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106443_347024.webp)
+![image-20220213203915542](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106443_347024.webp)
 
 - System Status：系统信息；
 - DS Replicas：服务器副本； 
@@ -1046,13 +1046,13 @@ public class DeptProvider8001 {
 
 - 截止目前：服务端也有了，客户端也有了，`启动7001，再启动8001，测试访问`：
 
-![image-20220213210328915](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106444_13557f.webp)
+![image-20220213210328915](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106444_13557f.webp)
 
 > actuator与注册微服务信息完善
 
 - 主机名称：服务名称修改
 
-![image-20220213210438955](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106445_a78ec3.webp)
+![image-20220213210438955](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106445_a78ec3.webp)
 
 - 在8001的yaml中修改一下配置。
 
@@ -1068,11 +1068,11 @@ eureka:
 
 - 重启，刷新后查看结果！
 
-![image-20220213210743283](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106446_f503f7.webp)
+![image-20220213210743283](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106446_f503f7.webp)
 
 - 访问信息有IP信息提示
 
-![image-20220213210821598](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106447_6b97c3.webp)
+![image-20220213210821598](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106447_6b97c3.webp)
 
 - yaml中在增加一个配置:
 
@@ -1089,7 +1089,7 @@ eureka:
 
 - 现在点击info，出现ERROR页面:
 
-![image-20220213211159537](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106448_93d817.webp)
+![image-20220213211159537](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106448_93d817.webp)
 
 - 修改8001的pom文件，新增依赖！
 
@@ -1112,7 +1112,7 @@ info:
 
 - 重启项目测试：7001、8001
 
-![image-20220214112924279](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106449_cee7a2.webp)
+![image-20220214112924279](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106449_cee7a2.webp)
 
 - 这里`没出来的可以将spring boot版本降级即可`！
 - 如果还没出来，可以添加如下配置：
@@ -1129,7 +1129,7 @@ management:
 
 - 之前出现的这些红色情况，没出现的，修改一个服务名，故意制造错误！
 
-![image-20220214115519422](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106450_bc058a.webp)
+![image-20220214115519422](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106450_bc058a.webp)
 
 - 一句话总结就是：某时刻某一个微服务不可用，eureka不会立即清理，依旧会对该微服务的信息进行保存！
 - 默认情况下，当eureka server在一定时间内没有收到实例的心跳，便会把该实例从注册表中删除（==默认是90秒==），但是，如果短时间内丢失大量的实例心跳，便会触发eureka server的自我保护机制，比如在开发测试时，需要频繁地重启微服务实例，但是我们很少会把eureka server一起重启（因为在开发过程中不会修改eureka注册中心），==当一分钟内收到的心跳数大量减少时，会触发该保护机制。可以在eureka管理界面看到Renews threshold和Renews(last min)，当后者（最后一分钟收到的心跳数）小于前者（心跳阈值）的时候，触发保护机制==，会出现红色的警告：`EMERGENCY!EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT.RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEGING EXPIRED JUST TO BE SAFE.`
@@ -1145,7 +1145,7 @@ management:
 - 对于注册进eureka里面的微服务，可以通过服务发现来获得该服务的信息。【对外暴露服务】 
 - 修改springcloud-provider-dept-8001工程中的DeptController，并新增一个方法。
 
-![image-20220214125858655](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106451_70999c.webp)
+![image-20220214125858655](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106451_70999c.webp)
 
 ```java
 /**
@@ -1179,15 +1179,15 @@ public Object discovery() {
 
 - 主启动类增加一个注解：
 
-![image-20220214130051064](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106452_d841c0.webp)
+![image-20220214130051064](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106452_d841c0.webp)
 
 - 启动Eureka服务，启动8001提供者，访问测试 http://localhost:8001/dept/discovery 
 
-![image-20220214131406463](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106453_a6dc62.webp)
+![image-20220214131406463](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106453_a6dc62.webp)
 
 - 后台输出：
 
-![image-20220214131422446](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106454_45e9e3.webp)
+![image-20220214131422446](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106454_45e9e3.webp)
 
 > consumer访问服务：
 
@@ -1202,13 +1202,13 @@ public Object discovery(){
 
 - 启动 80 项目进行测试！`先启动8001服务，再启动80`
 
-![image-20220214132540222](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106455_d71979.webp)
+![image-20220214132540222](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106455_d71979.webp)
 
 > Eureka：集群环境配置
 
 - 集群配置分析：
 
-![image-20220214134108853](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106456_810c62.webp)
+![image-20220214134108853](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106456_810c62.webp)
 
 - 新建工程springcloud-eureka-7002、springcloud-eureka-7003；
 - 为pom.xml添加依赖 (与springcloud-eureka-7001相同)
@@ -1262,15 +1262,15 @@ public class EurekaServer7003 {
 - 集群成员相互关联，修改映射配置 , windows域名映射。
 - 配置一些自定义本机名字，找到本机hosts文件并打开：
 
-![image-20220214135915497](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106457_50a8d8.webp)
+![image-20220214135915497](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106457_50a8d8.webp)
 
 - 在hosts文件最后加上，要访问的本机名称，默认是localhost
 
-![image-20220214140136658](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106458_3680ee.webp)
+![image-20220214140136658](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106458_3680ee.webp)
 
 - 修改application.yml的配置，如图为springcloud-eureka-7001配置，springcloud-eureka-7002/springcloud-eureka-7003同样分别修改为其对应的名称即可。
 
-![image-20220214140235957](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106459_e02410.webp)
+![image-20220214140235957](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106459_e02410.webp)
 
 - 在集群中使springcloud-eureka-7001关联springcloud-eureka-7002、springcloud-eureka-7003
 
@@ -1347,7 +1347,7 @@ eureka:
 
 - 启动集群测试！`7001、7002、7003、8001都要启动哦`！
 
-![image-20220214141214593](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106461_80042c.webp)
+![image-20220214141214593](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106461_80042c.webp)
 
 > 对比Zookeeper
 
@@ -1400,7 +1400,7 @@ eureka:
 
 > Ribbon能干嘛？
 
-![image-20220214150845147](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106462_39828a.webp)
+![image-20220214150845147](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106462_39828a.webp)
 
 - LB，即负载均衡 (LoadBalancer) ，在微服务或分布式集群中经常用的一种应用。
 - 负载均衡简单的说就是将用户的请求平摊的分配到多个服务上，从而达到系统的HA (高用)。
@@ -1482,18 +1482,18 @@ eureka:
   private static final String REST_URL_PREFIX = "http://SPRINGCLOUD-PROVIDER-DEPT";
   ```
 
-![image-20220219173650912](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106463_108d15.webp)
+![image-20220219173650912](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106463_108d15.webp)
 
 - 先启动3个Eureka集群后，再启动springcloud-provider-dept-8001并注册进eureka；
 - 启动 DeptConsumerRibbon80；
 
-![image-20220219174149545](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106464_e61040.webp)
+![image-20220219174149545](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106464_e61040.webp)
 
 - 测试 
   - http://localhost/consumer/dept/get/1 
   - http://localhost/consumer/dept/list
 
-![image-20220219173905938](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106465_3c21d4.webp)
+![image-20220219173905938](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106465_3c21d4.webp)
 
 - ==Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址和端口号==！
 
@@ -1503,7 +1503,7 @@ eureka:
 
 - 架构说明：
 
-![image-20220219175148658](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106466_be6399.webp)
+![image-20220219175148658](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106466_be6399.webp)
 
 - Ribbon在工作时分成两步：
   - 第一步先选择EurekaServer，它优先选择在同一个区域内负载均衡较少的Server。 
@@ -1515,13 +1515,13 @@ eureka:
   - 参照springcloud-provider-dept-8001，依次为另外两个Moudle添加pom.xml依赖 、resourece下的mybatis和application.yml配置，Java代码；
   - 全部复制完毕，修改启动类名称，修改端口号名称！
 
-![image-20220219175309813](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106467_4ff31c.webp)
+![image-20220219175309813](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106467_4ff31c.webp)
 
 - 新建8002/8003数据库，各自微服务分别连接各自的数据库，复制springcloud！ 
   - 新建springcloud02 
   - 新建springcloud03
 
-![image-20220219203740822](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106468_12eeff.webp)
+![image-20220219203740822](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106468_12eeff.webp)
 
 - 修改8002/8003各自的YML文件 
   - 端口 
@@ -1547,7 +1547,7 @@ application:
   - http://localhost:8002/dept/list 
   - http://localhost:8003/dept/list 
   
-  ![image-20220220193255505](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106469_86e24c.webp)
+  ![image-20220220193255505](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106469_86e24c.webp)
   
 - 启动springcloud-consumer-dept-80 
 
@@ -1555,7 +1555,7 @@ application:
   - http://localhost/consumer/dept/list 
   - 多刷新几次注意观察结果！
   
-  ![image-20220220193217642](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106470_71de5c.webp)
+  ![image-20220220193217642](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106470_71de5c.webp)
   
 - 总结：
   - Ribbon其实就是一个软负载均衡的客户端组件，他可以和其他所需请求的客户端结合使用，和Eureka结合只是其中的一个实例。
@@ -1577,7 +1577,7 @@ application:
   4. AbstractLoadBalancerRule：这个抽象父类十分重要！核心
   5. RoundRobinRule 
 
-![image-20220222220612536](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106471_4a7529.webp)
+![image-20220222220612536](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106471_4a7529.webp)
 
 分析一下方法：
 
@@ -1647,7 +1647,7 @@ public IRule myRule() {
 - 重启80服务进行访问测试，查看运行结果！【注意，可能服务长时间不使用会崩】 
 - 访问测试：http://localhost/consumer/dept/list
 
-![image-20220222221100037](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106472_e3b996.webp)
+![image-20220222221100037](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106472_e3b996.webp)
 
 - 测试：new RetryRule() 算法 
 - RetryRule【先按照RoundRobinRule的策略获取服务，如果获取服务失败，则在指定时间内会进行重试，获取可用的服务】
@@ -1671,15 +1671,15 @@ public IRule myRule() {
 - [官方文档](https://docs.spring.io/spring-cloud-netflix/docs/2.2.11.BUILD-SNAPSHOT/reference/html/#customizing-the-ribbon-client)明确给出了警告： 
 - 这个自定义配置类不能放在@ComponentScan所扫描的当前包以及子包下，否则我们自定义的这个配置类就会被所有的Ribbon客户端所共享，也就是说达不到特殊化定制的目的了！
 
-![image-20220222231901088](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106473_c9b2ae.webp)
+![image-20220222231901088](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106473_c9b2ae.webp)
 
-![image-20220222231927958](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106474_4b40df.webp)
+![image-20220222231927958](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106474_4b40df.webp)
 
 **步骤**：
 
 1. 由于有以上配置细节原因，我们建立一个包：com.github.myrul，在这里新建一个自定义规则的Rubbion类。
 
-![image-20220222232030128](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106475_13813a.webp)
+![image-20220222232030128](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106475_13813a.webp)
 
 ```java
 @Configuration
@@ -1717,14 +1717,14 @@ public class DeptConsumer80 {
 
 3. 启动所有项目，访问测试，查看编写的随机算法，现在是否生效！
 
-![image-20220223145416584](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106476_4ddd6e.webp)
+![image-20220223145416584](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106476_4ddd6e.webp)
 
 > 自定义规则深度解析 
 
 1. 问题：依旧轮询策略，但是加上新需求，每个服务器要求被调用5次，就是以前每一个机器一次，现在每个机器5次； 
 2. 解析源码：RandomRule.java ， IDEA直接点击进去，复制出来，变成我们自己的类 MyRondomRule
 
-![image-20220222232628236](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106477_d9252d.webp)
+![image-20220222232628236](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106477_d9252d.webp)
 
 - 分析阅读源码：
 
@@ -1900,7 +1900,7 @@ public class MySelfRule {
 
 - 测试实现，`会连续五次之后才会切换轮询`：
 
-![image-20220223145454446](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106478_ac3ba4.webp)
+![image-20220223145454446](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106478_ac3ba4.webp)
 
 ## 7.Feign：负载均衡(基于服务端)
 
@@ -1933,7 +1933,7 @@ Feign，主要是社区版，大家都习惯面向接口编程。这个是很多
    3. 删除myrule文件夹；
    4. 修改主启动类的名称为 FeignDeptConsumer80；
 
-![image-20220223150519033](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106479_619a44.webp)
+![image-20220223150519033](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106479_619a44.webp)
 
 3. springcloud-consumer-dept-feign-80修改pom.xml，添加对Feign的支持。
 
@@ -1950,7 +1950,7 @@ Feign，主要是社区版，大家都习惯面向接口编程。这个是很多
    1. pom.xml添加feign的支持 
    2. 新建一个Service包
 
-![image-20220223150729085](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106480_7febb9.webp)
+![image-20220223150729085](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106480_7febb9.webp)
 
 - 编写接口 DeptClientService，并增加新的注解@FeignClient。
 
@@ -2042,7 +2042,7 @@ public class FeignDeptConsumer80 {
 - 启动feign客户端 
 - 测试： http://localhost/consumer/dept/list 
 
-![image-20220223153152855](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106481_46fe30.webp)
+![image-20220223153152855](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106481_46fe30.webp)
 
 ==结论：Feign自带负载均衡配置项==。
 
@@ -2059,26 +2059,26 @@ public class FeignDeptConsumer80 {
 
 - 复杂分布式体系结构中的应用程序有数十个依赖关系，每个依赖关系在某些时候将不可避免的失败！
 
-![Hystrix](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106482_2fa4e5.webp)
+![Hystrix](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106482_2fa4e5.webp)
 
 **服务雪崩** 
 
 - 多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其他的微服务，这就是所谓的 “扇出”、如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的“雪崩效应”。
 
-![image-20220223181908141](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106484_733281.webp)
+![image-20220223181908141](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106484_733281.webp)
 
 - 对于高流量的应用来说，单一的后端依赖可能会导致所有服务器上的所有资源都在几十秒内饱和。比失败更糟糕的是，这些应用程序还可能导致服务之间的延迟增加，备份队列，线程和其他系统资源紧张，导致整个系统发生更多的级联故障，**这些都表示需要对故障和延迟进行隔离和管理，以达到单个依赖关系的失败而不影响整个应用程序或系统运行**。
 - 此时，我们需要**弃车保帅**！
 
 > 什么是Hystrix？
 
-![hystrix-logo-tagline-640](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106485_85e855.webp)
+![hystrix-logo-tagline-640](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106485_85e855.webp)
 
 - **Hystrix**是一个应用于处理分布式系统的延迟和容错的开源库，在分布式环境中，许多服务依赖项中的一些不可避免地会失败。Hystrix 是一个库，它通过添加延迟容错和容错逻辑来帮助您控制这些分布式服务之间的交互。Hystrix 通过隔离服务之间的访问点、停止它们之间的级联故障并提供回退选项来做到这一点，所有这些都可以提高系统的整体弹性。
 
 - “**断路器**”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控 (类似熔断保险丝) ，**向调用方返回一个服务预期的，可处理的备选响应 (FallBack) ，而不是长时间的等待或者抛出调用方法无法处理的异常，这样就可以保证了服务调用方的线程不会被长时间，不必要的占用**，从而避免了故障在分布式系统中的蔓延，乃至雪崩。
 
-![image-20220223182133992](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106486_d2c0dd.webp)
+![image-20220223182133992](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106486_d2c0dd.webp)
 
 **Hystrix的历史**
 
@@ -2116,17 +2116,17 @@ Hystrix 旨在执行以下操作：
 
 - 当一切正常时，请求流程可能如下所示：
 
-![soa-1-640](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106487_8999ee.webp)
+![soa-1-640](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106487_8999ee.webp)
 
 - 当许多后端系统之一变得潜在时，它可以阻止整个用户请求：
 
-![soa-2-640](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106488_f1ef0f.webp)
+![soa-2-640](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106488_f1ef0f.webp)
 
 - 在大流量的情况下，单个后端依赖变得潜在可能会导致所有服务器上的所有资源在几秒钟内变得饱和。
 
 - 应用程序中通过网络或客户端库中可能导致网络请求的每个点都是潜在故障的根源。比故障更糟糕的是，这些应用程序还可能导致服务之间的延迟增加，这会备份队列、线程和其他系统资源，从而导致整个系统出现更多的级联故障。
 
-![soa-3-640](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106489_afafef.webp)
+![soa-3-640](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106489_afafef.webp)
 
 - 当通过第三方客户端执行网络访问时，这些问题会更加严重——一个“黑匣子”，其中实现细节被隐藏并且可以随时更改，并且每个客户端库的网络或资源配置都不同，并且通常难以监控和改变。
 
@@ -2160,7 +2160,7 @@ Hystrix 通过以下方式工作：
   - 近乎实时地监控指标和配置更改。
 - 当您使用 Hystrix 包装每个底层依赖项时，如上图所示的架构将更改为类似于下图。每个依赖项相互隔离，限制在发生延迟时它可以饱和的资源，并包含在回退逻辑中，该逻辑决定当依赖项中发生任何类型的故障时做出什么响应：
 
-![soa-4-isolation-640](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106490_da8596.webp)
+![soa-4-isolation-640](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106490_da8596.webp)
 
 - 详细了解[它的工作原理](https://github.com/Netflix/Hystrix/wiki/How-it-Works)和[使用方法](https://github.com/Netflix/Hystrix/wiki/How-To-Use)。
 
@@ -2197,7 +2197,7 @@ Hystrix 通过以下方式工作：
 
 2. 修改yml，修改eureka实例的id。
 
-![image-20220223205606543](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106491_ff2971.webp)
+![image-20220223205606543](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106491_ff2971.webp)
 
 3. 修改DeptController 
 
@@ -2272,15 +2272,15 @@ public class DeptProviderHystrix8001 {
   3. 启动客户端 springcloud-consumer-dept-80;
   4. 访问 http://localhost/consumer/dept/get/111
 
-![image-20220223210806933](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106492_4e0f03.webp)
+![image-20220223210806933](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106492_4e0f03.webp)
 
 - 使用熔断后，当访问一个不存在的id时，前台页展示数据如下:
 
-![image-20220223210917714](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106493_8b98db.webp)
+![image-20220223210917714](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106493_8b98db.webp)
 
 - 而不使用熔断的springcloud-provider-dept–8001模块访问相同地址会出现下面状况:
 
-![image-20220223211146475](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106494_37e37a.webp)
+![image-20220223211146475](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106494_37e37a.webp)
 
 > 服务降级
 
@@ -2296,7 +2296,7 @@ public class DeptProviderHystrix8001 {
 
 - 降级的方式可以根据业务来，可以延迟服务，比如延迟给用户增加积分，只是放到一个缓存中，等服务平稳之后再执行；或者在粒度范围内关闭服务，比如关闭相关文章的推荐。
 
-![image-20220223211917403](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106495_af3a8b.webp)
+![image-20220223211917403](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106495_af3a8b.webp)
 
 - 由上图可得，**当某一时间内服务A的访问量暴增，而B和C的访问量较少，为了缓解A服务的压力，这时候需要B和C暂时关闭一些服务功能，去承担A的部分服务，从而为A分担压力，叫做服务降级**。
 
@@ -2372,7 +2372,7 @@ public interface DeptClientService {
 - springcloud-api工程`mvn clean install`；
 - springcloud-consumer-dept-feign-80工程修改YML；
 
-![image-20220224135408649](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106496_6f9d9f.webp)
+![image-20220224135408649](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106496_6f9d9f.webp)
 
 **测试** 
 
@@ -2384,7 +2384,7 @@ public interface DeptClientService {
 
 4. 正常访问测试：http://localhost/consumer/dept/get/1；
 
-   ![image-20220224140041962](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106497_be4dcd.webp)
+   ![image-20220224140041962](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106497_be4dcd.webp)
 
 5. 故意关闭微服务 springcloud-provider-dept-hystrix-8001；
 
@@ -2392,7 +2392,7 @@ public interface DeptClientService {
 
    - 此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时 也会获得提示信息而不会挂起耗死服务器。
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106498_5fd151.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106498_5fd151.webp)
 
 > 服务熔断和降级的区别
 
@@ -2401,7 +2401,7 @@ public interface DeptClientService {
 - 触发原因不太一样，服务熔断一般是某个服务（下游服务）故障引起，而服务降级一般是从整体负荷考虑；管理目标的层次不太一样，熔断其实是一个框架级的处理，每个微服务都需要（无层级之分），而降级一般需要对业务有层级之分（比如降级一般是从最外围服务开始）。
 - 实现方式不太一样，服务降级具有代码侵入性(由控制器完成/或自动降级)，熔断一般称为**自我熔断**。
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106499_9214c9.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106499_9214c9.webp)
 
 **熔断，降级，限流**：
 
@@ -2518,7 +2518,7 @@ public class DeptProviderHystrix8001 {
 
    - 访问：http://localhost:9001/hystrix
 
-     ![image-20220224200936842](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106501_54ac54.webp)
+     ![image-20220224200936842](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106501_54ac54.webp)
 
    - 启动3个Eureka集群
 
@@ -2529,26 +2529,26 @@ public class DeptProviderHystrix8001 {
      - http://localhost:8001/dept/get/1
      - http://localhost:8001/actuator/hystrix.stream 【查看1秒一动的数据流】
 
-![image-20220224201345128](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106502_d5fdb3.webp)
+![image-20220224201345128](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106502_d5fdb3.webp)
 
 7. 监控测试
    - 多次刷新 http://localhost:8001/dept/get/1
    - 观察监控窗口，就是那个豪猪页面；
    - 添加监控地址：
 
-![image-20220224201635630](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106503_b95698.webp)
+![image-20220224201635630](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106503_b95698.webp)
 
 - Delay: 该参数用来控制服务器上轮询监控信息的延迟时间，默认为2000毫秒，可以通过配置该属性来降低客户端的网络和CPU消耗 
 - Title：该参数对应了头部标题HystrixStream之后的内容，默认会使用具体监控实例URL，可以通过配置该信息来展示更合适的标题。
 - 监控结果：
 
-![image-20220224201808829](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106504_48029c.webp)
+![image-20220224201808829](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106504_48029c.webp)
 
 - 如何看：
 
   - 7色：绿 > 蓝 > 青 > 黄 > 紫 > 红
 
-    ![image-20220224201906162](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106505_d4b495.webp)
+    ![image-20220224201906162](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106505_d4b495.webp)
 
   - 一圈：
 
@@ -2556,21 +2556,21 @@ public class DeptProviderHystrix8001 {
     - 它的健康程度从 绿色<黄色<橙色<红色 递减。
     - 该实心圆除了颜色的变化之外，它的大小也会根据实例的请求流量发生变化，流量越大，该实心圆就越大，所以通过该实心圆的展示，就可以在大量的实例中快速发现故障实例和高压力实例。
 
-    ![image-20220224202128990](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106506_21215f.webp)
+    ![image-20220224202128990](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106506_21215f.webp)
 
   - 一线：
 
     - 曲线:用来记录2分钟内流量的相对变化,可以通过它来观察到流量的上升和下降趋势;
 
-    ![image-20220224202232243](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106507_50d431.webp)
+    ![image-20220224202232243](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106507_50d431.webp)
 
   - 整图说明：
 
-  ![image-20220224203656549](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106508_aa601d.webp)
+  ![image-20220224203656549](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106508_aa601d.webp)
 
 - 搞懂一个才能看懂复杂的
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106509_8ea1f8.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106509_8ea1f8.webp)
 
 
 
@@ -2584,7 +2584,7 @@ public class DeptProviderHystrix8001 {
 
 - 其中**路由功能负责将外部请求转发到具体的微服务实例上，是实现外部访问统一入口的基础**，而过**滤器功能则负责对请求的处理过程进行干预，是实现请求校验，服务聚合等功能的基础**。Zuul和Eureka进行整合，将Zuul自身注册为Eureka服务治理下的应用，同时从Eureka中获得其他服务的消息，也即以后的访问微服务都是通过Zuul跳转后获得。
 
-![image-20220224210505339](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106510_1583bd.webp)
+![image-20220224210505339](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106510_1583bd.webp)
 
 - **注意**：Zuul 服务最终还是会注册进 Eureka
 
@@ -2715,7 +2715,7 @@ public class SpringCloudZuulApp4399 {
   - zuul服务
   - 访问：http://localhost:7001/
 
-  ![image-20220224212021657](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106511_4ce44b.webp)
+  ![image-20220224212021657](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106511_4ce44b.webp)
 
 - 可以看出Zull路由网关被注册到Eureka注册中心中了！
 
@@ -2723,19 +2723,19 @@ public class SpringCloudZuulApp4399 {
 
   - 不用路由：http://localhost:8001/dept/get/2 
 
-    ![image-20220224212247260](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106512_07e801.webp)
+    ![image-20220224212247260](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106512_07e801.webp)
 
   - 使用路由：http://subeily.com:4399/springcloud-provider-dept/dept/get/2
 
     - 网关/微服务名字/具体的服务
 
 
-![image-20220224212934768](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106513_75f101.webp)
+![image-20220224212934768](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106513_75f101.webp)
 
 - 上图是没有经过Zull路由网关配置时，服务接口访问的路由，可以看出直接用微服务(服务提供方)名称去访问，这样不安全，不能将微服务名称暴露！
 - 所以经过Zull路由网关配置后，访问封装好的url：http://subeily.com:4399/subeily/mydept/dept/get/2
 
-![image-20220224213221611](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106514_1944b3.webp)
+![image-20220224213221611](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106514_1944b3.webp)
 
 - 微服务名称被替换并隐藏，换成了我们自定义的微服务名称mydept，同时加上了前缀subeily，这样就做到了对路由访问的加密处理。
 
@@ -2751,7 +2751,7 @@ public class SpringCloudZuulApp4399 {
 
 **SpringCloud config分布式配置中心**
 
-![img](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106515_4212c4.webp)
+![img](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106515_4212c4.webp)
 
 - spring cloud config 为微服务架构中的微服务提供集中化的外部支持，配置服务器为各个不同微服务应用的所有环节提供了一个**中心化的外部配置**。
 - spring cloud config 分为**服务端**和**客户端**两部分。
@@ -2778,7 +2778,7 @@ public class SpringCloudZuulApp4399 {
     - [生成/添加SSH公钥](https://gitee.com/help/articles/4181#article-header0)
   - 拉取到本地，编写application.yaml配置文件
 
-  ![image-20220225172517418](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106517_57204e.webp)
+  ![image-20220225172517418](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106517_57204e.webp)
 
 ```yaml
 spring:
@@ -2800,9 +2800,9 @@ spring:
 
 - 将本地git仓库springcloud-config文件夹下新建的application.yml提交到码云仓库:
 
-![image-20220225173808811](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106518_b791d2.webp)
+![image-20220225173808811](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106518_b791d2.webp)
 
-![image-20220225173832549](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106519_27e1e8.webp)
+![image-20220225173832549](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106519_27e1e8.webp)
 
 - HTTP服务具有以下格式的资源：
 
@@ -2882,19 +2882,19 @@ public class ConfigServer3344 {
 
   - 访问 http://localhost:3344/application-dev.yaml
 
-    ![image-20220225202051854](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106520_664084.webp)
+    ![image-20220225202051854](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106520_664084.webp)
 
   - 访问 http://localhost:3344/application/test/master
 
-    ![image-20220225202108065](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106521_15c9f3.webp)
+    ![image-20220225202108065](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106521_15c9f3.webp)
 
   - 访问 http://localhost:3344/master/application-dev.yaml
 
-    ![image-20220225202123168](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106522_285251.webp)
+    ![image-20220225202123168](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106522_285251.webp)
 
   - 访问不存在的配置
 
-![image-20220225202246907](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106523_928215.webp)
+![image-20220225202246907](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106523_928215.webp)
 
 > 客户端
 
@@ -2934,9 +2934,9 @@ eureka:
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
 ```
 
-![image-20220225203405428](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106524_6f90e6.webp)
+![image-20220225203405428](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106524_6f90e6.webp)
 
-![image-20220225203555050](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106525_257f95.webp)
+![image-20220225203555050](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106525_257f95.webp)
 
 - 新建 springcloud-config-client-3355 模块，导入依赖
 
@@ -3030,7 +3030,7 @@ public class ConfigClient3355 {
 
 - 测试一下，先启动3344，后启动客户端，然后访问 http://localhost:8201/config/
 
-![image-20220225204557627](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106526_e59676.webp)
+![image-20220225204557627](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106526_e59676.webp)
 
 - 在bootstrap.yaml文件中，切换一下环境dev->test
 
@@ -3047,7 +3047,7 @@ spring:
 
 - 重新测试，继续访问 http://localhost:8201/config 发现没用了。访问 http://localhost:8202/config
 
-![image-20220225204939567](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106527_cbd334.webp)
+![image-20220225204939567](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106527_cbd334.webp)
 
 > 实战一下
 >
@@ -3055,7 +3055,7 @@ spring:
 
 - 本地新建config-dept.yaml和config-eureka.yaml并提交到码云仓库。
 
-![image-20220225214805081](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106528_433b15.webp)
+![image-20220225214805081](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106528_433b15.webp)
 
 - config-dept.yaml
   - 其中为了测试dev和test唯一的不同是连接的数据库不同。
@@ -3279,17 +3279,17 @@ eureka:
 
   - 启动cofig3344服务端、客户端7001和8001
   - 访问 http://localhost:3344/master/config-eureka-dev.yaml ,
-    ![image-20220225220302796](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106529_a9169e.webp)
+    ![image-20220225220302796](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106529_a9169e.webp)
 
   > 说明config服务端没问题
 
   - 访问 http://localhost:7001/
-    ![image-20220225220633386](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106530_7a3869.webp)
+    ![image-20220225220633386](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106530_7a3869.webp)
 
   > 说明远程配置读取成功
 
   - 访问 http://localhost:8001/dept/get/2
-    ![image-20220225220714829](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106531_ffa579.webp)
+    ![image-20220225220714829](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106531_ffa579.webp)
 
   > 说明8001也从远程库读取配置文件成功
 
@@ -3314,13 +3314,13 @@ eureka:
   ```
 
   - 重新启动访问 http://localhost:8001/dept/get/2
-    ![image-20220225221008365](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106532_3dd2b6.webp)
+    ![image-20220225221008365](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106532_3dd2b6.webp)
 
 - 测试成功。
 
 ## 总结导图
 
-![spring cloud NetFlix](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106533_94ed83.webp)
+![spring cloud NetFlix](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410121106533_94ed83.webp)
 
 
 

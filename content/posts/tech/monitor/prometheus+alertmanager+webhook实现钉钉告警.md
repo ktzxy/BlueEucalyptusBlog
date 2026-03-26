@@ -48,7 +48,7 @@ nohup ./alertmanager   >/dev/null   2>&1 &
 启动成功之后，在浏览器上输入 ip+9093可以查看相关信息
 
 示例图:
- ![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507251736218_d7a03c.webp)
+ ![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507251736218_d7a03c.webp)
 
 
 
@@ -126,10 +126,10 @@ templates:
 - '/opt/prometheus/alertmanager-0.21.0.linux-386/template/wechat.tmpl'
 ```
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507251737025_282c7d.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507251737025_282c7d.webp)
 
 效果图:
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507251737853_da8298.webp)
+![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507251737853_da8298.webp)
 
 ## 1.6 内存告警设置
 

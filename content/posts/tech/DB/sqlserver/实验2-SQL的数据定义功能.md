@@ -127,8 +127,8 @@ alter table Goods drop column Barcode
 alter table Supplier alter column SupplierName nvarchar(200) not null;
 ```
 ### 3、使用SQL Server Management Studio管理平台为sjkDB数据库创建数据库表sjktable（表结构自行设计），然后完成例3-15的要求。
-![1e53e0bd9b0d0fc0356594725222e7a6](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304170335089.webp)
-![e50fb1f1195ccfec72d60c4a49aa198a](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304170416168.webp)
+![1e53e0bd9b0d0fc0356594725222e7a6](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304170335089.webp)
+![e50fb1f1195ccfec72d60c4a49aa198a](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304170416168.webp)
 
 ```sql
 drop table sjktable
@@ -197,7 +197,7 @@ create unique nonclustered index index_supplier on supplier(SupplierName)
 
 （2）使用系统存储过程sp_helpindex查看表Supplier的索引情况，如果已有主码，能否为其再建立一个聚集索引？为什么？
 
-![f3dbfac4b3ac3e93455ac60c08f68251](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304170446063.webp)
+![f3dbfac4b3ac3e93455ac60c08f68251](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304170446063.webp)
 ```sql
 聚集索引是通过设置主码来完成的，每个表的主码都是聚集索引，一个表只能有一个聚集索引，
 非聚集索引可以有多个。因此无法重复创建聚焦索引

@@ -47,7 +47,7 @@ IO 操作，是指输入和输出操作。
 
 当用户线程发出 IO 请求之后，内核会去查看数据是否就绪，如果没有就绪就会等待数据就绪，而用户线程就会处于阻塞状态，用户线程交出 CPU。当数据就绪之后，内核会将数据拷贝到用户线程，并返回结果给用户线程，用户线程才解除 block 状态。典型的阻塞 IO 模型的例子为：`data = socket.read();`，如果数据没有就绪，就会一直阻塞在 `read` 方法的位置。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035046_f5e3d3.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035046_f5e3d3.webp)
 
 > 在客户端连接数量不高的情况下，性能上是没问题的。但是当面对十万甚至百万级连接的时候，传统的 BIO 模型就会突显性能上的缺陷。
 
@@ -55,7 +55,7 @@ IO 操作，是指输入和输出操作。
 
 在非阻塞 I/O 模型中，当用户线程发起一个 read 操作后，并不需要等待，而是马上就得到了一个结果。如果结果是一个 error 时，它就知道数据还没有准备好，于是它可以再次发送 read 操作。期间用户线程会继续不断重试直到数据准备好为止。一旦内核中的数据准备好了，并且又再次收到了用户线程的请求，那么它马上就将数据拷贝到了用户线程，然后返回。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035047_7d888c.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035047_7d888c.webp)
 
 所以事实上，在非阻塞 IO 模型中，用户线程需要不断地询问内核数据是否就绪，也就说非阻塞 IO 不会交出 CPU，但会一直占用 CPU。典型的非阻塞 IO 模型实现一般如下：
 
@@ -79,7 +79,7 @@ while (true) {
 
 在 Java NIO 中，是通过 `selector.select()` 去查询每个通道是否有到达事件，如果没有事件，则一直阻塞在那里，因此这种方式会导致用户线程的阻塞。在多路复用 IO 模型中，会有一个线程不断去轮询多个 socket 的状态，只有当 socket 真正有读写事件时，才真正调用实际的 IO 读写操作。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035048_f206dc.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035048_f206dc.webp)
 
 因此**IO 多路复用的特点是：通过一种机制一个进程能同时等待多个文件描述符，而这些文件描述符(套接字描述符)其中任意一个进入就绪状态，select 函数就可以返回**。
 
@@ -98,7 +98,7 @@ while (true) {
 
 在信号驱动 IO 模型中，当用户线程发起一个 IO 请求操作，会给对应的 socket 注册一个信号函数，然后用户线程会继续执行；当内核数据就绪时会发送一个信号给用户线程，用户线程接收到信号之后，便在信号函数中调用 IO 读写操作来进行实际的 IO 请求操作。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035049_0dba21.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035049_0dba21.webp)
 
 **信号驱动 IO 模型的特点是：等待数据报到达期间进程不被阻塞。主循环可以继续执行，只要等待来自信号处理函数的通知。既可以是数据已准备好被处理，也可以是数据报已准备好被读取**。
 
@@ -106,7 +106,7 @@ while (true) {
 
 异步 IO 模型是最理想的 IO 模型，在异步 IO 模型中，当用户线程发起 read 操作之后，立刻就可以开始去做其它的事。而另一方面，从内核的角度，当它受到一个 asynchronous read 之后，它会立刻返回，说明 read 请求已经成功发起了，因此不会对用户线程产生任何 block。然后，内核会等待数据准备完成，再将数据拷贝到用户线程，当这一切都完成之后，内核会给用户线程发送一个信号，告诉它 read 操作完成了。也就说用户线程完全不需要实际的整个 IO 操作是如何进行的，只需要先发起一个请求，当接收内核返回的成功信号时表示 IO 操作已经完成，可以直接去使用数据了。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035050_476a0b.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035050_476a0b.webp)
 
 在异步 IO 模型中，IO 操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成，然后发送一个信号告知用户线程操作已完成。用户线程中不需要再次调用 IO 函数进行具体的读写。这点是和信号驱动模型有所不同的，在信号驱动模型中，当用户线程接收到信号表示数据已经就绪，然后需要用户线程调用 IO 函数进行实际的读写操作；而在异步 IO 模型中，收到信号表示 IO 操作已经完成，不需要再在用户线程中调用 IO 函数进行实际的读写操作。
 
@@ -1662,7 +1662,7 @@ public class OutputStreamWriter extends Writer
 
 OutputStreamWriter 是<font color=red>**字符流通向字节流**</font>的桥梁：可使用<font color=red>**指定的 charset 将要写入流中的字符编码成字节**</font>。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035051_505b28.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035051_505b28.webp)
 
 #### 6.3.2. 构造方法
 
@@ -1740,7 +1740,7 @@ public class InputStreamReader extends Reader
 
 InputStreamReader 是<font color=red>**字节流通向字符流的桥梁**</font>：它使用<font color=red>**指定的 charset 读取字节并将其解码为字符**</font>
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035052_6d2af7.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035052_6d2af7.webp)
 
 #### 6.4.2. 构造方法
 
@@ -1886,7 +1886,7 @@ PrintStream ps = new PrintStream(new FileOutputStream("ps.txt",true));
 
 PrintStream 类常用的成员方法主要是 `print` 与 `println`，并有大量的重载方法
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035053_13ed08.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035053_13ed08.webp)
 
 ```java
 public void print(数据类型 变量名);
@@ -1904,9 +1904,9 @@ public void println(数据类型 变量名);
 
 ### 8.1. Java IO 体系图
 
-![Java IO体系.xmind](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035054_6c00e3.webp)
+![Java IO体系.xmind](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035054_6c00e3.webp)
 
-![Java IO 分类总结.drawio](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035055_370fb0.webp)
+![Java IO 分类总结.drawio](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035055_370fb0.webp)
 
 ### 8.2. 字节流与字符流的区别
 
@@ -2031,7 +2031,7 @@ public class TCPClient {
 
 java.nio 全称 java non-blocking IO，是指 JDK 提供的新 API。从 JDK1.4 开始，Java 提供了一系列改进的输入/输出的新特性，被统称为 NIO(即 New IO)。新增了许多用于处理输入输出的类，这些类都被放在 java.nio 包及子包下，并且对原 java.io 包中的很多类进行改写，新增了满足 NIO 的功能。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035056_d6aecf.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035056_d6aecf.webp)
 
 #### 10.1.1. Java NIO 和传统 I/O 的区别
 
@@ -2084,7 +2084,7 @@ NIO 中常用的 `Channel` 实现类有：
 | `ServerSocketChannel` | Socket Server 用于 TCP 的数据读写 |
 | `SocketChannel`       | Socket Client 用于 TCP 的数据读写 |
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035057_f084ce.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035057_f084ce.webp)
 
 #### 10.2.3. FileChannel（文件的数据读写）
 
@@ -2228,7 +2228,7 @@ Java IO 面向流意味着每次从流中读一个或多个字节，直至读取
 
 缓冲区（Buffer）：实际上是一个容器，其内部通过一个连续的字节数组存储 I/O 上的数据。缓冲区对象内置了一些机制，能够跟踪和记录缓冲区的状态变化情况。**Channel 提供从文件、网络读取数据的渠道，但是读取或写入的数据都必须经由 Buffer**，如下图所示（以文件读写为例）：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035058_4a8177.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035058_4a8177.webp)
 
 #### 10.3.2. Buffer 抽象实现类
 
@@ -2308,7 +2308,7 @@ Selector（选择器），能够检测多个注册的 Channel 通道上是否有
 
 `Selector` 类关系图如下：
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035059_9267c2.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035059_9267c2.webp)
 
 #### 10.4.3. Selector 常用方法
 
@@ -2491,11 +2491,11 @@ public void testNioCopy() throws Exception {
 
 Java NIO 中的网络通道是非阻塞 IO 的实现，基于事件驱动，非常适用于服务器需要维持大量连接，但是数据交换量不大的情况，例如一些即时通信的服务等等...
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035060_e44a00.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035060_e44a00.webp)
 
 如下图描述，从一个客户端向服务端发送数据，然后服务端接收数据的过程。客户端发送数据时，必须先将数据存入 Buffer 中，然后将 Buffer 中的内容写入通道。服务端这边接收数据必须通过 Channel 将数据读入到 Buffer 中，然后再从 Buffer 中取出数据来处理。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035061_7eeaf9.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035061_7eeaf9.webp)
 
 在 Java 中编写 Socket 服务器，通常有以下几种模式：
 
@@ -2613,7 +2613,7 @@ public class NIOClient {
 
 NIO 示例运行效果：
 
-![NIO示例运行效果](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035063_c5a653.webp)
+![NIO示例运行效果](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035063_c5a653.webp)
 
 #### 10.6.3. 网络聊天案例
 
@@ -2933,7 +2933,7 @@ IO 的方式通常分为几种：同步阻塞的 BIO、同步非阻塞的 NIO、
 | 可靠性       | 差      | 好                  | 好        |
 | 吞吐量       | 低      | 高                  | 高        |
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035064_b5a26d.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035064_b5a26d.webp)
 
 > 举个例子再理解一下：
 >
@@ -3068,7 +3068,7 @@ public synchronized void load(Reader reader) throws IOException
 
 **Java 序列化技术**正是将对象转变成一串由二进制字节组成的数组，可以通过将二进制数据保存到磁盘或者传输网络，磁盘或者网络接收者可以在对象的属类的模板上来反序列化类的对象，达到对象持久化的目的。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035065_ab7bf6.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035065_ab7bf6.webp)
 
 - <font color=red>**序列化：将数据结构或对象转换成二进制字节流的过程**</font>。要实现对象的序列化需要使用的流：`ObjectOutputStream` 继承 `OutputStream`
 - <font color=red>**反序列化：将在序列化过程中所生成的二进制字节流的过程转换成数据结构或者对象的过程**</font>。要实现对象的反序列化需要使用的流：`ObjectInputStream` 继承 `InputStream`
@@ -3082,7 +3082,7 @@ public synchronized void load(Reader reader) throws IOException
 3. 网络层
 4. 网络接口层
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035066_1cfd2c.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035066_1cfd2c.webp)
 
 如上图所示，OSI 七层协议模型中，表示层做的事情主要就是对应用层的用户数据进行处理转换为二进制流。反过来的话，就是将二进制流转换成应用层的用户数据。因此，OSI 七层协议模型中的应用层、表示层和会话层对应的都是 TCP/IP 四层模型中的应用层，所以**序列化协议属于 TCP/IP 协议应用层的一部分**。
 
@@ -3281,7 +3281,7 @@ public int available() throws IOException
 - 出错的核心问题：**类改变后，类的序列化号也改变，就和文件中的序列化号不一样**
 - 解决方法：**修改类的时候，让序列化号不变，自定义一个序列号，不要系统随机生成序列号。**
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035067_a11c57.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251035067_a11c57.webp)
 
 #### 14.7.2. 注意事项总结
 

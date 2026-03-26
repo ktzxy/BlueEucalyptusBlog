@@ -25,7 +25,7 @@ mv /opt/prometheus-webhook-dingtalk-0.3.0.linux-amd64 /opt/prometheus-webhook-di
 
 # 二、钉钉创建机器人自定义告警关键词并获取token
 
-![二、Prometheus基于Alertmanager实现钉钉告警](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631413_20a104.webp)
+![二、Prometheus基于Alertmanager实现钉钉告警](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507281631413_20a104.webp)
 
 ```
 选择群组—>群设置–>添加智能群助手–>添加机器人

@@ -51,7 +51,7 @@ order by char_length(name) asc limit 5;
 
 执行效果如图所示：
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172431607.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172431607.webp)
 
 name字段使用关键字`模糊查询`之后，再使用`char_length`函数获取name字段的字符长度，然后按长度`升序`。
 
@@ -108,7 +108,7 @@ select now() from brand limit 1;
 ```
 
 返回结果为下面这样的：
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172438628.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172438628.webp)
 它会包含`年月日时分秒`。
 
 如果你还想返回`毫秒`，可以使用`now(3)`，例如：
@@ -118,7 +118,7 @@ select now(3) from brand limit 1;
 ```
 
 返回结果为下面这样的：
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172444638.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172444638.webp)
 使用起来非常方便好记。
 
 ## 6.insert into ... select
@@ -248,7 +248,7 @@ desc `order`;
 ```
 
 结果如图所示：
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172452459.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172452459.webp)
 确实能够看到order表中的字段名称、字段类型、字段长度、是否允许为空，是否主键、默认值等信息。
 
 但看不到该表的索引信息，如果想看创建了哪些索引，该怎么办呢？
@@ -262,7 +262,7 @@ show index from `order`;
 ```
 
 也能查出该表所有的索引：
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172458173.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172458173.webp)
 但查看字段和索引数据呈现方式，总觉得有点怪怪的，有没有一种更直观的方式？
 
 答：这就需要使用`show create table`命令了。
@@ -274,9 +274,9 @@ show create table `order`;
 ```
 
 执行结果如图所示：
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172505577.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172505577.webp)
 其中`Table`表示`表名`，`Create Table`就是我们需要看的`建表信息`，将数据展开：
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172508538.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172508538.webp)
 我们能够看到非常完整的建表语句，表名、字段名、字段类型、字段长度、字符集、主键、索引、执行引擎等都能看到。
 
 非常直接明了。
@@ -333,16 +333,16 @@ select * from `order`;
 explain select * from `order` where code='002';
 ```
 
-结果：![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172600929.webp)
+结果：![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172600929.webp)
 
 通过这几列可以判断索引使用情况，执行计划包含列的含义如下图所示：
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172526498.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172526498.webp)
 
 
 说实话，sql语句没有走索引，排除没有建索引之外，最大的可能性是索引失效了。
 
 下面说说索引失效的常见原因：
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172532487.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172532487.webp)
 如果不是上面的这些原因，则需要再进一步排查一下其他原因。
 
 ## 13.show processlist
@@ -354,7 +354,7 @@ explain select * from `order` where code='002';
 答：我们可以使用`show processlist`命令查看`当前线程执行情况`。
 
 如图所示：
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172539263.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304172539263.webp)
 从执行结果中，我们可以查看当前的连接状态，帮助识别出有问题的查询语句。
 
 - id 线程id

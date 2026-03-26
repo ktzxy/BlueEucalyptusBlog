@@ -303,7 +303,7 @@ public class Dog {
 }
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037619_319023.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037619_319023.webp)
 
 方法包含一个方法头和一个方法体。下面是一个方法的所有部分：
 
@@ -396,7 +396,7 @@ xiaoLi:小李
 
 解析：两个引用类型的形参互换并没有影响实参啊！因为 swap 方法的参数 person1 和 person2 只是拷贝的实参 xiaoZhang 和 xiaoLi 的地址。因此，person1 和 person2 的互换只是拷贝的两个地址的互换罢了，并不会影响到实参 xiaoZhang 和 xiaoLi。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037620_57796d.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037620_57796d.webp)
 
 ### 3.6. 方法重载(Overload)
 
@@ -490,7 +490,7 @@ Foo extends Bar;
 Bar extends SuperBar;
 ```
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037621_1c31e5.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037621_1c31e5.webp)
 
 ### 4.4. 继承的特点
 
@@ -572,7 +572,7 @@ class Dog extends Animal{
 | 异常     | 可以不相同 | 可以减少或删除，一定不能抛出新的或者更广的异常 |
 | 访问权限 | 可以不相同 | 一定不能做更严格的限制（可以降低限制）        |
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037622_0b5f30.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037622_0b5f30.webp)
 
 ## 5. 内部类
 
@@ -1184,7 +1184,7 @@ public interface EventListener {
 
 在 Java 中有两种形式可以实现多态：**继承**（多个子类对同一方法的重写）和**接口**（实现接口并覆盖接口中同一方法）。
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037623_0c85eb.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037623_0c85eb.webp)
 
 #### 9.1.1. 多态的前提
 

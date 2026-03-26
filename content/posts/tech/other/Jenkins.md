@@ -116,15 +116,15 @@ systemctl status jenkins.service
 
 > 搜索：Generic Webhook Trigger Plugin 进行安装
 
-![image-20230215103949929](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152857538.webp)
+![image-20230215103949929](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152857538.webp)
 
 ### 创建任务
 
-![image-20230215104125692](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152904765.webp)
+![image-20230215104125692](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152904765.webp)
 
 > 选择项目
 
-![image-20230215104229186](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152909772.webp)
+![image-20230215104229186](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152909772.webp)
 
 
 
@@ -136,7 +136,7 @@ systemctl status jenkins.service
 - Credentials：可以pull项目的Git账号
 - Branches to build：拉取到工作空间的分支名称
 
-![image-20230215104444621](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152914749.webp)
+![image-20230215104444621](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152914749.webp)
 
 
 
@@ -149,19 +149,19 @@ systemctl status jenkins.service
 1. 选择 Generic Webhook Trigger，新增一个 Post content parameters
    
 2. 配置 Post content parameters
-   ![image-20230215105159680](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152920117.webp)
+   ![image-20230215105159680](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152920117.webp)
 
 3. 配置 Token
 
    > Token可以随便填，但是不要重复，最好使用任务名称，保证不会重复
 
-   ![image-20230215105237208](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152925390.webp)
+   ![image-20230215105237208](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152925390.webp)
 
 4. 过滤内容
 
    > 只处理指定分支的推送事件
 
-   ![image-20230215105448285](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152930748.webp)
+   ![image-20230215105448285](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152930748.webp)
 
 
 
@@ -170,7 +170,7 @@ systemctl status jenkins.service
 也可以选择在构建后操作中进行配置
 如果是在当前服务器进行构建，选择 `执行 shell` 选项
 
-![image-20230215105620097](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152935866.webp)
+![image-20230215105620097](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152935866.webp)
 
 
 
@@ -382,7 +382,7 @@ fi
 
 http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webhook Trigger中配置的Token}
 
-![image-20230215114307333](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152945520.webp)
+![image-20230215114307333](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152945520.webp)
 
 
 
@@ -393,11 +393,11 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 
 > 添加 SSH 配置
 
-![image-20230215111402420](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152951206.webp)
+![image-20230215111402420](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152951206.webp)
 
 > 找到 Publish over SSH 进行配置
 
-![image-20230215111454285](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152956352.webp)
+![image-20230215111454285](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320152956352.webp)
 
 > 填写相关信息
 
@@ -406,17 +406,17 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 - Username：登录用户名
 - Remote Directory：这个最好填 `/`
 
-![image-20230215111829142](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153001657.webp)
+![image-20230215111829142](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153001657.webp)
 
 点击 `高级` 按钮，按下方图片示例填写密码，最后使用 `Test Configuration` 按钮进行测试
 
-![image-20230215112106166](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153014880.webp)
+![image-20230215112106166](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153014880.webp)
 
 > 配置构建步骤
 
 选择 Send files or execute commands over SSH
 
-![image-20230215111211593](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153022733.webp)
+![image-20230215111211593](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153022733.webp)
 
 填写相关信息
 
@@ -432,7 +432,7 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 1. 如果想让源代码在远程服务器中，则只配置 `Exec command` 进行拉取代码、打包、运行就行
 2. 如果只想让远程服务器保留打包后的文件，先配置Git，再在 `构建设置` 选择进行打包，然后在 `构建后操作` 选项将打包后的文件传输过去执行启动命令；
 
-![image-20230215112541505](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153033262.webp)
+![image-20230215112541505](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153033262.webp)
 
 
 
@@ -452,11 +452,11 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 
 选择 `font` 视图，前端任务都在这里进行创建，`example` 为前端示例项目
 
-![image-20230216144238972](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153042378.webp)
+![image-20230216144238972](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153042378.webp)
 
 填写任务名称，填写示例项目名称创建新任务
 
-![image-20230216144400617](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153046246.webp)
+![image-20230216144400617](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153046246.webp)
 
 
 
@@ -464,7 +464,7 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 
 修改 `Repository URL`，选择 Git 用户
 
-![image-20230216144552883](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153057816.webp)
+![image-20230216144552883](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153057816.webp)
 
 
 
@@ -474,7 +474,7 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 
 **<span style="color:red">`basedir + dir` 目录下的文件都会被删除，请谨慎修改 `basedir`</span>**
 
-![image-20230216144851812](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153051567.webp)
+![image-20230216144851812](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153051567.webp)
 
 
 
@@ -482,7 +482,7 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 
 点击任务进入详情页，立即构建按钮点击后进行构建，下方是历史构建日志
 
-![image-20230216150228348](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153105356.webp)
+![image-20230216150228348](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153105356.webp)
 
 
 
@@ -492,11 +492,11 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 
 选择 `back` 视图，后端任务都在这里进行创建，`run-sh` 为后端示例项目
 
-![image-20230216150711707](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153113066.webp)
+![image-20230216150711707](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153113066.webp)
 
 填写任务名称，填写示例项目名称创建新任务
 
-![image-20230216150815285](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153120562.webp)
+![image-20230216150815285](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153120562.webp)
 
 
 
@@ -504,7 +504,7 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 
 修改 Token，使用任务名称作为 Token，保证唯一性
 
-![image-20230216150902640](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153117946.webp)
+![image-20230216150902640](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153117946.webp)
 
 
 
@@ -512,7 +512,7 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 
 如果你只想当 `master` 分支有新提交的时候才自动构建，那么你下图位置的内容修改为 `master`，这里默认就是 `master`
 
-![image-20230216151005447](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153130972.webp)
+![image-20230216151005447](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153130972.webp)
 
 
 
@@ -520,7 +520,7 @@ http://{你的Jenkins地址}/generic-webhook-trigger/invoke?token={Generic Webho
 
 自行调整 Shell
 
-![image-20230216151155651](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153127713.webp)
+![image-20230216151155651](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260320153127713.webp)
 
 
 

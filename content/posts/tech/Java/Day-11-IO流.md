@@ -76,11 +76,11 @@ I/O：Input/Output的缩写，用于处理设备之间的数据的传输。
 
 【1】形象理解：IO流当作一根“管”：
 
-![image-20210221174943653](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241632001_ceeadd.webp)
+![image-20210221174943653](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241632001_ceeadd.webp)
 
 【2】IO流的体系结构：
 
-![image-20210221175223445](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241632139_3753e4.webp)
+![image-20210221175223445](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241632139_3753e4.webp)
 
 【3】利用FileReader，FileWriter完成文件复制
 
@@ -602,7 +602,7 @@ lnputStreamReader :字节输入流---》字符的输入流
 
 OutputStreamWriter :字符输出流--》字节的输出流
 
-![image-20210222203839091](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241632512_f5fc1a.webp)
+![image-20210222203839091](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241632512_f5fc1a.webp)
 
 ```java
 package com.zy.io2;
@@ -671,7 +671,7 @@ public class Test8 {
 
 **练习：键盘录入内容输出到文件中**
 
-![image-20210222205517597](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633408_154fe1.webp)
+![image-20210222205517597](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633408_154fe1.webp)
 
 ```java
 package com.zy.io2;
@@ -882,7 +882,7 @@ public class Test1 {
 
 发生异常：
 
-![image-20210223163116188](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633730_94deb3.webp)
+![image-20210223163116188](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633730_94deb3.webp)
 
 出现异常的原因:
 你想要序列化的那个对象对应的类，必须要实现一个接口:
@@ -1010,25 +1010,25 @@ public class Person implements Serializable {
 
 再次测试：
 
-![image-20210223164558119](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/e1a37c3fb5f74b8be6f9d1a566073bd1_1d1f23.webp)
+![image-20210223164558119](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/e1a37c3fb5f74b8be6f9d1a566073bd1_1d1f23.webp)
 
 出现异常原因：
 
-![image-20210223164636053](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633652_070dc0.webp)
+![image-20210223164636053](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633652_070dc0.webp)
 
 解决:给这个类加入一个序列号: serialVersionUID
 
-![image-20210223164913422](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633890_3f529e.webp)
+![image-20210223164913422](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633890_3f529e.webp)
 
 IDEA中配置序列化版本号：
 
-![image-20210223165150028](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633772_adc6a3.webp)
+![image-20210223165150028](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633772_adc6a3.webp)
 
 alt+enter自动生成序列化版本号：
 
-![image-20210223165329552](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633160_3a09a9.webp)
+![image-20210223165329552](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241633160_3a09a9.webp)
 
-![image-20210223165405418](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241634094_f76a0e.webp)
+![image-20210223165405418](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202310241634094_f76a0e.webp)
 
 (1）被序列化的类的内部的所有属性，必须是可序列化的(基本数据类型都是可序列化的。
 

@@ -1031,7 +1031,7 @@ rpush key value1 value2 ...
 - `lrange key start end`：获取链表中从start到end的元素的值，start和end从0开始计数，如果为负数，-1表示倒数第一个元素，-2表示倒数第二个元素，以此类推。
 - 查看所有列表：(0~-1就可以查看所有值)。例：`lrange key 0 -1`
 
-![1](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304180045060.webp)
+![1](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304180045060.webp)
 
 ### 4.3. 两边弹出
 

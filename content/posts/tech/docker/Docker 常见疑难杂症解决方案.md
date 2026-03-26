@@ -72,7 +72,7 @@ $ sudo cp -arv /data/docker /data2/docker
 
 下图中，就是因为启动的容器使用的是普通用户运行进程的，且在运行当中需要使用 /tmp 目录，结果提示没有权限。在我们导入容器镜像的时候，其实是会将容器启动时需要的各个目录的权限和属性都赋予了。如果我们直接是 cp  命令单纯复制文件内容的话，就会出现属性不一致的情况，同时还会有一定的安全问题。
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163547659.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163547659.webp)
 
 2.[Docker ](http://mp.weixin.qq.com/s?__biz=MzI0MDQ4MTM5NQ==&mid=2247500917&idx=2&sn=8f93bd64875f72a94f222994fbe4c295&chksm=e918a169de6f287f8a3fb4fddf1bff02629753a21c28d7358f94879f9dc3c67ba12019680d42&scene=21#wechat_redirect)设备空间不足
 
@@ -471,7 +471,7 @@ NFS clients support flock() locks by emulating them as byte-range locks on the e
 
 **问题起因**：我们在使用 Docker  启动服务的时候，发现有时候服务之前可以相互连通，而有时间启动的多个服务之前却出现了无法访问的情况。究其原因，发现原来是因为使用的内部私有地址网段不一致导致的。有点服务启动到了 172.17 - 172.31 的网段，有的服务跑到了 192.169.0 - 192.168.224  的网段，这样导致服务启动之后出现无法访问的情况。
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163603620.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163603620.webp)
 
 **解决方法**：上述问题的处理方式，就是手动指定 Docker 服务的启动网段，就可以了。
 
@@ -531,7 +531,7 @@ $ docker-compose -f ./docker-compose.yml -p app1 up -d
 
 **问题起因**：CI 更新环境执行了一个脚本，但是脚本执行过程中报错了，如下所示。通过对应的输出信息，可以看到提示说正在执行的设备不是一个 tty。
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163613775.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163613775.webp)
 
 随即，查看了脚本发现报错地方是执行了一个 exec 的 docker 命令，大致如下所示。很奇怪的是，手动执行或直接调脚本的时候，怎么都是没有问题的，但是等到 CI 调用的时候怎么都是有问题。后来好好看下下面这个命令，注意到 -it 这个参数了。
 
@@ -549,7 +549,7 @@ docker exec -it <container_name> psql -Upostgres ......
 
 **解决方法**：docker exec 的参数 -t 是指 Allocate a pseudo-TTY 的意思，而 CI 在执行 job 的时候并不是在 TTY 终端中执行，所以 -t 这个参数会报错。
 
-![图片](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163619288.webp)
+![图片](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163619288.webp)
 
 ## 14.Docker 定时任务异常
 

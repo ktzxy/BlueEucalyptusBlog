@@ -614,7 +614,7 @@ xmlns="namespaceURI"
 
 使用 eclipse 创建 XML 文件关联 xsd 文件：新建项目 -> 选择XML File -> 选择【Create XML file from an XML schema file】 -> 选择相应的 schema.xsd 文件 -> 最后的 Prefix 是设置前缀名，可以修改设置为空
 
-![](https://cdn.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037357_268c88.webp)
+![](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202410251037357_268c88.webp)
 
 ### 4.4. Schema 与DTD 的区别
 
