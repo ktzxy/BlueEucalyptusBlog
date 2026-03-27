@@ -8,10 +8,10 @@ summary = "使用docker部署hugo，部署到云服务器"
 categories = ["📒博客部署"]                                      
 tags = ["hugo"]    
 comments = true  
-series = ["博客部署美化系列"]
+series = ["博客部署系列"]
 showSeries= true     
 weight = 1
-outer = true                                    
+outer = false                                    
 +++
 # **准备 SSH 密钥**
 

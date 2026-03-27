@@ -7,7 +7,7 @@ description = "hexo博客框架-折腾版"
 summary = ""         
 categories = ["📒博客部署"]                                      
 tags = ["hexo"]     
-series = ["博客部署美化系列"]
+series = ["博客部署系列"]
 showSeries= true                                               
 +++
 # hexo 博客完整部署以及魔改记录

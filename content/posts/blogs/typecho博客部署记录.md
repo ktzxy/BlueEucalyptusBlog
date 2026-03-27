@@ -6,7 +6,7 @@ description = "typecho博客部署记录"
 summary = ""         
 categories = ["📒博客部署"]                                      
 tags = ["typecho"]   
-series = ["博客部署美化系列"]
+series = ["博客部署系列"]
 showSeries= true                                                 
 +++
 

@@ -7,7 +7,7 @@ description = "halo快速部署个人博客"
 categories = ["📒博客部署"]
 tags = ["halo"]
 summary = "halo快速部署个人博客"
-series = ["博客部署美化系列"]
+series = ["博客部署系列"]
 showSeries= true  
 +++
 
