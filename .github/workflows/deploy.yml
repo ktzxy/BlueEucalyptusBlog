@@ -24,7 +24,7 @@ jobs:
           path: |
             resources
             .hugo_cache
-          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum') }}-${{ github.sha }}
+          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum','hugo.toml','content/**') }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-hugo-
 
