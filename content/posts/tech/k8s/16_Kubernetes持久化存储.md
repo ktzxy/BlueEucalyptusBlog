@@ -14,18 +14,48 @@ showSeries= true
 
 ## 前言
 
-之前我们有提到数据卷：`emptydir` ，是本地存储，pod重启，数据就不存在了，需要对数据持久化存储
+在 Kubernetes 中：Pod 是“短暂的”
 
-对于数据持久化存储【pod重启，数据还存在】，有两种方式
+表现：
 
-- nfs：网络存储【通过一台服务器来存储】
+- Pod 重建 → IP 变
+- Pod 删除 → 数据丢失
 
-## 步骤
+ 使用持久化存储（Persistent Storage）——>Pod 重建后，数据仍然存在
 
-### 持久化服务器上操作
+## 存储发展路径
 
-- 找一台新的服务器nfs服务端，安装nfs
-- 设置挂载路径
+### 阶段1：直接挂载（最原始）
+
+```
+Pod → NFS（写死 IP）
+```
+
+问题：
+
+- 强耦合
+- 不可迁移
+- 不易维护
+
+### 阶段2：PV / PVC（标准方案）
+
+```
+Pod → PVC → PV → 存储（NFS/云盘）
+```
+
+✔ 解耦 ✔ 标准 ✔ 可维护
+
+### 阶段3：StorageClass（企业级）
+
+```
+Pod → PVC → StorageClass → 自动创建 PV
+```
+
+✔ 自动化 ✔ 动态供给
+
+## NFS 持久化存储
+
+### Step 1：搭建 NFS 服务端
 
 使用命令安装nfs
 
@@ -39,28 +69,60 @@ yum install -y nfs-utils
 mkdir -p /data/nfs
 ```
 
-设置挂载路径
+配置共享目录
 
 ```bash
 # 打开文件
 vim /etc/exports
 # 添加如下内容
-/data/nfs *(rw,no_root_squash)
+/data/nfs *(rw,sync,no_root_squash,no_subtree_check)
 ```
 
-执行完成后，即部署完我们的持久化服务器
+启动服务
 
-### Node节点上操作
+```shell
+systemctl start nfs-server
+systemctl enable nfs-server
+```
 
-然后需要在k8s集群node节点上安装nfs，这里需要在 node1 和 node2节点上安装
+生效配置
+
+```shell
+exportfs -r
+```
+
+### Step 2：Node 节点准备
+
+在所有 Node 上执行：
 
 ```bash
 yum install -y nfs-utils
 ```
 
-执行完成后，会自动帮我们挂载上
+### Step 3：直接挂载 NFS
 
-### 启动nfs服务端
+nfs-pod.yaml
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfs-test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: web-data
+  volumes:
+  - name: web-data
+    nfs:
+      server: 192.168.44.134
+      path: /data/nfs
+```
+
+启动nfs服务端
 
 下面我们回到nfs服务端，启动我们的nfs服务
 
@@ -72,21 +134,6 @@ service nfs-server start
 ```
 
 ![image-20201119082047766](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291531221.webp)
-
-### K8s集群部署应用
-
-最后我们在k8s集群上部署应用，使用nfs持久化存储
-
-```bash
-# 创建一个pv文件
-mkdir pv
-# 进入
-cd pv
-```
-
-然后创建一个yaml文件  `nfs-nginx.yaml`
-
-![image-20201119082317625](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291531222.webp)
 
 通过这个方式，就挂载到了刚刚我们的nfs数据节点下的 /data/nfs 目录
 
@@ -115,76 +162,189 @@ kubectl describe pod nginx-dep1
 ```bash
 # 进入pod中查看
 kubectl exec -it nginx-dep1 bash
+
+# NFS 数据已经挂载 
+#但这种方式：不推荐（强耦合）
 ```
 
 ![image-20201119095847548](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291531225.webp)
 
 ## PV和PVC
 
-对于上述的方式，我们都知道，我们的ip 和端口是直接放在我们的容器上的，这样管理起来可能不方便
+在 Kubernetes 中，如果将存储（如 NFS 的 IP 和路径）直接写在 Pod 配置中，会导致应用与底层存储强耦合，不利于维护和迁移。为了解决这个问题，Kubernetes 引入了 PV（PersistentVolume）和 PVC（PersistentVolumeClaim）机制，实现存储资源的抽象与解耦。
 
-![image-20201119082317625](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291531222.webp)
+PV（PersistentVolume）
 
-所以这里就需要用到 pv  和 pvc的概念了，方便我们配置和管理我们的 ip 地址等元信息
+> PV 是对底层存储资源（如 NFS、云盘等）的抽象，由集群管理员创建和维护，属于存储资源的提供者。
 
-PV：持久化存储，对存储的资源进行抽象，对外提供可以调用的地方【生产者】
+PVC（PersistentVolumeClaim）
 
-PVC：用于调用，不需要关心内部实现细节【消费者】
+> PVC 是用户对存储资源的请求，描述了所需的容量、访问模式等信息。Pod 通过 PVC 使用存储，而不需要关心底层实现细节。
 
-PV 和 PVC 使得 K8S 集群具备了存储的逻辑抽象能力。使得在配置Pod的逻辑里可以忽略对实际后台存储
-技术的配置，而把这项配置的工作交给PV的配置者，即集群的管理者。存储的PV和PVC的这种关系，跟
-计算的Node和Pod的关系是非常类似的；PV和Node是资源的提供者，根据集群的基础设施变化而变
-化，由K8s集群管理员配置；而PVC和Pod是资源的使用者，根据业务服务的需求变化而变化，由K8s集
-群的使用者即服务的管理员来配置。
+### Step 4：创建 PV
 
-### 实现流程
+ pv.yaml
 
-- PVC绑定PV
-- 定义PVC
-- 定义PV【数据卷定义，指定数据存储服务器的ip、路径、容量和匹配模式】
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /data/nfs
+    server: 192.168.44.134
+  persistentVolumeReclaimPolicy: Retain
+```
 
-### 举例
-
-创建一个 pvc.yaml
-
-![image-20201119101753419](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291531226.webp)
-
-第一部分是定义一个 deployment，做一个部署
-
-- 副本数：3
-- 挂载路径
-- 调用：是通过pvc的模式
-
-然后定义pvc
-
-![image-20201119101843498](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291531227.webp)
-
-然后在创建一个 `pv.yaml`
-
-![image-20201119101957777](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291531228.webp)
-
-然后就可以创建pod了
-
-```bash
+```shell
+# 创建
 kubectl apply -f pv.yaml
 ```
 
-然后我们就可以通过下面命令，查看我们的 pv  和 pvc之间的绑定关系
+### Step 5：创建 PVC
 
-```bash
-kubectl get pv, pvc
+pvc.yaml
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
 ```
 
-![image-20201119102332786](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291531229.webp)
+```shell
+# 创建
+kubectl apply -f pvc.yaml
 
-到这里为止，我们就完成了我们 pv 和 pvc的绑定操作，通过之前的方式，进入pod中查看内容
-
-```bash
-kubect exec -it nginx-dep1 bash
+# 查看绑定
+kubectl get pv,pvc
 ```
 
-然后查看  /usr/share/nginx.html
+### Step 6：Pod 使用 PVC
 
-![image-20201119102448226](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291531230.webp)
+deployment.yaml
 
-也同样能看到刚刚的内容，其实这种操作和之前我们的nfs是一样的，只是多了一层pvc绑定pv的操作
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-pvc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: web-data
+      volumes:
+      - name: web-data
+        persistentVolumeClaim:
+          claimName: nfs-pvc
+```
+
+```yaml
+# 创建
+kubectl apply -f deployment.yaml
+
+# 测试
+kubectl exec -it <pod-name> bash
+```
+
+## 访问模式
+
+| 模式 | 说明              |
+| ---- | ----------------- |
+| RWO  | 单节点读写        |
+| ROX  | 多节点只读        |
+| RWX  | 多节点读写（NFS） |
+
+## 回收策略
+
+| 策略    | 说明           |
+| ------- | -------------- |
+| Retain  | 保留数据       |
+| Delete  | 自动删除       |
+| Recycle | 清空（已废弃） |
+
+## 绑定方式
+
+自动匹配（容量 + 访问模式）
+
+## StorageClass
+
+> StorageClass = “自动创建 PV 的模板”
+
+不用每次都手动创建 PV，StorageClass（动态供给）
+
+`Pod → PVC → StorageClass → 自动创建 PV`
+
+关键组件：Provisioner
+
+常见：
+
+```yaml
+kubernetes.io/no-provisioner（本地）
+nfs-client（NFS）
+ceph / aws-ebs / aliyun-disk（云盘）
+```
+
+#### StorageClass YAML
+
+ 示例（NFS）
+
+```shell
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-storage
+provisioner: example.com/nfs
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+```
+
+> provisioner：谁来创建存储
+>
+> reclaimPolicy：Retain（保留数据） Delete（自动删除）
+>
+> volumeBindingMode：Immediate（立即绑定） WaitForFirstConsumer（等 Pod 调度）
+
+#### PVC 使用 StorageClass
+
+PVC 示例
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-storage
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+
+

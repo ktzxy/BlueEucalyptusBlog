@@ -14,54 +14,76 @@ showSeries= true
 
 ## 概述
 
-当我们访问K8S集群时，需要经过三个步骤完成具体操作
+> Kubernetes 的安全机制由认证（Authentication）、鉴权（Authorization）和准入控制（Admission）三部分组成。所有请求必须通过 kube-apiserver 统一入口处理。
 
-- 认证
-- 鉴权【授权】
-- 准入控制
+> - 认证用于确认请求者身份（如证书、Token）
+> - 鉴权用于判断请求者是否有权限执行操作（如 RBAC）
+> - 准入控制用于对请求进行最终校验或修改（如安全策略、资源限制）
 
-进行访问的时候，都需要经过 apiserver， apiserver做统一协调，比如门卫
+```shell
+客户端请求
+   ↓
+Authentication（认证）
+   ↓
+Authorization（鉴权）
+   ↓
+Admission（准入控制）
+   ↓
+etcd（持久化）
+
+所有请求必须经过 kube-apiserver，依次完成身份确认、权限校验和请求合法性校验，最终才会生效。
+```
+
+kube-apiserver 是 Kubernetes 的统一入口，所有资源操作（kubectl / API / UI）都必须经过它，是集群的安全与控制核心。
 
 - 访问过程中，需要证书、token、或者用户名和密码
 - 如果访问pod需要serviceAccount
 
-![image-20201118092356107](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529044.webp)
-
 ### 认证
 
-对外不暴露8080端口，只能内部访问，对外使用的端口6443
+K8s **只使用 HTTPS（6443端口）**，没有“明文 HTTP 认证”
 
-客户端身份认证常用方式
+常见认证方式
 
-- https证书认证，基于ca证书
-- http token认证，通过token来识别用户
-- http基本认证，用户名 + 密码认证
+| 方式            | 说明                     |
+| --------------- | ------------------------ |
+| 证书认证（TLS） | 最常用（kubectl）        |
+| Bearer Token    | ServiceAccount / API访问 |
+| OIDC            | 接入企业身份系统（SSO）  |
 
 ### 鉴权
 
-基于RBAC进行鉴权操作
+常见鉴权方式:
 
-基于角色访问控制
+| 模式    | 说明         |
+| ------- | ------------ |
+| RBAC    | 主流（推荐） |
+| ABAC    | 旧方案       |
+| Webhook | 自定义       |
+| Node    | 节点权限控制 |
 
 ### 准入控制
 
-就是准入控制器的列表，如果列表有请求内容就通过，没有的话 就拒绝
+准入控制是在请求通过认证和鉴权之后，对资源进行“最后的校验和修改”。
+
+两类控制器：Validating（校验）；Mutating（修改）
 
 ## RBAC介绍
 
-基于角色的访问控制，为某个角色设置访问内容，然后用户分配该角色后，就拥有该角色的访问权限
+> RBAC（Role-Based Access Control）是 Kubernetes 中基于角色的访问控制机制，通过定义角色（Role/ClusterRole）和权限规则，并将其绑定到用户或服务账号，从而实现对资源访问的精细化控制。
+>
 
 ![image-20201118093949893](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529045.webp)
 
 k8s中有默认的几个角色
 
-- role：特定命名空间访问权限
-- ClusterRole：所有命名空间的访问权限
+- role：只能作用在一个 namespace
+- ClusterRole：可以是集群资源;也可以被 RoleBinding 限制在某个 namespace
 
 角色绑定
 
-- roleBinding：角色绑定到主体
-- ClusterRoleBinding：集群角色绑定到主体
+- roleBinding：把 Role 或 ClusterRole 绑定到某个 namespace 下的用户
+- ClusterRoleBinding：在整个集群范围内生效
 
 主体
 
@@ -69,11 +91,66 @@ k8s中有默认的几个角色
 - group：用户组
 - serviceAccount：服务账号
 
+**权限规则**
+
+权限由 rules 定义
+
+```yaml
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+```
+
+| 字段      | 说明     |
+| --------- | -------- |
+| apiGroups | 资源组   |
+| resources | 资源类型 |
+| verbs     | 操作类型 |
+
+**完整实例：**
+
+定义 Role
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+```
+
+绑定用户
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+- kind: User
+  name: alice
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
 ## RBAC实现鉴权
 
-- 创建命名空间
-
-
+```yaml
+1️⃣ 创建 namespace
+2️⃣ 创建资源（Pod）
+3️⃣ 定义 Role（权限规则）
+4️⃣ 创建 RoleBinding（绑定用户）
+5️⃣ 创建用户身份（证书 / kubeconfig）
+6️⃣ 使用该用户访问验证权限
+```
 
 ### 创建命名空间
 
@@ -103,11 +180,21 @@ kubectl run nginx --image=nginx -n roledemo
 
 我们通过 rbac-role.yaml进行创建
 
-![image-20201118094851338](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529047.webp)
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: roledemo
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+```
 
-tip：这个角色只对pod 有 get、list权限
-
-然后通过 yaml创建我们的role
+只允许：
+✔ 查看 Pod
+❌ 不能删除 / 创建 / 修改
 
 ```bash
 # 创建
@@ -116,13 +203,25 @@ kubectl apply -f rbac-role.yaml
 kubectl get role -n roledemo
 ```
 
-![image-20201118095141786](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529048.webp)
-
 ### 创建角色绑定
 
 我们还是通过 role-rolebinding.yaml 的方式，来创建我们的角色绑定
 
-![image-20201118095248052](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529049.webp)
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods-binding
+  namespace: roledemo
+subjects:
+- kind: User
+  name: mary   # 用户名必须和证书一致
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
 
 然后创建我们的角色绑定
 
@@ -133,31 +232,97 @@ kubectl apply -f rbac-rolebinding.yaml
 kubectl get role, rolebinding -n roledemo
 ```
 
-![image-20201118095357067](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529050.webp)
-
 ### 使用证书识别身份
 
-我们首先得有一个 rbac-user.sh 证书脚本
+准备 CSR 文件
 
-![image-20201118095541427](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529051.webp)
-
-![image-20201118095627954](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529052.webp)
-
-这里包含了很多证书文件，在TSL目录下，需要复制过来
-
-通过下面命令执行我们的脚本
-
-```bash
-./rbac-user.sh
+```yaml
+cat > mary-csr.json <<EOF
+{
+  "CN": "mary",
+  "hosts": [],
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "CN",
+      "ST": "BeiJing",
+      "L": "BeiJing"
+    }
+  ]
+}
+EOF
 ```
 
-最后我们进行测试
+生成证书
+
+```yaml
+cfssl gencert \
+  -ca=/etc/kubernetes/pki/ca.pem \
+  -ca-key=/etc/kubernetes/pki/ca-key.pem \
+  -config=/etc/kubernetes/pki/ca-config.json \
+  -profile=kubernetes \
+  mary-csr.json | cfssljson -bare mary
+```
+
+**生成 kubeconfig**
+
+设置集群信息
+
+```yaml
+kubectl config set-cluster kubernetes \
+  --certificate-authority=/etc/kubernetes/pki/ca.pem \
+  --server=https://<API_SERVER>:6443 \
+  --kubeconfig=mary.kubeconfig
+```
+
+设置用户
+
+```yaml
+kubectl config set-credentials mary \
+  --client-certificate=mary.pem \
+  --client-key=mary-key.pem \
+  --kubeconfig=mary.kubeconfig
+```
+
+设置上下文
+
+```yaml
+kubectl config set-context mary@kubernetes \
+  --cluster=kubernetes \
+  --user=mary \
+  --namespace=roledemo \
+  --kubeconfig=mary.kubeconfig
+```
+
+使用该用户
+
+```yaml
+kubectl config use-context mary@kubernetes \
+  --kubeconfig=mary.kubeconfig
+```
+
+### 验证权限
 
 ```bash
+# 方法1
+kubectl get pods --kubeconfig=mary.kubeconfig 
+成功
+kubectl get svc --kubeconfig=mary.kubeconfig 
+拒绝
+
+# 方法2
+kubectl auth can-i get pods \
+  --as=mary -n roledemo
+
+kubectl auth can-i get svc \
+  --as=mary -n roledemo
+  
 # 用get命令查看 pod 【有权限】
 kubectl get pods -n roledemo
 # 用get命令查看svc 【没权限】
 kubectl get svc -n roledmeo
 ```
 
-![image-20201118100051043](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291529053.webp)

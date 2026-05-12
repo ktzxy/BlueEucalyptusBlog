@@ -139,6 +139,11 @@ sudo apt install -y nginx certbot python3-certbot-nginx
 
 ```
 sudo certbot --nginx -d your-domain.com -d www.your-domain.com
+
+# 子域名/主域名都可以
+certbot -d "*.ktzxy.top" -d ktzxy.top --manual --preferred-challenges dns certonly
+新的 TXT 值
+记录解析即可
 ```
 
 按照提示：

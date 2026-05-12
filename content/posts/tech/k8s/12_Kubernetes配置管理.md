@@ -14,7 +14,8 @@ showSeries= true
 
 ## Secret
 
-Secret的主要作用就是加密数据，然后存在etcd里面，让Pod容器以挂载Volume方式进行访问
+> Secret 是 Kubernetes 中用于存储敏感信息（如密码、Token、证书）的资源对象，支持以环境变量或文件挂载的方式注入到 Pod 中使用。
+>
 
 场景：用户名 和 密码进行加密
 
@@ -22,15 +23,27 @@ Secret的主要作用就是加密数据，然后存在etcd里面，让Pod容器�
 
 ```bash
 echo -n 'admin' | base64
+
+# 还原
+echo YWRtaW4= | base64 -d
 ```
 
 ![image-20201117212037668](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291528634.webp)
 
 ### 变量形式挂载到Pod
 
-- 创建secret加密数据的yaml文件    secret.yaml
+示例 YAML
 
-![image-20201117212124476](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291528635.webp)
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  username: YWRtaW4=
+  password: MTIzNDU2
+```
 
 然后使用下面命令创建一个pod
 
@@ -38,13 +51,25 @@ echo -n 'admin' | base64
 kubectl create -f secret.yaml
 ```
 
+```yaml
+env:
+- name: SECRET_USERNAME
+  valueFrom:
+    secretKeyRef:
+      name: my-secret
+      key: username
+- name: SECRET_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: my-secret
+      key: password
+```
+
 通过get命令查看
 
 ```bash
 kubectl get pods
 ```
-
-![image-20201118084010980](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291528636.webp)
 
 然后我们通过下面的命令，进入到我们的容器内部
 
@@ -69,28 +94,60 @@ echo $SECRET_PASSWORD
 kubectl delete -f secret-val.yaml
 ```
 
+==缺点：环境变量容易被泄露（ps / 日志）==
+
 ### 数据卷形式挂载
 
 首先我们创建一个 secret-val.yaml 文件
 
 ![image-20201118084321590](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291528638.webp)
 
+```yaml
+volumeMounts:
+- name: secret-vol
+  mountPath: /etc/secret
+
+volumes:
+- name: secret-vol
+  secret:
+    secretName: my-secret
+```
+
 然后创建我们的 Pod
 
 ```bash
-# 根据配置创建容器
-kubectl apply -f secret-val.yaml
+# 创建 Secret
+kubectl apply -f secret.yaml
+
+# 查看
+kubectl get secret
+
+# 创建 Pod
+kubectl apply -f pod.yaml
+
 # 进入容器
-kubectl exec -it mypod bash
+kubectl exec -it mypod -- bash
+
 # 查看
 ls /etc/foo
 ```
 
 ![image-20201118084707478](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291528639.webp)
 
+**优点：**
+
+- 更安全
+- 支持权限控制
+- 可动态更新（部分场景）
+
+**总结：**
+
+> Secret 是 Kubernetes 中用于存储敏感信息的资源对象，支持以环境变量或文件挂载的方式注入到 Pod 中使用。其数据通常以 Base64 编码存储，但安全性主要依赖于 etcd 加密和访问控制机制。在生产环境中，推荐使用 Volume 挂载方式以提高安全性。
+
 ## ConfigMap
 
-ConfigMap作用是存储不加密的数据到etcd中，让Pod以变量或数据卷Volume挂载到容器中
+> ConfigMap 是 Kubernetes 中用于存储非敏感配置数据的资源对象，可以以环境变量或文件的形式注入到 Pod 中使用，实现配置与应用解耦。
+>
 
 应用场景：配置文件
 
@@ -99,7 +156,7 @@ ConfigMap作用是存储不加密的数据到etcd中，让Pod以变量或数据�
 首先我们需要创建一个配置文件 `redis.properties`
 
 ```bash
-redis.port=127.0.0.1
+redis.host=127.0.0.1
 redis.port=6379
 redis.password=123456
 ```
@@ -109,7 +166,23 @@ redis.password=123456
 我们使用命令创建configmap
 
 ```bash
+# 方式一 从文件创建
 kubectl create configmap redis-config --from-file=redis.properties
+
+# 方式二 从字面值创建
+kubectl create configmap redis-config \
+  --from-literal=redis.host=127.0.0.1 \
+  --from-literal=redis.port=6379
+  
+# 方式三 使用 YAML（推荐生产）
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+data:
+  redis.host: "127.0.0.1"
+  redis.port: "6379"
+  redis.password: "123456"
 ```
 
 然后查看详细信息
@@ -124,7 +197,26 @@ kubectl describe cm redis-config
 
 首先我们需要创建一个 `cm.yaml`
 
-![image-20201118085847424](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291528641.webp)
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cm-pod
+spec:
+  containers:
+  - name: test
+    image: busybox
+    command: ["sleep", "3600"]
+    volumeMounts:
+    - name: config-vol
+      mountPath: /etc/config
+  volumes:
+  - name: config-vol
+    configMap:
+      name: redis-config
+```
+
+
 
 然后使用该yaml创建我们的pod
 
@@ -144,6 +236,12 @@ kubectl logs mypod
 ```
 
 ![image-20201118090712780](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291528643.webp)
+
+**优点：**
+
+- 支持热更新（部分场景）
+- 结构清晰
+- 适合配置文件
 
 ### 以变量的形式挂载Pod
 
@@ -173,3 +271,11 @@ kubectl logs mypod
 ```
 
 ![image-20201118091448252](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291528647.webp)
+
+## ConfigMap vs Secret
+
+| 特性     | ConfigMap | Secret    |
+| -------- | --------- | --------- |
+| 数据类型 | 普通配置  | 敏感数据  |
+| 是否加密 | ❌         | ✔（可选） |
+| 用途     | 配置文件  | 密码/证书 |

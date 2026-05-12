@@ -12,27 +12,81 @@ showSeries= true
 +++
 # Kubernetes核心技术-Controller
 
-## 内容
-
-- 什么是Controller
-- Pod和Controller的关系
-- Deployment控制器应用场景
-- yaml文件字段说明
-- Deployment控制器部署应用
-- 升级回滚
-- 弹性伸缩
-
 ## 什么是Controller
 
-Controller是在集群上管理和运行容器的对象，Controller是实际存在的，Pod是虚拟机的
+持续对比“期望状态（Desired State）和实际状态（Current State）”，并不断修正差异的控制循环（Control Loop）组件。
+
+**核心思想：控制循环**
+
+```shell
+用户声明（YAML）
+      ↓
+Desired State（期望状态）
+      ↓
+Controller 不断对比
+      ↓
+Current State（当前实际状态）
+      ↓
+如果不一致 → 自动修正
+```
 
 ## Pod和Controller的关系
 
-Pod是通过Controller实现应用的运维，比如弹性伸缩，滚动升级等
+Pod = “被管理对象（最小运行单元）”
+Controller = “Pod的管理者 + 状态维护器”
 
-Pod 和 Controller之间是通过label标签来建立关系，同时Controller又被称为控制器工作负载
+```shell
+Pod ----(label)----> 被识别
+  ↑
+Controller ----(selector)----> 管理范围
+```
 
-![image-20201116092431237](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291525928.webp)
+**例子**
+
+Pod：
+
+```
+labels:
+  app: nginx
+```
+
+Deployment：
+
+```
+selector:
+  matchLabels:
+    app: nginx
+```
+
+Controller 只管理 label 匹配的 Pod
+
+## Controller的核心能力
+
+所有 Controller 本质都具备这4个能力：
+
+### 自动创建（Self-healing）
+
+Pod 挂了 → 自动补
+
+### 副本控制（Replica Management）
+
+保证：
+
+```
+实际 Pod 数 == 期望 Pod 数
+```
+
+### 滚动更新（Rolling Update）
+
+逐步替换旧版本 Pod
+
+### 自愈能力（Self-healing）
+
+节点挂了：
+
+```
+Pod 自动漂移到其他节点
+```
 
 ## Deployment控制器应用
 
@@ -58,7 +112,7 @@ kubectrl create deployment web --image=nginx
 但是我们可以尝试使用上面的代码创建一个镜像【只是尝试，不会创建】
 
 ```bash
-kubectl create deployment web --image=nginx --dry-run -o yaml > nginx.yaml
+kubectl create deployment web --image=nginx --dry-run=client -o yaml > nginx.yaml
 ```
 
 然后输出一个yaml配置文件 `nginx.yml` ，配置文件如下所示
@@ -94,7 +148,7 @@ status: {}
 
 ![image-20201116093638951](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291525929.webp)
 
-### 使用YAML创建Pod
+### 使用YAML创建Deployment
 
 通过刚刚的代码，我们已经生成了YAML文件，下面我们就可以使用该配置文件快速创建Pod镜像了
 
@@ -112,10 +166,23 @@ kubectl expose deployment web --port=80 --type=NodePort --target-port=80 --name=
 
 关于上述命令，有几个参数
 
-- --port：就是我们内部的端口号
-- --target-port：就是暴露外面访问的端口号
+- --port：Service内部端口（ClusterIP端口）
+- --target-port：Pod容器端口
 - --name：名称
 - --type：类型
+- NodePort：节点暴露端口（外部访问）
+
+```shell
+浏览器访问
+   ↓
+NodeIP:NodePort（32639）
+   ↓
+Service（port:80）
+   ↓
+Pod（targetPort:80）
+   ↓
+容器 nginx
+```
 
 同理，我们一样可以导出对应的配置文件
 
@@ -192,9 +259,24 @@ kubectl get pods,svc
 
 ## 升级回滚和弹性伸缩
 
-- 升级：  假设从版本为1.14 升级到 1.15 ，这就叫应用的升级【升级可以保证服务不中断】
-- 回滚：从版本1.15 变成 1.14，这就叫应用的回滚
-- 弹性伸缩：我们根据不同的业务场景，来改变Pod的数量对外提供服务，这就是弹性伸缩
+- 升级：  创建一个新的 ReplicaSet（新版本），逐步替换旧的 ReplicaSet（旧版本）
+
+  ```shell
+  旧版本 RS（nginx:1.14） → 1个 Pod
+  
+  执行升级命令
+          ↓
+  创建新 RS（nginx:1.15）
+          ↓
+  新 RS +1 Pod
+  旧 RS -1 Pod
+          ↓
+  直到全部替换完成
+  ```
+
+  回滚：Deployment 通过恢复历史 ReplicaSet，实现快速版本回退
+
+- 弹性伸缩：通过调整 replicas 数量，实现服务容量的动态扩展或收缩
 
 ### 应用升级和回滚
 
@@ -227,6 +309,30 @@ spec:
 status: {}
 ```
 
+标准写法：
+
+```shell
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 1
+    maxSurge: 1
+```
+
+- maxUnavailable（最多不可用）:最多允许多少 Pod 不可用
+- maxSurge（最大超出）:升级时最多多出来多少 Pod
+
+举例（replicas=3）
+
+```shell
+maxUnavailable=1
+maxSurge=1
+
+升级时可能：
+最多 4 个 Pod（3+1）
+最少 2 个可用
+```
+
 我们先指定版本为1.14，然后开始创建我们的Pod
 
 ```bash
@@ -240,7 +346,12 @@ kubectl apply -f nginx.yaml
 我们使用下面的命令，可以将nginx从 1.14 升级到 1.15
 
 ```bash
+# 方式一
 kubectl set image deployment web nginx=nginx:1.15
+
+# 方式二
+kubectl apply -f nginx.yaml
+修改 image: nginx:1.15
 ```
 
 在我们执行完命令后，能看到升级的过程
@@ -252,8 +363,6 @@ kubectl set image deployment web nginx=nginx:1.15
 - 最后把1.14版本的Pod移除，完成我们的升级
 
 我们在下载 1.15版本，容器就处于ContainerCreating状态，然后下载完成后，就用 1.15版本去替换1.14版本了，这么做的好处就是：升级可以保证服务不中断
-
-![image-20201116111614085](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291525935.webp)
 
 我们到我们的node2节点上，查看我们的 docker images;
 
@@ -312,3 +421,71 @@ kubectl scale deployment web --replicas=10
 能够清晰看到，我们一下创建了10个副本
 
 ![image-20201117092841865](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291525939.webp)
+
+**企业常用：自动伸缩（HPA）**
+
+Horizontal Pod Autoscaler
+
+```shell
+kubectl autoscale deployment web \
+--cpu-percent=50 \
+--min=1 \
+--max=10
+```
+
+> 原理：CPU高 → 扩容 ；CPU低 → 缩容
+
+## Controller全景链路控制图
+
+```shell
+                ┌────────────────────────────┐
+                │        kubectl apply       │
+                │        (用户提交YAML)       │
+                └────────────┬───────────────┘
+                             ↓
+                ┌────────────────────────────┐
+                │        API Server          │
+                │  (统一入口 / 资源校验)       │
+                └────────────┬───────────────┘
+                             ↓
+                ┌────────────────────────────┐
+                │           etcd             │
+                │   (存储 Desired State)     │
+                └────────────┬───────────────┘
+                             ↓
+        ┌────────────────────────────────────────────┐
+        │            Controller Manager              │
+        │ (各种控制器：Deployment / RS / Node等)      │
+        └────────────┬───────────────────────────────┘
+                     ↓
+        ┌────────────────────────────┐
+        │     Deployment Controller  │
+        │   (管理版本 / 滚动升级)     │
+        └────────────┬───────────────┘
+                     ↓
+        ┌────────────────────────────┐
+        │     ReplicaSet Controller  │
+        │   (维持副本数 = replicas)  │
+        └────────────┬───────────────┘
+                     ↓
+        ┌────────────────────────────┐
+        │            Pod             │
+        │  (Pending 状态，未调度)    │
+        └────────────┬───────────────┘
+                     ↓
+        ┌────────────────────────────┐
+        │        Scheduler           │
+        │  (选择最合适的 Node)        │
+        └────────────┬───────────────┘
+                     ↓
+        ┌────────────────────────────┐
+        │            Node            │
+        │   kubelet + containerd     │
+        └────────────┬───────────────┘
+                     ↓
+        ┌────────────────────────────┐
+        │        Running Pod         │
+        │   (容器真正运行起来)        │
+        └────────────────────────────┘
+```
+

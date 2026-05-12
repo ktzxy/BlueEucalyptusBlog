@@ -1,12 +1,12 @@
 +++
 date = '2025-01-29T14:56:29+08:00'
 draft = false
-title = '30 使用kubeadm ha脚本一键安装K8S'
+title = '23 使用kubeadm ha脚本一键安装K8S'
 slug = "fmsgcgkhw5"
-description = "30 使用kubeadm ha脚本一键安装K8S"
+description = "23 使用kubeadm ha脚本一键安装K8S"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
-summary = "30 使用kubeadm ha脚本一键安装K8S"
+summary = "23 使用kubeadm ha脚本一键安装K8S"
 series = ["Kubernetes学习系列"]
 showSeries= true  
 +++

@@ -233,8 +233,6 @@ SSL:Secure Sockets Layer安全套接协议的缩写，可以在Internet上提供
 
 #### 方案一：Nginx的源码简单安装
 
->   我使用的是这个方案
-
 (1)进入官网查找需要下载版本的链接地址，然后使用wget命令进行下载
 
 ```shell
@@ -604,8 +602,6 @@ events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接，
 
 http 全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求数上限等。
 
-
-
 ##### server 块
 
 这块和虚拟主机有密切关系，虚拟主机从用户角度看，和一台独立的硬件主机是完全一样的，该技术的产生是为了节省互联网服务器硬件成本。 每个 http 块可以包括多个 server 块，而每个 server 块就相当于一个虚拟主机。而每个 server 块也分为全局 server 块，以及可以同时包含多个 locaton 块。
@@ -618,7 +614,508 @@ http 全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自�
 
  ==一个 server 块可以配置多个 location 块。==这块的主要作用是基于 Nginx 服务器接收到的请求字符串（例如 server_name/uri-string），对虚拟主机名称（实现效果：使用 nginx 反向代理，访问 www.123.com 直接跳转到 127.0.0.1:8080也可以是 IP 别名）之外的字符串（例如 前面的 /uri-string）进行匹配，对特定的请求进行处理。地址定向、数据缓存和应答控制等功能，还有许多第三方模块的配置也在这里进行。
 
+### 详细解析
+
+```shell
+#user  nobody;   # 用户  用户组  ；一般只有类unix系统有，windows不需要
+worker_processes  1;   # 工作进程，一般配置为cpu核心数的2倍
+
+#  错误日志的配置路径
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+
+# 进程id存放路径
+#pid        logs/nginx.pid;
+
+
+
+
+# 指定进程可以打开的最大描述符的数量
+# 整个系统的最大文件描述符打开数目可以通过命令 ulimit -n  查看
+# 所以一般而言，这个值可以是 ulimit -n 除以nginx进程数
+#  worker_rlimit_nofile 65535;
+
+events {
+    # 使用epoll的I/O 模型；epoll 使用于Linux内核2.6版本及以后的系统
+    use epoll;
+    # 每一个工作进程的最大连接数量； 理论上而言每一台nginx服务器的最大连接数为： worker_processes*worker_connections
+    worker_connections  1024;
+
+    # 超时时间
+    #keepalive_timeout 60
+
+    # 客户端请求头部的缓冲区大小，客户端请求一般会小于一页； 可以根据你的系统的分页大小来设定， 命令 getconf PAGESIZE 可以获得当前系统的分页大小（一般4K）
+    #client_header_buffer_size 4k;
+
+    # 为打开的文件指定缓存，默认是不启用； max指定缓存数量，建议和打开文件数一致；inactive是指经过这个时间后还没有被请求过则清除该文件的缓存。
+    #open_file_cache max=65535 inactive=60s;
+
+    # 多久会检查一次缓存的有效信息
+    #open_file_cache_valid 80s;
+
+    # 如果在指定的参数open_file_cache的属性inactive设置的值之内，没有被访问这么多次（open_file_cache_min_uses），则清除缓存
+    # 则这里指的是 60s内都没有被访问过一次则清除 的意思
+    # open_file_cache_min_uses 1;
+}
+
+
+
+# 设定http服务；可以利用它的反向代理功能提供负载均衡支持
+http {
+    #设定mime类型,类型由mime.types文件定义；  可以 cat nginx/conf/mime.types  查看下支持哪些类型
+    include       mime.types;
+    # 默认mime类型；  application/octet-stream 指的是原始二进制流
+    default_type  application/octet-stream;
+
+
+
+    # --------------------------------------------------------------------------   #
+    # 日志格式设置：
+    #   $remote_addr、$http_x_forwarded_for     可以获得客户端ip地址
+    #   $remote_user                            可以获得客户端用户名
+    #   $time_local                             记录访问的时区以及时间
+    #   $request                                请求的url与http协议
+    #   $status                                 响应状态成功为200
+    #   $body_bytes_sent                        发送给客户端主体内容大小
+    #   $http_referer                           记录从哪个页面过来的请求
+    #   $http_user_agent                        客户端浏览器信息
+    #
+    #   注意事项：
+    #           通常web服务器(我们的tomcat)放在反向代理(nginx)的后面，这样就不能获取到客户的IP地址了，通过$remote_add拿到的IP地址是反向代理服务器的iP地址。
+    #           反向代理服务器(nginx)在转发请求的http头信息中，可以增加$http_x_forwarded_for信息，记录原有客户端的IP地址和原来客户端的请求的服务器地址。
+    # --------------------------------------------------------------------------   #
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    
+    #log_format log404 '$status [$time_local] $remote_addr $host$request_uri $sent_http_location';
+
+
+    # 日志文件；  【注意：】用了log_format则必须指定access_log来指定日志文件
+    #access_log  logs/access.log  main;
+    #access_log  logs/access.404.log  log404;
+
+
+    # 保存服务器名字的hash表由 server_names_hash_bucket_size、server_names_hash_max_size 控制
+    # server_names_hash_bucket_size 128;
+
+    # 限制通过nginx上传文件的大小
+    #client_max_body_size 300m;
+
+
+    # sendfile 指定 nginx 是否调用sendfile 函数（零拷贝 方式）来输出文件；
+    # 对于一般常见应用，必须设为on。
+    # 如果用来进行下载等应用磁盘IO重负载应用，可设置为off，以平衡磁盘与网络IO处理速度，降低系统uptime。
+    sendfile        on;
+
+    # 此选项允许或禁止使用socke的TCP_CORK的选项，此选项仅在使用sendfile的时候使用；TCP_CORK TCP_NODELAY 选项可以是否打开TCP的内格尔算法
+    #tcp_nopush     on;
+
+
+    #tcp_nodelay on;
+
+    # 后端服务器连接的超时时间_发起握手等候响应超时时间
+    #proxy_connect_timeout 90; 
+
+    # 连接成功后_等候后端服务器响应时间_其实已经进入后端的排队之中等候处理（也可以说是后端服务器处理请求的时间）
+    #proxy_read_timeout 180;
+
+    # 后端服务器数据回传时间_就是在规定时间之内后端服务器必须传完所有的数据
+    #proxy_send_timeout 180;
+
+
+    # proxy_buffering 这个参数用来控制是否打开后端响应内容的缓冲区，如果这个设置为on，以下的proxy_buffers才生效
+    #proxy_buffering on
+
+    # 设置从被代理服务器读取的第一部分应答的缓冲区大小，通常情况下这部分应答中包含一个小的应答头，
+    # 默认情况下这个值的大小为指令proxy_buffers中指定的一个缓冲区的大小，不过可以将其设置为更小
+    #proxy_buffer_size 256k;
+
+    # 设置用于读取应答（来自被代理服务器--如tomcat）的缓冲区数目和大小，默认情况也为分页大小，根据操作系统的不同可能是4k或者8k
+    #proxy_buffers 4 256k;
+
+
+    # 同一时间处理的请求buffer大小；也可以说是一个最大的限制值--控制同时传输到客户端的buffer大小的。
+    #proxy_busy_buffers_size 256k;
+
+    # 设置在写入proxy_temp_path时数据的大小，预防一个工作进程在传递文件时阻塞太长
+    #proxy_temp_file_write_size 256k;
+
+
+    # proxy_temp_path和proxy_cache_path指定的路径必须在同一分区
+    #proxy_temp_path /app/tmp/proxy_temp_dir;
+
+    # 设置内存缓存空间大小为200MB，1天没有被访问的内容自动清除，硬盘缓存空间大小为10GB。
+    #proxy_cache_path /app/tmp/proxy_cache_dir levels=1:2 keys_zone=cache_one:200m inactive=1d max_size=30g;
+
+
+    # 如果把它设置为比较大的数值，例如256k，那么，无论使用firefox还是IE浏览器，来提交任意小于256k的图片，都很正常。
+    # 如果注释该指令，使用默认的client_body_buffer_size设置，也就是操作系统页面大小的两倍，8k或者16k，问题就出现了。
+    # 无论使用firefox4.0还是IE8.0，提交一个比较大，200k左右的图片，都返回500 Internal Server Error错误
+    #client_body_buffer_size 512k;   # 默认是页大小的两倍
+
+    # 表示使nginx阻止HTTP应答代码为400或者更高的应答。可以结合error_page指向特定的错误页面展示错误信息
+    #proxy_intercept_errors on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+
+
+    # 负载均衡 START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # upstream 指令定义的节点可以被proxy_pass指令引用；二者结合用来反向代理+负载均衡配置
+    # 【内置策略】：轮询、加权轮询、ip_hash、最少连接 默认编译进了nginx
+    # 【扩展策略】：fair、通用hash、一致性hash 默认没有编译进nginx
+    #-----------------------------------------------------------------------------------------------#
+    # 【1】默认是轮询；如果后端服务器down掉，能自动剔除。
+    #   upstream bakend {
+    #        server 192.168.75.130:8080;
+    #        server 192.168.75.132:8080;
+    #        server 192.168.75.134:8080;
+    #    }
+    #
+    #【2】权重轮询(加权轮询)：这样配置后，如果总共请求了3次，则前面两次请求到130，后面一次请求到132
+    #   upstream bakend {
+    #        server 192.168.75.130:8080 weight=2;
+    #        server 192.168.75.132:8080 weight=1;
+    #   }
+    #
+    #【3】ip_hash：这种配置会使得每个请求按访问者的ip的hash结果分配，这样每个访客固定访问一个后端服务器，这样也可以解决session的问题。
+    #   upstream bakend {
+    #        ip_hash;
+    #        server 192.168.75.130:8080;
+    #        server 192.168.75.132:8080;
+    #   }
+    #
+    #【4】最少连接：将请求分配给连接数最少的服务器。Nginx会统计哪些服务器的连接数最少。
+    #   upstream bakend {
+    #        least_conn;
+    #        server 192.168.75.130:8080;
+    #        server 192.168.75.132:8080;
+    #   }
+    #
+    #
+    #【5】fair策略(需要安装nginx的第三方模块fair)：按后端服务器的响应时间来分配请求，响应时间短的优先分配。
+    #   upstream bakend {
+    #        fair;
+    #        server 192.168.75.130:8080;
+    #        server 192.168.75.132:8080;
+    #   }
+    #
+    #【6】url_hash策略（也是第三方策略）：按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。
+    #               在upstream中加入hash语句，server语句中不能写入weight等其他的参数，hash_method指定hash算法
+    #   upstream bakend {
+    #        server 192.168.75.130:8080;
+    #        server 192.168.75.132:8080;
+    #        hash $request_uri;
+    #        hash_method crc32;
+    #   }
+    #
+    #【7】其他设置，主要是设备的状态设置
+    #   upstream bakend{
+    #       ip_hash;
+    #       server 127.0.0.1:9090 down;   # down 表示该机器处于下线状态不可用
+    #       server 127.0.0.1:8080 weight=2;
+    #       server 127.0.0.1:6060;
+    #       
+    #       # max_fails 默认为1； 最大请求失败的次数，结合fail_timeout使用；
+    #       # 以下配置表示 192.168.0.100:8080在处理请求失败3次后，将在15s内不会受到任何请求了
+    #       # fail_timeout 默认为10秒。某台Server达到max_fails次失败请求后，在fail_timeout期间内，nginx会认为这台Server暂时不可用，不会将请求分配给它。
+    #       server 192.168.0.100:8080 weight=2 max_fails=3 fail_timeout=15;
+    #       server 192.168.0.101:8080 weight=3;
+    #       server 192.168.0.102:8080 weight=1;
+    #       # 限制分配给某台Server处理的最大连接数量，超过这个数量，将不会分配新的连接给它。默认为0，表示不限制。注意：1.5.9之后的版本才有这个配置
+    #       server 192.168.0.103:8080 max_conns=1000;
+    #       server 127.0.0.1:7070 backup;  # 备份机；其他机器都不可用时，这台机器就上场了
+    #       server example.com my_dns_resolve;  # 指定域名解析器；my_dns_resolve需要在http节点配置resolver节点如：resolver 10.0.0.1;
+    #   }
+    #
+    #
+    #
+    #负载均衡 END<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    #-----------------------------------------------------------------------------------------------#
+
+
+    ###配置虚拟机START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    #
+    #server{
+    #    listen 80;
+    #    配置监听端口
+    #    server_name image.***.com;
+    #    配置访问域名
+    #    location ~* \.(mp3|exe)$ {
+    #        对以“mp3或exe”结尾的地址进行负载均衡
+    #        proxy_pass http://img_relay$request_uri;
+    #        设置被代理服务器的端口或套接字，以及URL
+    #        proxy_set_header Host $host;
+    #        proxy_set_header X-Real-IP $remote_addr;
+    #        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #        以上三行，目的是将代理服务器收到的用户的信息传到真实服务器上
+    #    }
+    #
+    #
+    #
+    #    location /face {
+    #        if ($http_user_agent ~* "xnp") {
+    #            rewrite ^(.*)$ http://211.151.188.190:8080/face.jpg redirect;
+    #        }
+    #        proxy_pass http://img_relay$request_uri;
+    #        proxy_set_header Host $host;
+    #        proxy_set_header X-Real-IP $remote_addr;
+    #        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #        error_page 404 502 = @fetch;
+    #    }
+    #
+    #    location @fetch {
+    #        access_log /data/logs/face.log log404;
+    #        rewrite ^(.*)$ http://211.151.188.190:8080/face.jpg redirect;
+    #    }
+    #
+    #    location /image {
+    #        if ($http_user_agent ~* "xnp") {
+    #            rewrite ^(.*)$ http://211.151.188.190:8080/face.jpg redirect;
+    #
+    #        }
+    #        proxy_pass http://img_relay$request_uri;
+    #        proxy_set_header Host $host;
+    #        proxy_set_header X-Real-IP $remote_addr;
+    #        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #        error_page 404 502 = @fetch;
+    #    }
+    #
+    #    location @fetch {
+    #        access_log /data/logs/image.log log404;
+    #        rewrite ^(.*)$ http://211.151.188.190:8080/face.jpg redirect;
+    #    }
+    #}
+    #
+    #
+    #
+    ###其他举例
+    #
+    #server{
+    #
+    #    listen 80;
+    #
+    #    server_name *.***.com *.***.cn;
+    #
+    #    location ~* \.(mp3|exe)$ {
+    #        proxy_pass http://img_relay$request_uri;
+    #        proxy_set_header Host $host;
+    #        proxy_set_header X-Real-IP $remote_addr;
+    #        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #    }
+    #
+    #    location / {
+    #        if ($http_user_agent ~* "xnp") {
+    #            rewrite ^(.*)$ http://i1.***img.com/help/noimg.gif redirect;
+    #        }
+    #
+    #        proxy_pass http://img_relay$request_uri;
+    #        proxy_set_header Host $host;
+    #        proxy_set_header X-Real-IP $remote_addr;
+    #        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #        #error_page 404 http://i1.***img.com/help/noimg.gif;
+    #        error_page 404 502 = @fetch;
+    #    }
+    #
+    #    location @fetch {
+    #        access_log /data/logs/baijiaqi.log log404;
+    #        rewrite ^(.*)$ http://i1.***img.com/help/noimg.gif redirect;
+    #    }
+    #}
+    #
+    #server{
+    #    listen 80;
+    #    server_name *.***img.com;
+    #
+    #    location ~* \.(mp3|exe)$ {
+    #        proxy_pass http://img_relay$request_uri;
+    #        proxy_set_header Host $host;
+    #        proxy_set_header X-Real-IP $remote_addr;
+    #        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #    }
+    #
+    #    location / {
+    #        if ($http_user_agent ~* "xnp") {
+    #            rewrite ^(.*)$ http://i1.***img.com/help/noimg.gif;
+    #        }
+    #
+    #        proxy_pass http://img_relay$request_uri;
+    #        proxy_set_header Host $host;
+    #        proxy_set_header X-Real-IP $remote_addr;
+    #        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #        #error_page 404 http://i1.***img.com/help/noimg.gif;
+    #        error_page 404 = @fetch;
+    #    }
+    #
+    ##access_log off;
+    #
+    #    location @fetch {
+    #        access_log /data/logs/baijiaqi.log log404;
+    #        rewrite ^(.*)$ http://i1.***img.com/help/noimg.gif redirect;
+    #    }
+    #}
+    #
+    #server{
+    #    listen 8080;
+    #    server_name ngx-ha.***img.com;
+    #
+    #    location / {
+    #        stub_status on;
+    #        access_log off;
+    #    }
+    #}
+    #
+    #server {
+    #    listen 80;
+    #    server_name imgsrc1.***.net;
+    #    root html;
+    #}
+    #
+    #
+    #
+    #server {
+    #    listen 80;
+    #    server_name ***.com w.***.com;
+    #    # access_log /usr/local/nginx/logs/access_log main;
+    #    location / {
+    #        rewrite ^(.*)$ http://www.***.com/ ;
+    #    }
+    #}
+    #
+    #server {
+    #    listen 80;
+    #    server_name *******.com w.*******.com;
+    #    # access_log /usr/local/nginx/logs/access_log main;
+    #    location / {
+    #        rewrite ^(.*)$ http://www.*******.com/;
+    #    }
+    #}
+    #
+    #server {
+    #    listen 80;
+    #    server_name ******.com;
+    #
+    #    # access_log /usr/local/nginx/logs/access_log main;
+    #
+    #    location / {
+    #        rewrite ^(.*)$ http://www.******.com/;
+    #    }
+    #
+    #    location /NginxStatus {
+    #        stub_status on;
+    #        access_log on;
+    #        auth_basic "NginxStatus";
+    #        auth_basic_user_file conf/htpasswd;
+    #    }
+    #
+    #    #设定查看Nginx状态的地址
+    #    location ~ /\.ht {
+    #        deny all;
+    #    }#禁止访问.htxxx文件
+    #
+    #}
+    #配置虚拟机END<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            #root   html;
+            root   /app;
+	    index   zyt505050.html;
+	    #index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+}
+```
+
 ## Nginx 反向代理
+
+- **`upstream`**: 定义一个后端服务器集群。
+- **`server`**: 在 `upstream` 块中定义一台后端服务器。
+- **`least_conn`**: 一种负载均衡算法，将请求发送到当前活动连接数最少的服务器。
+- **`proxy_pass`**: 在 `location` 块中，将请求转发到指定的 `upstream` 集群。
 
 ### Nginx 反向代理 ( 1 )
 
@@ -802,6 +1299,97 @@ location [=|~|~*|^~] uri {
 
 
 ## Nginx 负载均衡
+
+#### 负载均衡技术
+
+负载均衡实现多种，硬件到软件，商业的、开源的。常见的负载均衡方式：
+
+### HTTP重定向负载均衡（较差）
+
+需要**HTTP重定向服务器**。
+
+#### 流程
+
+- 浏览器先去HTTP重定向服务器请求，获取到实际被定向到的服务器；浏览器再请求被实际定向到的服务器。
+
+#### 特点
+
+简单易实现。
+
+#### 缺点
+
+- 浏览器需要两次请求才能完成一次完整的访问，性能以及体验太差。
+- 依赖于**重定向服务器**自身处理能力，集群伸缩性规模有限。
+- 使用HTTP 302进行重定向可能使搜索引擎判断为SEO作弊，降低搜索排名。
+
+### DNS域名解析负载均衡（一般）
+
+需要**DNS服务器**。
+
+#### 流程
+
+- 浏览器请求某个域名，DNS服务器返回web服务器集群中的某个ip地址。
+- 浏览器再去请求DNS返回的服务器地址。
+
+
+#### 特点
+
+该方案要要求在DNS服务器中配置多个A记录，例如：
+
+| www.example.com IN A | 10.192.168.66 |
+| :------------------- | :------------ |
+| www.example.com IN A | 10.192.168.77 |
+| www.example.com IN A | 10.192.168.88 |
+
+该方案将负载均衡的工作交给了DNS，节省了网站管理维护负载均衡服务器的麻烦。
+
+#### 缺点
+
+- 目前的DNS是**多级解析**的，每一级别都可能缓存了A记录，当某台业务服务器下线后，即使修改了DNS的A记录，要使其生效还需要一定时间。这期间，可能导致用户会访问已下线的服务器造成访问失败。
+- DNS负载均衡的控制权在域名服务商那里，网站无法对其做出更多的改善和管理。
+
+>**温馨提示**
+>
+>事实上，可能是部分使用DNS域名解析，利用域名解析作为第一级的负载均衡手段，域名解析得到的是同样提供负载均衡的内部服务器，这组服务器再进行负载均衡，请求分发到真是的web应用服务器。
+
+
+### 反向代理负载均衡（良）
+
+反向代理服务器需要配置双网卡和内外部两套IP地址。即**反向代理服务器需要有外部IP、内部IP**。
+
+#### 特点
+
+部署简单，负载均衡功能和反向代理服务器功能集成在一块。
+
+#### 缺点
+
+反向代理服务器是所有请求和相应的中转站，性能可能成为瓶颈。
+
+
+### IP负载均衡（良）
+
+#### 特点
+
+优点是在**内核进程**中完成了数据分发，而反向代理负载均衡是在应用程序中分发数据，IP负载均衡处理性能更优。
+
+#### 缺点
+
+所有请求、响应都经由负载均衡服务器，导致**集群最大响应数据吞吐量不得不受制于负载均衡服务器网卡带宽**。
+
+
+### 数据链路层负载均衡（优）
+
+#### 特点
+
+- 数据链路层负载均衡也叫**三角传输模式**。
+- 负载均衡数据分发过程中**不修改IP地址，而是修改MAC地址**。
+- 由于实际处理请求的真实物理IP地址和数据请求目的IP地址一致，所以不需要通过负载均衡服务器进行地址转换，可以将响应数据包直接返回给用户浏览器，**避免负载均衡服务器网卡宽带成为瓶颈**。
+
+这种负载均衡方式也叫作**直接路由方式（DR）**。
+
+>使用三角传输模式的链路层负载均衡是目前大型网站使用最广泛的一种负载均衡手段。
+>
+>在Linux平台上最好的链路层负载均衡开源产品是LVS（Linux Virutal Server）。
 
 #### 实现效果
 
@@ -1187,7 +1775,50 @@ server {
 
 ## Nginx 高可用
 
-![image-20210609112427875](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304162510011.webp)
+### Keepalived工作原理
+
+> Keepalived类似一个工作在layer3,4&7的交换机。
+>
+> 
+>
+> Layer3,4&7工作在IP/TCP协议栈的IP层，TCP层，及应用层,原理分别如下：
+>
+> Layer3：Keepalived使用Layer3的方式工作式时，Keepalived会定期向服务器群中的服务器发送一个ICMP的数据包（即我们平时用的Ping程序）,如果发现某台服务的IP地址没有激活，Keepalived便报告这台服务器失效，并将它从服务器群中剔除，这种情况的典型例子是某台服务器被 非法关机。Layer3的方式是以服务器的IP地址是否有效作为服务器工作正常与否的标准。
+>
+> Layer4:如果您理解了Layer3的方式，Layer4就容易了。Layer4主要以TCP端口的状态来决定服务器工作正常与否。如web server的服务端口一般是80，如果Keepalived检测到80端口没有启动，则Keepalived将把这台服务器从服务器群中剔除。
+>
+> Layer7：Layer7就是工作在具体的应用层了，比Layer3,Layer4要复杂一点，在网络上占用的带宽也要大一些。Keepalived将根据用户的设定检查服务器程序的运行是否正常，如果与用户的设定不相符，则Keepalived将把服务器从服务器群中剔除。
+>
+> ---- 来自搜狗百科
+
+### Keepalived作用
+
+主要用作真实服务器的健康状态检查以及负载均衡的主机和备机之间故障切换实现。
+
+### Keepalived高可用架构
+
+Keepalived高可用简单架构概念视图：
+
+当主down机后，会提升备为主，保证服务可用。
+
+当主再次上线时，备会退位，主继续服务。
+
+```shell
+Keepalived 本质是基于 VRRP 协议的四层高可用方案，通过 VIP 漂移实现服务冗余，结合健康检查实现故障自动切换，不解析业务流量，适用于 LVS/Nginx 等负载均衡入口的高可用保障。
+```
+
+### Keepalived组成
+
+Keepalived 模块化设计，主要有三个模块，分别是`core`、`check`和 `vrrp`。 
+
+- core
+  - **keepalived的核心，负责主进程的启动和维护、全局配置文件的加载解析** 
+- check
+  - **负责healthchecker(健康检查)，包括各种健康检查方式，以及对应的配置的解析包括LVS的配置解析；可基于脚本检查对IPVS后端服务器健康状况进行检查。** 
+- vrrp
+  - **VRRPD子进程就是来实现VRRP（虚拟路由冗余协议）协议的**
+
+![image-20260415083754300](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/image-20260415083754300.png)
 
 -   需要两台 Nginx 服务器
 -   需要 keepalived
@@ -1221,30 +1852,285 @@ libkkc-0.3.1-9.el7.x86_64 有缺少的需求 libmarisa.so.0()(64bit)
 
 `rpm -ivh mysql-community-libs-compat-5.7.25-1.el7.x86_64.rpm`
 
+```shell
+# 源码方式安装
+#下载
+wget http://www.keepalived.org/software/keepalived-1.2.23.tar.gz
+#解压
+tar -zxvf keepalived-1.2.23.tar.gz
+cd keepalived-1.2.23
+#安装
+./configure --prefix=/usr/local/keepalived   #prefix指定安装目录
+make
+make install
+
+
+vi /usr/local/keepalived/etc/keepalived/keepalived.conf
+替换为你自身逻辑的配置文件的内容。
+
+
+vi /usr/local/keepalived/etc/sysconfig/keepalived
+添加以下内容：
+KEEPALIVED_OPTIONS="-D -f /usr/local/keepalived/etc/keepalived/keepalived.conf" #不使用默认的，自己显示指定keepalived配置文件路径
+
+
+# 因为我们使用非默认路径（/usr/local）安装keepalived，需要设置一些软链接以保证keepalived能正常启动：
+ln -s /usr/local/keepalived/sbin/keepalived  /usr/bin #将keepalived主程序加入到环境变量
+ln -s /usr/local/keepalived/etc/rc.d/init.d/keepalived  /etc/init.d/ #keepalived启动脚本，放到/etc/init.d/目录下就可以使用service命令便捷调用
+ln -s /usr/local/keepalived/etc/sysconfig/keepalived  /etc/sysconfig/ #keepalived启动脚本变量引用文件，默认文件路径是/etc/sysconfig/，也可以不做软链接，直接修改启动脚本中文件路径即可
+
+
+启动服务
+service keepalived start
+
+# 可以检查下服务是否正常（没有消息就是最好的消息）
+chkconfig keepalived on
+
+# 查看绑定好的虚拟ip（vip）
+ip addr
+```
+
 在执行 `yum install keepalived -y`
+
+```shell
+# 完整keepalived.conf 配置解析
+#全局配置
+global_defs { 
+	#故障通知邮箱（一般生产才用）
+   notification_email { 
+     acassen@firewall.loc
+     failover@firewall.loc
+     sysadmin@firewall.loc
+   }
+   # 发邮件配置（报警用）
+   notification_email_from Alexandre.Cassen@firewall.loc
+   smtp_server 192.168.200.1
+   smtp_connect_timeout 30
+   
+   # 本节点标识（日志用）
+   router_id LVS_DEVEL  
+   
+   # VRRP 行为控制 vrrp_strict：严格模式（更安全） vrrp_skip_check_adv_addr：跳过地址检查
+   vrrp_skip_check_adv_addr
+   vrrp_strict
+   
+   # ARP 广播控制（VIP漂移时用）
+   vrrp_garp_interval 0
+   vrrp_gna_interval 0
+}
+
+# 定义一个 VRRP 实例
+vrrp_instance VI_1 {
+    # 当前节点是主
+    state MASTER
+    # 绑定网卡
+    interface eth0
+    # 虚拟路由ID（主备必须一样）
+    virtual_router_id 51
+    # 优先级（决定主备）
+    priority 100
+    # 心跳间隔（1秒）
+    advert_int 1
+    # 主备认证（必须一致）
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    # 虚拟IP（VIP）可多个
+    virtual_ipaddress {
+        192.168.200.16
+        192.168.200.17
+        192.168.200.18
+    }
+}
+# LVS负载均衡
+virtual_server 192.168.200.100 443 {
+	# 健康检查间隔（6秒）
+    delay_loop 6
+    # 负载均衡算法 rr = 轮询
+    lb_algo rr
+    # LVS模式：NAT 地址转换（简单） DR 直连（高性能） TUN 隧道
+    lb_kind NAT
+    # 会话保持（50秒）
+    persistence_timeout 50
+    # 协议
+    protocol TCP
+	
+	# 真实服务器
+    real_server 192.168.201.100 443 {
+        weight 1
+        # 健康检查方式（HTTPS）
+        SSL_GET {
+       		 # 检查： 访问 / 返回内容的MD5必须匹配
+            url {
+              path /
+              digest ff20ad2481f97b1754ef3e12ecd3a9cc
+            }
+            url {
+              path /mrtg/
+              digest 9b3a0c85a887a256d6939da88aabd8cd
+            }
+            # 超时与重试机制
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        }
+    }
+}
+
+# 带备用服务器
+virtual_server 10.10.10.2 1358 {
+    delay_loop 6
+    lb_algo rr
+    lb_kind NAT
+    persistence_timeout 50
+    protocol TCP
+	
+	# 所有后端挂了 → 转发到“兜底服务器”
+    sorry_server 192.168.200.200 1358
+
+    real_server 192.168.200.2 1358 {
+        weight 1
+        HTTP_GET {
+            url {
+              path /testurl/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            }
+            url {
+              path /testurl2/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            }
+            url {
+              path /testurl3/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            }
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        }
+    }
+
+    real_server 192.168.200.3 1358 {
+        weight 1
+        HTTP_GET {
+            url {
+              path /testurl/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334c
+            }
+            url {
+              path /testurl2/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334c
+            }
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        }
+    }
+}
+
+virtual_server 10.10.10.3 1358 {
+    delay_loop 3
+    lb_algo rr
+    lb_kind NAT
+    persistence_timeout 50
+    protocol TCP
+
+    real_server 192.168.200.4 1358 {
+        weight 1
+        HTTP_GET {
+            url {
+              path /testurl/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            }
+            url {
+              path /testurl2/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            }
+            url {
+              path /testurl3/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            }
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        }
+    }
+
+    real_server 192.168.200.5 1358 {
+        weight 1
+        HTTP_GET {
+            url {
+              path /testurl/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            }
+            url {
+              path /testurl2/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            }
+            url {
+              path /testurl3/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            }
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        }
+    }
+}
+```
+
+```shell
+| 项目 | 你现在      | 这个配置    |
+| -- | -------- | ------- |
+| 层级 | 7层（HTTP） | 4层（TCP） |
+| 软件 | Nginx    | LVS     |
+| 功能 | 反向代理     | 高性能转发   |
+| 性能 | 一般       | 极高      |
+
+Keepalived不仅可以实现高可用（VRRP），
+还可以结合LVS实现四层负载均衡。
+
+在生产环境中：
+
+1. VRRP负责VIP漂移，保证服务不宕机
+2. LVS负责流量分发，保证高性能
+3. 健康检查决定后端节点是否参与调度
+
+相比Nginx，LVS工作在内核层，
+性能更高，但功能更简单（不解析HTTP）
+```
+
+```shell
+LVS 是一个工作在内核层的四层负载均衡器，
+只负责请求转发，不解析业务内容，
+特点是性能极高，但功能简单。
+
+适用于高并发场景，
+通常与 Nginx 配合使用。
+```
 
 ### 准备两台 Nginx
 
 克隆一份 Linux 系统即可。记得修改 IP 地址。
 
-### 主节点（192.168.17.129）配置：
+### 主节点（192.168.157.133）配置：
 
 `/etc/keepalived/keepalived.conf`
 
 ```shell
 global_defs {
    # 故障通知邮箱列表（多个邮箱用空格或换行分隔）
-   notification_email {
-      acassen@firewall.loc
-      failover@firewall.loc
-      sysadmin@firewall.loc
-   }
+   #notification_email {
+    #  acassen@firewall.loc
+    #  failover@firewall.loc
+    #  sysadmin@firewall.loc
+   #}
    # 发件人邮箱地址
-   notification_email_from Alexandre.Cassen@firewall.loc
+   #notification_email_from Alexandre.Cassen@firewall.loc
    # SMTP 服务器地址（用于发送邮件告警）
-   smtp_server 192.168.200.130
+   #smtp_server 192.168.200.130
    # SMTP 连接超时时间（秒）
-   smtp_connect_timeout 30
+   #smtp_connect_timeout 30
    # 路由器 ID，用于标识本台机器（主备建议不同，方便日志排查）
    router_id nginx_master
 }
@@ -1256,7 +2142,7 @@ vrrp_script chk_http_port {
    # 每隔 2 秒执行一次检查
    interval 2
    # 如果检查失败，优先级降低 2（原优先级 - weight）
-   weight 2
+   weight -20
    # 可选：连续失败多少次才判定为失败（默认 3）
    fall 3
    # 可选：连续成功多少次才恢复（默认 3）
@@ -1286,27 +2172,27 @@ vrrp_instance VI_1 {
    }
    # 虚拟 IP 地址（即对外服务的 VIP）
    virtual_ipaddress {
-      192.168.17.50/24 dev ens33 label ens33:0
+      192.168.157.100/24 dev ens33 label ens33:0
       # 格式：VIP/子网掩码 dev 网卡名 label 别名
       # /24 表示子网掩码 255.255.255.0，根据你的网络调整
    }
 }
 ```
 
-### 备节点（192.168.17.131）配置
+### 备节点（192.168.157.136）配置
 
 ### `/etc/keepalived/keepalived.conf`
 
 ```shell
 global_defs {
-   notification_email {
-      acassen@firewall.loc
-      failover@firewall.loc
-      sysadmin@firewall.loc
-   }
-   notification_email_from Alexandre.Cassen@firewall.loc
-   smtp_server 192.168.200.130
-   smtp_connect_timeout 30
+   #notification_email {
+    #  acassen@firewall.loc
+   #   failover@firewall.loc
+    #  sysadmin@firewall.loc
+   #}
+   #notification_email_from Alexandre.Cassen@firewall.loc
+   #smtp_server 192.168.200.130
+   #smtp_connect_timeout 30
    # 备节点 router_id 不同，便于区分
    router_id nginx_backup
 }
@@ -1314,7 +2200,7 @@ global_defs {
 vrrp_script chk_http_port {
    script "/usr/local/src/nginx_check.sh"
    interval 2
-   weight 2
+   weight -20
    fall 3
    rise 2
 }
@@ -1334,7 +2220,7 @@ vrrp_instance VI_1 {
       chk_http_port
    }
    virtual_ipaddress {
-      192.168.17.50/24 dev ens33 label ens33:0
+      192.168.157.100/24 dev ens33 label ens33:0
    }
 }
 ```
@@ -1348,23 +2234,15 @@ vrrp_instance VI_1 {
 # Nginx 健康检查脚本
 # 功能：检测 nginx 进程是否存在，若不存在则尝试启动；若启动失败则停止 keepalived，触发 VIP 漂移
 
-# 统计 nginx 进程数量（注意使用英文短横线 - ）
-A=$(ps -C nginx --no-header | wc -l)
-
-# 如果没有 nginx 进程
-if [ $A -eq 0 ]; then
-    # 尝试启动 nginx（根据你的实际安装路径调整）
-    /usr/local/nginx/sbin/nginx
-    
-    # 等待 2 秒让进程启动
+# 检查 nginx 是否存活
+if ! pidof nginx > /dev/null; then
+    systemctl start nginx
     sleep 2
-    
-    # 再次检查是否启动成功
-    if [ $(ps -C nginx --no-header | wc -l) -eq 0 ]; then
-        # 如果仍失败，停止 keepalived，释放 VIP
-        killall keepalived
-        exit 1
-    fi
+fi
+
+# 再检查一次
+if ! pidof nginx > /dev/null; then
+    exit 1
 fi
 
 # 检查成功，退出码 0
@@ -1391,9 +2269,51 @@ systemctl enable keepalived
 ### **查看 VIP 是否绑定**
 
 ```shell
-ip addr show ens33 | grep 192.168.17.50
+ip addr show ens33 | grep 192.168.157.100
 # 或在主节点执行
 ip a
+```
+
+正常访问验证（基线测试）
+
+```shell
+# 浏览器访问
+http://192.168.157.100
+
+# VIP + nginx 工作正常
+
+# 报错
+[root@localhost ~]# curl 192.168.157.100
+<!DOCTYPE html>
+<html>
+<head>
+<title>Error</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>An error occurred.</h1>
+<p>Sorry, the page you are looking for is currently unavailable.<br/>
+Please try again later.</p>
+<p>If you are the system administrator of this resource then you should check
+the error log for details.</p>
+<p><em>Faithfully yours, nginx.</em></p>
+</body>
+</html>
+
+Keepalived 高可用只能保证 VIP 不宕机，
+但不能保证后端服务一定可用。
+
+如果后端服务（Nginx/Tomcat）异常，
+用户仍然会访问到错误页面。
+
+因此必须结合：
+- 健康检查（track_script）
+- 应用层检测（HTTP检测）
+来保证真正的高可用。
 ```
 
 ### **模拟故障测试**
@@ -1404,20 +2324,57 @@ ip a
   systemctl stop nginx
   ```
 
-  观察备节点是否在 6 秒内（2s*3fall）接管 VIP。
+  ```shell
+  # 观察备节点是否在 6 秒内（2s*3fall）接管 VIP。
+  [root@localhost ~]# ip a
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+      inet6 ::1/128 scope host
+         valid_lft forever preferred_lft forever
+  2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+      link/ether 00:0c:29:a9:06:44 brd ff:ff:ff:ff:ff:ff
+      inet 192.168.157.136/24 brd 192.168.157.255 scope global ens33
+         valid_lft forever preferred_lft forever
+      inet 192.168.157.100/24 scope global secondary ens33:0    #备节点接管VIP
+         valid_lft forever preferred_lft forever
+      inet6 fe80::789b:8aea:bd9:cb0a/64 scope link
+         valid_lft forever preferred_lft forever
+      inet6 fe80::635a:7777:87b0:6deb/64 scope link tentative dadfailed
+         valid_lft forever preferred_lft forever
+  3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN
+      link/ether 02:42:ea:c1:67:dd brd ff:ff:ff:ff:ff:ff
+      inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+         valid_lft forever preferred_lft forever
+         
+  #当 nginx 故障时，Keepalived 能自动切换 VIP，实现服务不中断（高可用生效）
+  ```
 
-- **方法二**：停止主节点 keepalived
+  **方法二**：停止主节点 keepalived
 
   ```bash
   systemctl stop keepalived
+  #VIP 应立即漂移到备节点。
+  #Keepalived进程是VIP控制核心，停止即释放VIP
   ```
-
-  VIP 应立即漂移到备节点。
 
 - **方法三**：关闭主节点防火墙或断网
 
   ```bash
   iptables -I INPUT -p vrrp -j DROP
+  
+  单独上述是不能实现切换到备节点，必须结合
+  iptables -I OUTPUT -p vrrp -j DROP
+  达到预期效果，VRRP 是 单向“广播/组播”协议，BACKUP 不依赖 INPUT 来判断 MASTER 是否存活
+  iptables -I INPUT -p vrrp -j DROP是阻止“进入本机的 VRRP包”，但是MASTER 仍然在发送 VRRP，BACKUP 仍然能收到（因为是 OUTGOING），而iptables -I OUTPUT -p vrrp -j DROP是MASTER 发不出 VRRP 心跳包了，结果BACKUP自然 收不到 VRRP 心跳
+  或者可以用ip link set ens33 down进行测试
+  
+  #Keepalived切换本质：BACKUP是否收到MASTER VRRP心跳
+  
+  #阻断 VRRP 心跳 备节点认为主挂了
+  
+  #VRRP依赖网络心跳，网络异常也会触发切换
   ```
 
 ###  **查看日志**
@@ -1427,20 +2384,6 @@ tail -f /var/log/messages | grep Keepalived
 # 或
 journalctl -u keepalived -f
 ```
-
-### 测试
-
--   删除动静分离的配置，不然会有问题
--   `cd /usr/local/nginx/sbin/ `
--   `./nginx` 启动 Nginx
--   `systemctl start keepalived.service` 启动 keepalived
--   两台 Nginx 都要启动
-
-访问 http://192.168.200.50/ 虚拟 IP
-
-![image-20210609124047972](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304162518717.webp)
-
-关闭主机的 Nginx 再次访问
 
 ## Nginx 原理
 
@@ -1517,13 +2460,44 @@ worker 数和服务器的 cpu 数相等是最为适宜的
 
 ## Nginx HTTPS / SSL 终结
 
+### 使用 Let's Encrypt 获取免费证书 (推荐)
+
+Let's Encrypt 提供免费、自动化的 SSL 证书。
+
+```bash
+# 1. 安装 Certbot 客户端
+yum install certbot python3-certbot-nginx -y
+
+# 2. 自动获取并配置证书
+# certbot 会自动修改您的 Nginx 配置以启用 HTTPS
+certbot --nginx -d myapp.example.com
+```
+
+### 使用 OpenSSL 创建自签名证书 (测试/开发)
+
+自签名证书适用于内部测试或开发环境，但在公共网络中浏览器会提示不安全。
+
+```bash
+# 1. 创建私钥 (去除口令)
+openssl genrsa -out server.key 2048
+
+# 2. 创建证书签名请求 (CSR)
+openssl req -new -key server.key -out server.csr
+
+# 3. 生成自签名证书
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.pem
+```
+
+
+
 ```nginx
 server {
     listen 443 ssl http2;
     server_name www.example.com;
 
-    ssl_certificate     /etc/nginx/ssl/example.com.crt;
-    ssl_certificate_key /etc/nginx/ssl/example.com.key;
+    # 证书文件路径
+    ssl_certificate      /path/to/your/server.pem; # 或 fullchain.pem
+    ssl_certificate_key  /path/to/your/server.key; # 或 privkey.pem
 
     # 推荐的安全协议和加密套件
     ssl_protocols TLSv1.2 TLSv1.3;
@@ -1727,4 +2701,324 @@ server {
     }
 }
 ```
+
+## 问题集锦
+
+### 出现大量TIME_WAIT的情况
+
+1）导致 nginx端出现大量TIME_WAIT的情况有两种：
+
+keepalive_requests设置比较小，高并发下超过此值后nginx会强制关闭和客户端保持的keepalive长连接；（主动关闭连接后导致nginx出现TIME_WAIT）
+keepalive设置的比较小（空闲数太小），导致高并发下nginx会频繁出现连接数震荡（超过该值会关闭连接），不停的关闭、开启和后端server保持的keepalive长连接；
+2）导致后端server端出现大量TIME_WAIT的情况：
+nginx没有打开和后端的长连接，即：没有设置proxy_http_version 1.1;和proxy_set_header Connection “”;从而导致后端server每次关闭连接，高并发下就会出现server端出现大量TIME_WAIT
+
+```shell
+http {
+    server {
+        location /  {
+            proxy_http_version 1.1; // 这两个最好也设置
+            proxy_set_header Connection "";
+        }
+    }
+}
+```
+
+### Nginx服务端404以及502等页面配置
+
+#### 进入nginx.conf配置文件:
+
+```shell
+vi /usr/local/nginx/conf/nginx.conf
+```
+
+新手请记得备份一下再操作。
+
+#### 添加页面重定向
+
+#### ```http```内添加一行 ```fastcgi_intercept_errors on;``` 开启页面重定向功能。
+
+```
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    # 404 500
+    fastcgi_intercept_errors on;
+	...
+```
+
+#### ```server``` 内添加页面指向
+
+
+```
+server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        # 假如服务器ip是192.168.10.125，则访问 192.168.10.125 实际访问的目录是：/usr/local/nginx/html/index.html
+        location / {
+            root   html;
+            index  index.html index.htm;
+            proxy_pass http://127.0.0.1:3000;
+        }
+
+        # 配置 404 状态页面指向，指向的是：root 中的 html 的绝对路径是 /usr/local/nginx/html/404.html 文件
+        error_page  404              /404.html;
+        location = /404.html {
+            root html;
+        }
+		...
+		error_page   500  /500.html;
+        location = /500.html {
+            root   html;
+        }
+
+        error_page   502   /502.html;
+        location = /502.html {
+            root   html;
+        }
+		...
+```
+
+
+
+#### 检查nginx配置文件是否准确
+```
+/usr/local/nginx/sbin/nginx -t
+```
+
+#### 重启nginx
+```
+/usr/local/nginx/sbin/nginx -s reload
+```
+
+
+#### 访问服务失败
+
+访问服务器ip时，失败，通过```tail -n 5  /usr/local/nginx/logs/error.log```查看nginx错误日志发现：
+
+```
+2019/01/29 16:01:10 [error] 4351#0: *21 connect() failed (111: Connection refused) while connecting to ups
+tream, client: xxx.xxx.xxx.xxx, server: localhost, request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:3
+000/", host: "xxx.xxx.xxx.xxx:80"
+```
+
+原因可能是：
+
+#### php-fpm没有安装
+
+新买的阿里云服务器 就属于这种情况,有nginx，但是没安装php-fpm
+这种情况下可参考
+centos安装php php-fpm 以及 配置nginx
+
+### Nginx的页面乱码解决方法
+
+在server段里加字符集配置：
+```
+default_type 'text/html';
+charset utf-8;
+```
+
+```
+检查:
+/usr/local/nginx/sbin/nginx -t
+
+重启:
+/usr/local/nginx/sbin/nginx -s reload
+```
+
+### 将nginx设置为系统service【掌握】
+
+源码编译的一个缺陷是没法将安装好的应用设置为系统的service， 即无法使用 service 服务名 start | stop | restart 等命令统一操作。
+
+以nginx为例，需要做一些配置，该配置文件的样本示例： https://www.nginx.com/resources/wiki/start/topics/examples/redhatnginxinit/
+
+- `vi /etc/init.d/nginx`
+
+```bash
+#!/bin/sh
+#
+# nginx - this script starts and stops the nginx daemon
+#
+# chkconfig:   - 85 15
+# description:  NGINX is an HTTP(S) server, HTTP(S) reverse \
+#               proxy and IMAP/POP3 proxy server
+# processname: nginx
+# config:      /etc/nginx/nginx.conf
+# config:      /etc/sysconfig/nginx
+# pidfile:     /var/run/nginx.pid
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ "$NETWORKING" = "no" ] && exit 0
+
+# 配置nginx命令的位置
+# 修改为你的nginx可执行命令的路径如： /usr/local/nginx/sbin/nginx
+nginx="/usr/local/nginx/sbin/nginx"
+prog=$(basename $nginx)
+
+# 指向你的配置文件路径，如：/usr/local/nginx/conf/nginx.conf
+NGINX_CONF_FILE="/usr/local/nginx/conf/nginx.conf"
+
+[ -f /etc/sysconfig/nginx ] && . /etc/sysconfig/nginx
+
+lockfile=/var/lock/subsys/nginx
+
+make_dirs() {
+   # make required directories
+   user=`$nginx -V 2>&1 | grep "configure arguments:.*--user=" | sed 's/[^*]*--user=\([^ ]*\).*/\1/g' -`
+   if [ -n "$user" ]; then
+      if [ -z "`grep $user /etc/passwd`" ]; then
+         useradd -M -s /bin/nologin $user
+      fi
+      options=`$nginx -V 2>&1 | grep 'configure arguments:'`
+      for opt in $options; do
+          if [ `echo $opt | grep '.*-temp-path'` ]; then
+              value=`echo $opt | cut -d "=" -f 2`
+              if [ ! -d "$value" ]; then
+                  # echo "creating" $value
+                  mkdir -p $value && chown -R $user $value
+              fi
+          fi
+       done
+    fi
+}
+
+start() {
+    [ -x $nginx ] || exit 5
+    [ -f $NGINX_CONF_FILE ] || exit 6
+    make_dirs
+    echo -n $"Starting $prog: "
+    daemon $nginx -c $NGINX_CONF_FILE
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog -QUIT
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    configtest || return $?
+    stop
+    sleep 1
+    start
+}
+
+reload() {
+    configtest || return $?
+    echo -n $"Reloading $prog: "
+    killproc $prog -HUP
+    retval=$?
+    echo
+}
+
+force_reload() {
+    restart
+}
+
+configtest() {
+  $nginx -t -c $NGINX_CONF_FILE
+}
+
+rh_status() {
+    status $prog
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+case "$1" in
+    start)
+        rh_status_q && exit 0
+        $1
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+    restart|configtest)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+            ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}"
+        exit 2
+esac
+```
+
+- 添加可执行权限： 
+
+  ```bash
+  chmod a+x /etc/init.d/nginx
+  ```
+
+- 将一个新服务添加到启动列表中(关于chkconfig 命令更多详情，可以参考[这里](https://mp.weixin.qq.com/s?src=11&timestamp=1577072100&ver=2051&signature=y-131MCP3pZ*oQ6x7ylxbr-*Z1WND5itrTbxzh7eXzoCfrhsHc7X7dUqPjjaP91Nv4YJYxTuWmqcr9yZrRLyoSgQtIl1CXDCGlHiM9tC4S4LvdPCn-sfQq5ZOYpa6DQx&new=1) )
+
+  ```bash
+  chkconfig --add /etc/init.d/nginx
+  ```
+
+- 配置启动
+
+  ```bash
+  chkconfig nginx on
+  ```
+
+OK。 就可以使用：  `service nginx start ` 之类的命令了。
+
+## 资料链接
+
+- [大型网站技术架构淘宝大牛](https://www.cnblogs.com/edisonchou/category/585873.html)
+- [淘宝大牛的博客干货资料](https://www.cnblogs.com/edisonchou/p/4281978.html)
+- [nginx实现请求的负载均衡 + keepalived实现nginx的高可用](https://www.cnblogs.com/youzhibing/p/7327342.html)
+- [nginx优化之keepalive](https://www.cnblogs.com/sunsky303/p/10648861.html)
+- [Nginx+keepalived搭建---nginx反向代理为什么这么快](https://www.zhihu.com/question/19761434/answer/250280897)
+- [Keepalived介绍以及-安装与配置](https://blog.csdn.net/xyang81/article/details/52554398)
+
+- [Linux高可用之Keepalived-简书](https://www.jianshu.com/p/b050d8861fc1)
+
+- [SegmentFault负载均衡算法实现详细介绍](https://segmentfault.com/a/1190000004492447)
+
+- [云栖社区-负载均衡调度算法](https://cloud.tencent.com/developer/information/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95)
+- [淘宝大牛分享经验](https://www.cnblogs.com/edisonchou/p/3851333.html)
+- [菜鸟教程-负载均衡算法大全](https://www.runoob.com/w3cnote/balanced-algorithm.html)
+
+- [LVS实战](https://www.cnblogs.com/liwei0526vip/p/6370103.html)
 

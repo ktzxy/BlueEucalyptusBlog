@@ -12,54 +12,40 @@ showSeries= true
 +++
 # Kubernetes核心技术Service
 
-## 前言
-
-前面我们了解到 Deployment 只是保证了支撑服务的微服务Pod的数量，但是没有解决如何访问这些服务的问题。一个Pod只是一个运行服务的实例，随时可能在一个节点上停止，在另一个节点以一个新的IP启动一个新的Pod，因此不能以确定的IP和端口号提供服务。
-
-要稳定地提供服务需要服务发现和负载均衡能力。服务发现完成的工作，是针对客户端访问的服务，找到对应的后端服务实例。在K8S集群中，客户端需要访问的服务就是Service对象。每个Service会对应一个集群内部有效的虚拟IP，集群内部通过虚拟IP访问一个服务。
-
-在K8S集群中，微服务的负载均衡是由kube-proxy实现的。kube-proxy是k8s集群内部的负载均衡器。它是一个分布式代理服务器，在K8S的每个节点上都有一个；这一设计体现了它的伸缩性优势，需要访问服务的节点越多，提供负载均衡能力的kube-proxy就越多，高可用节点也随之增多。与之相比，我们平时在服务器端使用反向代理作负载均衡，还要进一步解决反向代理的高可用问题。
+Service 是 Kubernetes 中的网络抽象层，用于将动态变化的 Pod 集合映射为一个稳定的访问入口，并通过节点上的 kube-proxy 生成转发规则，实现对后端实例的透明负载均衡与服务发现。
 
 ## Service存在的意义
 
-### 防止Pod失联【服务发现】
+### 服务发现（Service Discovery）
 
-因为Pod每次创建都对应一个IP地址，而这个IP地址是短暂的，每次随着Pod的更新都会变化，假设当我们的前端页面有多个Pod时候，同时后端也多个Pod，这个时候，他们之间的相互访问，就需要通过注册中心，拿到Pod的IP地址，然后去访问对应的Pod
+Pod 的 IP 是动态变化的，无法作为稳定访问入口。Service 通过提供一个固定的虚拟 IP（ClusterIP）和 DNS 名称，使客户端无需感知后端 Pod 的变化，即可访问服务，实现服务发现能力。
 
-![image-20201117093606710](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291525476.webp)
+### 负载均衡（Load Balancing）
 
-### 定义Pod访问策略【负载均衡】
+Service 会将客户端请求通过 kube-proxy 转发到后端多个 Pod，实现流量分发，从而提升系统的可用性与扩展性。
 
-页面前端的Pod访问到后端的Pod，中间会通过Service一层，而Service在这里还能做负载均衡，负载均衡的策略有很多种实现策略，例如：
-
-- 随机
-- 轮询
-- 响应比
-
-![image-20201117093902459](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291525477.webp)
+Service 的负载均衡由 kube-proxy 实现，在 iptables 模式下基于规则转发（近似随机），在 IPVS 模式下支持多种调度算法（如轮询、最少连接等）。
 
 ## Pod和Service的关系
 
-这里Pod 和 Service 之间还是根据 label 和 selector 建立关联的 【和Controller一样】
+Pod 和 Service 之间通过 label 和 selector 建立关联。Service 根据 selector 动态选择一组 Pod，并生成对应的 Endpoints 列表作为后端实例。客户端通过访问 Service 的虚拟 IP（ClusterIP），由 kube-proxy 将请求转发到后端 Pod，从而实现服务发现与负载均衡。
 
 ![image-20201117094142491](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291525478.webp)
-
-我们在访问service的时候，其实也是需要有一个ip地址，这个ip肯定不是pod的ip地址，而是 虚拟IP `vip` 
 
 ## Service常用类型
 
 Service常用类型有三种
 
-- ClusterIp：集群内部访问
-- NodePort：对外访问应用使用
-- LoadBalancer：对外访问应用使用，公有云
+- ClusterIp：默认类型，仅在集群内部访问，用于微服务之间通信
+- NodePort：在每个节点上开放一个端口（30000-32767），可通过 NodeIP:NodePort 从集群外访问
+- LoadBalancer：依赖云厂商提供外部负载均衡器，对外暴露一个公网 IP
 
 ### 举例
 
 我们可以导出一个文件 包含service的配置信息
 
 ```bash
-kubectl expose deployment web --port=80 --target-port=80 --dry-run -o yaml > service.yaml
+kubectl expose deployment web --port=80 --target-port=80 --dry-run=client -o yaml > service.yaml
 ```
 
 service.yaml 如下所示
@@ -105,17 +91,107 @@ status:
   loadBalancer: {}
 ```
 
-修改完命令后，我们使用创建一个pod
+修改完命令后，我们使用创建一个Service
 
 ```bash
 kubectl apply -f service.yaml
 ```
 
-然后能够看到，已经成功修改为 NodePort类型了，最后剩下的一种方式就是LoadBalanced：对外访问应用使用公有云
+## NodePort 与 LoadBalancer 的访问方式
 
-node一般是在内网进行部署，而外网一般是不能访问到的，那么如何访问的呢？
+在 Kubernetes 集群中，节点（Node）通常部署在内网环境，外部用户无法直接访问 Pod。因此，需要通过 Service 将应用对外暴露。
 
-- 找到一台可以通过外网访问机器，安装nginx，反向代理
-- 手动把可以访问的节点添加到nginx中
+### NodePort 方式（基础对外访问）
 
-如果我们使用LoadBalancer，就会有负载均衡的控制器，类似于nginx的功能，就不需要自己添加到nginx上
+当 Service 类型为 NodePort 时，Kubernetes 会在每个节点上开放一个端口（30000-32767），外部可以通过以下方式访问服务：
+
+```bash
+NodeIP:NodePort
+```
+
+但在实际环境中，节点通常位于内网，因此需要额外的入口来接入外部流量，例如：
+
+- 在一台具备公网访问能力的服务器上部署 Nginx
+- 通过反向代理将请求转发到集群节点的 NodePort
+- 手动维护后端节点列表
+
+👉 这种方式本质是：
+
+```bash
+外部流量 → Nginx → NodePort → Service → Pod
+```
+
+### LoadBalancer 方式（云原生推荐）
+
+当 Service 类型为 LoadBalancer 时，Kubernetes 会调用云厂商（如阿里云 / AWS）的 API，自动创建一个外部负载均衡器，并分配公网 IP。
+
+该负载均衡器会将流量转发到集群内部的 NodePort，再由 Service 分发到后端 Pod。
+
+👉 实际访问链路：
+
+```bash
+公网IP
+   ↓
+云负载均衡（SLB / ELB）
+   ↓
+NodePort
+   ↓
+Service
+   ↓
+Pod
+```
+
+## kube-proxy
+
+> kube-proxy = 每个 Node 上的“转发代理”
+
+监听 Service / Endpoints 变化
+→ 写入转发规则（iptables / ipvs）
+
+当你访问 Service IP 时，比如：10.96.0.10:80（ClusterIP），实际命中 iptables / ipvs 规则
+→ 被转发到某个 Pod IP
+
+过程：
+
+```
+访问 VIP
+   ↓
+内核规则匹配
+   ↓
+随机选择 Pod
+   ↓
+转发过去
+```
+
+#### kube-proxy 三种模式
+
+- userspace（已淘汰）
+
+- iptables（默认）
+
+- IPVS（推荐生产）
+
+  ````
+  基于 Linux IPVS（四层负载均衡）
+  高性能 
+  支持多种算法 
+  
+  支持策略：
+  轮询（RR）
+  最少连接（LC）
+  加权轮询（WRR）
+  ````
+
+Pod 扩容后为什么自动负载均衡？
+
+Endpoints 更新
+→ kube-proxy 更新规则
+→ 自动加入转发
+
+Pod 挂了为什么不会访问？
+
+被移出 Endpoints
+
+为什么 Service IP 不会变？
+
+是虚拟IP（不是 Pod）

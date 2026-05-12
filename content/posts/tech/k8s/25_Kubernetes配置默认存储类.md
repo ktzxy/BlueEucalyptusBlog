@@ -1,12 +1,12 @@
 +++
 date = '2024-01-30T15:34:26+08:00'
 draft = false
-title = '32 Kubernetes配置默认存储类'
+title = '25 Kubernetes配置默认存储类'
 slug = "ygfgxu9fey"
-description = "32 Kubernetes配置默认存储类"
+description = "25 Kubernetes配置默认存储类"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
-summary = "32 Kubernetes配置默认存储类"
+summary = "25 Kubernetes配置默认存储类"
 series = ["Kubernetes学习系列"]
 showSeries= true  
 +++

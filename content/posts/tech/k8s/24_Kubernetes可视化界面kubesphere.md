@@ -1,12 +1,12 @@
 +++
 date = '2026-01-26T11:39:52+08:00'
 draft = false
-title = '31 Kubernetes可视化界面kubesphere'
+title = '24 Kubernetes可视化界面kubesphere'
 slug = "2hr3mnahxq"
-description = "31 Kubernetes可视化界面kubesphere"
+description = "24 Kubernetes可视化界面kubesphere"
 categories = ["📒Kubernetes"]
 tags = ["Kubernetes"]
-summary = "31 Kubernetes可视化界面kubesphere"
+summary = "24 Kubernetes可视化界面kubesphere"
 series = ["Kubernetes学习系列"]
 showSeries= true  
 +++

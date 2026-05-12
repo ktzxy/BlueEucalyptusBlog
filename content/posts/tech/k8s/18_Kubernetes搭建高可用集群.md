@@ -16,8 +16,6 @@ showSeries= true
 
 之前我们搭建的集群，只有一个master节点，当master节点宕机的时候，通过node将无法继续访问，而master主要是管理作用，所以整个集群将无法提供服务
 
-![image-20201121164522945](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533945.webp)
-
 ## 高可用集群
 
 下面我们就需要搭建一个多master节点的高可用集群，不会存在单点故障问题
@@ -34,8 +32,6 @@ showSeries= true
 ## 高可用集群技术细节
 
 高可用集群技术细节如下所示：
-
-![image-20201121165325194](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291533947.webp)
 
 - keepalived：配置虚拟ip，检查节点的状态
 - haproxy：负载均衡服务【类似于nginx】

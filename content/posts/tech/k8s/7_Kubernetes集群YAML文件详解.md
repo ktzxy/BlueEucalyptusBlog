@@ -12,27 +12,18 @@ showSeries= true
 +++
 # Kubernetes集群YAML文件详解
 
-## 概述
+## 什么是 YAML
 
-k8s 集群中对资源管理和资源对象编排部署都可以通过声明样式（YAML）文件来解决，也就是可以把需要对资源对象操作编辑到YAML 格式文件中，我们把这种文件叫做资源清单文件，通过kubectl 命令直接使用资源清单文件就可以实现对大量的资源对象进行编排部署了。一般在我们开发的时候，都是通过配置YAML文件来部署集群的。
+YAML 是 Kubernetes 中用于描述资源“期望状态”的声明式配置文件
 
-YAML文件：就是资源清单文件，用于资源编排
+本质：写 YAML → 提交给 API Server → K8s 自动创建/维护资源
 
-## YAML文件介绍
+### YAML 基础语法
 
-### YAML概述
-
-YAML ：仍是一种标记语言。为了强调这种语言以数据做为中心，而不是以标记语言为重点。
-
-YAML 是一个可读性高，用来表达数据序列的格式。
-
-### YAML 基本语法
-
-* 使用空格做为缩进
-* 缩进的空格数目不重要，只要相同层级的元素左侧对齐即可
-* 低版本缩进时不允许使用Tab 键，只允许使用空格
-* 使用#标识注释，从这个字符一直到行尾，都会被解释器忽略
-* 使用 --- 表示新的yaml文件开始
+* 使用 **空格缩进（禁止Tab）**
+* 层级对齐必须一致
+* #` 表示注释` 
+* `---` 表示多个资源分隔
 
 ### YAML 支持的数据结构
 
@@ -41,43 +32,52 @@ YAML 是一个可读性高，用来表达数据序列的格式。
 键值对的集合，又称为映射(mapping) / 哈希（hashes） / 字典（dictionary）
 
 ```yaml
-# 对象类型：对象的一组键值对，使用冒号结构表示
-name: Tom
-age: 18
-
-# yaml 也允许另一种写法，将所有键值对写成一个行内对象
-hash: {name: Tom, age: 18}
+name: nginx
+replicas: 3
 ```
 
 #### 数组
 
 ```bash
-# 数组类型：一组连词线开头的行，构成一个数组
-People
-- Tom
-- Jack
-
-# 数组也可以采用行内表示法
-People: [Tom, Jack]
+containers:
+- name: nginx
+  image: nginx
+- name: busybox
+  image: busybox
 ```
 
+#### 行内写法
 
+```shell
+env: {name: ENV, value: prod}
+```
 
-## YAML文件组成部分
+## Kubernetes YAML 核心结构
 
-主要分为了两部分，一个是控制器的定义 和 被控制的对象
+**标准模板**
 
-### 控制器的定义
-
-![image-20201114110444032](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523695.webp)
-
-
-
-### 被控制的对象
-
-包含一些 镜像，版本、端口等
-
-![image-20201114110600165](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523696.webp)
+```shell
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: default
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25
+```
 
 ### 属性说明
 
@@ -96,46 +96,213 @@ People: [Tom, Jack]
 |    spec    |  Pod规格   |
 | containers |  容器配置  |
 
+**完整示例**
 
+```		bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: default
+  labels:
+    app: nginx
+spec:
+  replicas: 3
 
-## 如何快速编写YAML文件
+  selector:
+    matchLabels:
+      app: nginx
 
-一般来说，我们很少自己手写YAML文件，因为这里面涉及到了很多内容，我们一般都会借助工具来创建
+  template:
+    metadata:
+      labels:
+        app: nginx
 
-### 使用kubectl create命令
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25
 
-这种方式一般用于资源没有部署的时候，我们可以直接创建一个YAML配置文件
+        ports:
+        - containerPort: 80
+		
+		# 资源控制 防止资源抢占
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+		
+		# env（环境变量）
+        env:
+        - name: ENV
+          value: prod
+		
+		# probes（健康检查 ⭐） liveness（存活检测）
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+		
+		# readiness（就绪检测） 失败 → 不加入流量
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
 
-```bash
-# 尝试运行,并不会真正的创建镜像
-kubectl create deployment web --image=nginx -o yaml --dry-run
+      restartPolicy: Always
 ```
 
-或者我们可以输出到一个文件中
+## YAML 编写方式
 
-```bash
-kubectl create deployment web --image=nginx -o yaml --dry-run > hello.yaml
+#### 方式一：dry-run生成
+
+```
+kubectl create deployment nginx \
+  --image=nginx \
+  --dry-run=client -o yaml > nginx.yaml
 ```
 
-然后我们就在文件中直接修改即可
+#### 方式二：从已有资源导出
 
-### 使用kubectl get命令导出yaml文件
-
-可以首先查看一个目前已经部署的镜像
-
-```bash
-kubectl get deploy
+```
+kubectl get deploy nginx -o yaml > nginx.yaml
 ```
 
-![image-20201114113115649](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523697.webp)
+#### 方式三：结合 explain（强烈推荐 ⭐）
 
-然后我们导出 nginx的配置
-
-```bash
-kubectl get deploy nginx -o=yaml --export > nginx.yaml
+```
+kubectl explain deployment.spec
+kubectl explain pod.spec.containers
 ```
 
-然后会生成一个 `nginx.yaml` 的配置文件
+# YAML 背后的“控制逻辑”
 
-![image-20201114184538797](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291523698.webp)
+## 一、核心架构
+
+**控制链路**
+
+```shell
+kubectl apply
+    ↓
+API Server
+    ↓
+etcd（存储期望状态）
+    ↓
+Controller（控制器监听变化）
+    ↓
+Scheduler（调度）
+    ↓
+Kubelet（执行）
+```
+
+> YAML 只负责“写入期望”，真正干活的是 Controller
+
+## 二、最核心机制：Reconcile（调谐循环）
+
+```shell
+核心流程
+1️⃣ 读取期望状态（Desired State）
+2️⃣ 获取当前状态（Actual State）
+3️⃣ 对比差异（Diff）
+4️⃣ 执行动作（Create / Delete / Update）
+```
+
+## 三、用 Deployment 举例
+
+```shell
+replicas: 3
+
+#实际发生了什么？
+Step 1：写入 etcd
+Deployment: replicas=3
+Step 2：Deployment Controller 监听
+当前没有 Pod
+Step 3：创建 ReplicaSet
+Deployment → ReplicaSet
+Step 4：ReplicaSet 创建 Pod
+ReplicaSet → Pod（3个）
+Step 5：Scheduler 分配节点
+Pod → Node1 / Node2 / Node3
+Step 6：Kubelet 启动容器
+拉镜像 → 启动容器
+```
+
+## 四、为什么 YAML 改了不会“直接删 Pod”？
+
+```shell
+改 YAML 不是直接替换Pod，而是创建一个新的ReplicaSet
+
+原：ReplicaSet v1（nginx:1.20） → 3个Pod
+改：image: nginx:1.25
+实际；
+创建 ReplicaSet v2（nginx:1.25）
+    ↓
+逐步增加 v2 Pod
+    ↓
+逐步删除 v1 Pod
+
+这就是滚动更新（Rolling Update）
+```
+
+## 五、控制器本质（Controller Pattern）
+
+每个 Controller 都在干这件事：`监听资源变化 → 对齐状态`
+
+常见 Controller：
+
+| 控制器      | 作用           |
+| ----------- | -------------- |
+| Deployment  | 管理无状态应用 |
+| ReplicaSet  | 保证副本数     |
+| StatefulSet | 管理有状态     |
+| DaemonSet   | 每个节点一个   |
+| Job         | 一次性任务     |
+
+## 六、事件驱动 + Watch机制
+
+Controller 不是轮询，而是：`监听 API Server 变化（Watch）`,一旦发生变化：`YAML变更 / Pod挂了 / Node挂了`，Controller立刻响应。
+
+## 七、Pod 挂了为什么自动恢复？
+
+当某个Pod被删除后，ReplicaSet 发现当前 Pod = 2而期望 Pod = 3，于是创建一个新的 Pod，这就是自愈能力（Self-healing）
+
+## 八、Service 为什么能负载均衡？
+
+Service 本身不处理流量，实际是：`kube-proxy + iptables/ipvs `通过 `Endpoints（Pod列表）` 实现转发。
+
+## 九、核心抽象总结
+
+#### Kubernetes 做了三层抽象：
+
+资源定义（YAML）——>描述“我要什么”
+
+控制器（Controller）——>保证“变成这样”
+
+执行层（Node）——>真正运行容器
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

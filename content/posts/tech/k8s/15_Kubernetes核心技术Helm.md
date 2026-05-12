@@ -18,26 +18,64 @@ Helm就是一个包管理工具【类似于npm】
 
 ## 为什么引入Helm
 
-首先在原来项目中都是基于yaml文件来进行部署发布的，而目前项目大部分微服务化或者模块化，会分成很多个组件来部署，每个组件可能对应一个deployment.yaml,一个service.yaml,一个Ingress.yaml还可能存在各种依赖关系，这样一个项目如果有5个组件，很可能就有15个不同的yaml文件，这些yaml分散存放，如果某天进行项目恢复的话，很难知道部署顺序，依赖关系等，而所有这些包括
+在 Kubernetes 中，应用通常通过多个 YAML 文件（Deployment、Service、Ingress 等）进行部署。当系统演进为微服务架构后，一个应用往往由多个组件组成，每个组件都需要维护独立的 YAML 文件，导致部署复杂、依赖难以管理、版本控制困难。因此，引入 Helm 作为 Kubernetes 的包管理工具，用于统一管理、打包和发布应用。
 
-- 基于yaml配置的集中存放
-- 基于项目的打包
-- 组件间的依赖
+### 传统 YAML 部署的核心问题
 
-但是这种方式部署，会有什么问题呢？
+1. 文件碎片化严重
 
-- 如果使用之前部署单一应用，少数服务的应用，比较合适
-- 但如果部署微服务项目，可能有几十个服务，每个服务都有一套yaml文件，需要维护大量的yaml文件，版本管理特别不方便
+   ```shell
+   一个服务：Deployment + Service + Ingress
+   多个服务：几十甚至上百 YAML
+   
+   难维护 ❌
+   难查找 ❌
+   难统一管理 ❌
+   ```
 
-Helm的引入，就是为了解决这个问题
+2. 无法描述依赖关系
 
-- 使用Helm可以把这些YAML文件作为整体管理
-- 实现YAML文件高效复用
-- 使用helm应用级别的版本管理
+   ```shell
+   先部署 DB？
+   再部署后端？
+   最后部署前端？
+   ```
+
+3. 环境差异难处理
+
+   ```shell
+   dev / test / prod 配置不同
+   YAML 需要复制多份修改
+   ```
+
+4. 缺乏版本管理
+
+   ```shell
+   YAML 需要复制多份修改
+   
+   无法快速回滚
+   ```
+
+5. 复用能力差
+
+   ```shell
+   多个项目用同一套组件（如 Redis）
+   
+   只能复制粘贴
+   ```
+
+### Helm 解决了什么问题
+
+- 应用级打包
+-  模板化
+- 环境隔离
+- 版本管理
+- 依赖管理
 
 ## Helm介绍
 
-Helm是一个Kubernetes的包管理工具，就像Linux下的包管理器，如yum/apt等，可以很方便的将之前打包好的yaml文件部署到kubernetes上。
+> Helm 是 Kubernetes 的包管理工具，用于将多个资源对象（Deployment、Service、Ingress 等）打包为一个 Chart，通过模板化机制实现配置复用，并提供应用级的版本管理、依赖管理和一键部署能力，大幅提升 Kubernetes 应用的交付效率。
+>
 
 Helm有三个重要概念
 
@@ -58,6 +96,8 @@ Helm采用客户端/服务端架构，有如下组件组成
 
 ## Helm v3变化
 
+> Helm v3 采用纯客户端架构，移除了服务端组件 Tiller。Helm CLI 直接通过 Kubernetes API 与集群通信，所有操作基于当前 kubeconfig 权限执行，从而简化架构并提升安全性。
+
 2019年11月13日，Helm团队发布了Helm v3的第一个稳定版本
 
 该版本主要变化如下
@@ -67,14 +107,19 @@ Helm采用客户端/服务端架构，有如下组件组成
   - 最明显的变化是Tiller的删除
   - V3版本删除Tiller
   - relesase可以在不同命名空间重用
+  - 支持将Chart推送至Docker 镜像仓库中
+  - 使用JSONSchema验证 chart values
 
-V3之前
+![image-20220815224715228](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291538105.webp)
 
-![image-20201118171523403](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530852.webp)
+### Helm v2 vs v3 对比
 
- V3版本
-
-![image-20201118171956054](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530853.webp)
+| 对比点   | Helm v2             | Helm v3               |
+| -------- | ------------------- | --------------------- |
+| 架构     | C/S（有 Tiller）    | 纯客户端              |
+| 安全性   | 低（Tiller 高权限） | 高（基于 kubeconfig） |
+| 复杂度   | 高                  | 低                    |
+| 权限控制 | 难                  | 统一 RBAC             |
 
 ## helm配置
 
@@ -97,98 +142,164 @@ helm repo add 仓库名  仓库地址
 例如
 
 ```bash
-# 配置微软源
-helm repo add stable http://mirror.azure.cn/kubernetes/charts
-# 配置阿里源
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo add aliyun https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
-# 配置google源
-helm repo add google https://kubernetes-charts.storage.googleapis.com/
 
 # 更新
 helm repo update
-```
-
-然后可以查看我们添加的仓库地址
-
-```bash
-# 查看全部
+# 查看仓库
 helm repo list
-# 查看某个
-helm search repo stable
+
+# 搜索 Chart
+helm search repo nginx
+
+# 删除仓库
+helm repo remove bitnami
 ```
 
-![image-20201118195732281](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530854.webp)
+安装
 
-或者可以删除我们添加的源
+```yaml
+# 下载
+wget https://get.helm.sh/helm-v3.14.0-linux-amd64.tar.gz
 
-```bash
-helm repo remove stable
+# 解压
+tar -zxvf helm-v3.14.0-linux-amd64.tar.gz
+
+# 移动
+mv linux-amd64/helm /usr/local/bin/helm
+
+# 验证
+helm version
 ```
 
 ## helm基本命令
 
-- chart install
-- chart upgrade
-- chart rollback
+| 命令       | 描述                                                         |
+| ---------- | ------------------------------------------------------------ |
+| create     | 创建一个chart并指定名称                                      |
+| dependency | 管理chart依赖                                                |
+| get        | 下载release，可用子命令：all、hooks、manifest、notes、value  |
+| history    | 获取release历史                                              |
+| install    | 安装一个chart                                                |
+| list       | 列出release                                                  |
+| package    | 将chart目录打包到chart存档文件中                             |
+| pull       | 从远程仓库中下载chart并解压到本地； helm pull stable/mysql --untar |
+| repo       | 添加、列出、移除、更新和索引chart仓库                        |
+| rollback   | 从之前版本回滚                                               |
+| search     | 根据关键字搜索Chart                                          |
+| show       | 查看chart详细信息                                            |
+| template   | 本地呈现模板                                                 |
+| uninstall  | 卸载一个release                                              |
+| upgrade    | 更新一个release                                              |
+| version    | 查看helm客户端版本                                           |
+
+```shell
+# 安装
+helm install my-nginx bitnami/nginx
+# 查看
+helm list
+# 升级
+helm upgrade my-nginx bitnami/nginx
+# 回滚
+helm rollback my-nginx 1
+#卸载
+helm uninstall my-nginx
+```
+
+## values.yaml（Helm 核心）
+
+参数化配置
+
+示例
+
+```shell
+helm install my-nginx bitnami/nginx \
+  --set service.type=NodePort
+  
+或
+helm install my-nginx bitnami/nginx -f values.yaml
+```
 
 ## 使用helm快速部署应用
 
-### 使用命令搜索应用
-
-首先我们使用命令，搜索我们需要安装的应用
+### Step 1：搜索应用
 
 ```bash
 # 搜索 weave仓库
 helm search repo weave
 ```
 
-![image-20201118200603643](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530855.webp)
+### Step 2：查看 Chart 详情
 
-### 根据搜索内容选择安装
-
-搜索完成后，使用命令进行安装
-
-```bash
-helm install ui aliyun/weave-scope
+```shell
+helm show values aliyun/weave-scope
 ```
 
-可以通过下面命令，来下载yaml文件【如果】
+用来找
+
+- 端口
+- 副本数
+- 资源限制
+
+### Step 3：安装（带参数）
 
 ```bash
-kubectl apply -f weave-scope.yaml
+helm install ui aliyun/weave-scope \
+  --set service.type=NodePort
+ 
+或使用 values.yaml
+helm install ui aliyun/weave-scope -f values.yaml
 ```
 
-安装完成后，通过下面命令即可查看
+### Step 4：查看状态
 
 ```bash
 helm list
-```
-
-![image-20201118203727585](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530856.webp)
-
-同时可以通过下面命令，查看更新具体的信息
-
-```bash
 helm status ui
 ```
 
-但是我们通过查看 svc状态，发现没有对象暴露端口
+### Step 5：查看资源
 
-![image-20201118205031343](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530857.webp)
-
-所以我们需要修改service的yaml文件，添加NodePort
-
-```bash
-kubectl edit svc ui-weave-scope
+```shell
+kubectl get pods,svc
 ```
 
-![image-20201118205129431](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530858.webp)
+###  Step 6：访问服务
 
-这样就可以对外暴露端口了
+```shell
+NodeIP + NodePort
+```
 
-![image-20201118205147631](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530859.webp)
+Helm 已经部署了资源，但参数没配对（service.type 默认是 ClusterIP）
 
-然后我们通过 ip + 32185 即可访问
+```shell
+# 为什么不能直接 kubectl edit
+kubectl edit svc ui-weave-scope
+虽然能改成功，但有问题：
+❌ Helm 不知道你改了什么
+❌ 下次 helm upgrade 会被覆盖
+❌ 配置不可追踪（不符合 DevOps）
+
+正确做法:
+方式1：直接升级
+helm upgrade ui aliyun/weave-scope \
+  --set service.type=NodePort
+
+方式2：用 values.yaml（推荐）
+① 导出默认配置
+helm show values aliyun/weave-scope > values.yaml
+② 修改
+service:
+  type: NodePort
+③ 升级
+helm upgrade ui aliyun/weave-scope -f values.yaml
+
+方式3：强制修改
+kubectl patch svc ui-weave-scope \
+  -p '{"spec":{"type":"NodePort"}}'
+```
 
 ### 如果自己创建Chart
 
@@ -200,13 +311,13 @@ helm create mychart
 
 创建完成后，我们就能看到在当前文件夹下，创建了一个 mychart目录
 
-![image-20201118210755621](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530860.webp)
-
-#### 目录格式
-
-- templates：编写yaml文件存放到这个目录
-- values.yaml：存放的是全局的yaml文件
-- chart.yaml：当前chart属性配置信息
+```shell
+mychart/
+  Chart.yaml        # 描述信息
+  values.yaml       # 全局变量（核心）
+  templates/        # 模板文件
+  charts/           # 依赖
+```
 
 ### 在templates文件夹创建两个文件
 
@@ -246,24 +357,34 @@ helm upgrade web1 mychart
 
 通过传递参数，动态渲染模板，yaml内容动态从传入参数生成
 
-![image-20201118213630083](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530863.webp)
-
 刚刚我们创建mychart的时候，看到有values.yaml文件，这个文件就是一些全局的变量，然后在templates中能取到变量的值，下面我们可以利用这个，来完成动态模板
 
 - 在values.yaml定义变量和值
 - 具体yaml文件，获取定义变量值
-- yaml文件中大题有几个地方不同
+- yaml文件中大体有几个地方不同
   - image
   - tag
   - label
   - port
   - replicas
 
+> Helm Chart 提供了一套默认配置（values.yaml），但在实际部署中通常需要根据环境进行调整。可以通过 `-f values.yaml` 或 `--set` 覆盖默认配置，其中 `--set` 优先级更高。推荐在生产环境中使用 values.yaml 文件统一管理配置，以保证可维护性和可复用性。
+
 ### 定义变量和值
 
 在values.yaml定义变量和值
 
-![image-20201118214050899](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530864.webp)
+```shell
+replicaCount: 2
+
+image:
+  repository: nginx
+  tag: "1.25"
+
+service:
+  type: ClusterIP
+  port: 80
+```
 
 ### 获取变量和值
 
@@ -271,14 +392,30 @@ helm upgrade web1 mychart
 
 例如： `{{.Release.Name}}`
 
-![image-20201118214413203](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530865.webp)
+deployment.yaml（模板）
+
+```shell
+replicas: {{ .Values.replicaCount }}
+
+containers:
+- name: nginx
+  image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+```
+
+service.yaml
+
+```shell
+type: {{ .Values.service.type }}
+port: {{ .Values.service.port }}
+```
 
 ### 安装应用
 
 在我们修改完上述的信息后，就可以尝试的创建应用了
 
 ```bash
-helm install --dry-run web2 mychart
+# 带调试
+helm install web2 mychart --dry-run --debug
 ```
 
 ![image-20201118214727058](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291530866.webp)

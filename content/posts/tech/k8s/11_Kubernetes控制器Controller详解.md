@@ -14,38 +14,40 @@ showSeries= true
 
 ## Statefulset
 
-Statefulset主要是用来部署有状态应用
-
-对于StatefulSet中的Pod，每个Pod挂载自己独立的存储，如果一个Pod出现故障，从其他节点启动一个同样名字的Pod，要挂载上原来Pod的存储继续以它的状态提供服务。
+StatefulSet 是 Kubernetes 中用于管理有状态应用的控制器，能够为每个 Pod 提供稳定的网络标识、持久化存储以及有序的部署与扩缩容能力。
 
 ### 无状态应用
 
-我们原来使用 deployment，部署的都是无状态的应用，那什么是无状态应用？
-
-- 认为Pod都是一样的
-- 没有顺序要求
-- 不考虑应用在哪个node上运行
-- 能够进行随意伸缩和扩展
+- Pod 无差别（可替换）
+- 无需固定名称
+- 无需固定存储
+- 无启动顺序
+- 可随意扩缩容
 
 ### 有状态应用
 
-上述的因素都需要考虑到
+- Pod 有唯一身份（不可替换）
+- 有固定名称（pod-0）
+- 有独立存储（PVC绑定）
+- 有启动顺序
+- 有数据依赖关系
 
-- 让每个Pod独立的
-- 让每个Pod独立的，保持Pod启动顺序和唯一性
-- 唯一的网络标识符，持久存储
-- 有序，比如mysql中的主从
+### 适用场景
 
-适合StatefulSet的业务包括数据库服务MySQL 和 PostgreSQL，集群化管理服务Zookeeper、etcd等有状态服务
+> StatefulSet 更适用于需要“稳定身份 + 持久数据”的应用场景。相比 Deployment 的“无状态、可替换”模型，StatefulSet 更接近传统虚拟机的“有状态、不可随意替换”的特性，但通过 Kubernetes 的调度机制仍具备一定的高可用能力。
 
-StatefulSet的另一种典型应用场景是作为一种比普通容器更稳定可靠的模拟虚拟机的机制。传统的虚拟机正是一种有状态的宠物，运维人员需要不断地维护它，容器刚开始流行时，我们用容器来模拟虚拟机使用，所有状态都保存在容器里，而这已被证明是非常不安全、不可靠的。
-
-使用StatefulSet，Pod仍然可以通过漂移到不同节点提供高可用，而存储也可以通过外挂的存储来提供
-高可靠性，StatefulSet做的只是将确定的Pod与确定的存储关联起来保证状态的连续性。
+- 数据库：MySQL / PostgreSQL
+- 分布式系统：Zookeeper / etcd
+- 消息队列：Kafka
+- 有状态服务：Redis（主从/集群）
 
 ### 部署有状态应用
 
 无头service， ClusterIp：none
+
+> Headless Service 是什么
+>
+> 不分配 ClusterIP，不做负载均衡，直接返回后端 Pod 的真实 IP。
 
 这里就需要使用 StatefulSet部署有状态应用
 
@@ -61,31 +63,46 @@ StatefulSet的另一种典型应用场景是作为一种比普通容器更稳定
 
 ![image-20201117203245641](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291527795.webp)
 
-这里有状态的约定，肯定不是简简单单通过名称来进行约定，而是更加复杂的操作
+> 在部署有状态应用时，通常需要结合 Headless Service（clusterIP: None）与 StatefulSet 使用。Headless Service 不提供负载均衡，而是为每个 Pod 提供独立的 DNS 解析，使客户端可以直接访问指定 Pod。
 
-- deployment：是有身份的，有唯一标识
-- statefulset：根据主机名 + 按照一定规则生成域名
+> StatefulSet 会为每个 Pod 分配固定名称（如 pod-0、pod-1），并基于 Headless Service 生成稳定的域名，例如：
+>
+> ```
+> pod-0.service-name.namespace.svc.cluster.local
+> ```
+>
+> 这种机制保证了每个 Pod 拥有稳定的网络身份，从而满足数据库、分布式系统等有状态应用对节点身份的要求。
 
 每个pod有唯一的主机名，并且有唯一的域名
 
-- 格式：主机名称.service名称.名称空间.svc.cluster.local
-- 举例：nginx-statefulset-0.default.svc.cluster.local
+- 格式：`<pod-name>.<service-name>.<namespace>.svc.cluster.local`
+- 举例：`nginx-0.nginx.default.svc.cluster.local`
 
 ## DaemonSet
 
-DaemonSet 即后台支撑型服务，主要是用来部署守护进程
+DaemonSet 是 Kubernetes 中的一种控制器，用于在每个节点上运行一个 Pod 实例，常用于部署日志采集、监控、网络等节点级系统服务。它会随着节点的加入自动创建 Pod，随着节点的移除自动删除 Pod，从而保证每个节点始终运行一个指定的服务实例。
 
-长期伺服型和批处理型的核心在业务应用，可能有些节点运行多个同类业务的Pod，有些节点上又没有这类的Pod运行；而后台支撑型服务的核心关注点在K8S集群中的节点(物理机或虚拟机)，要保证每个节点上都有一个此类Pod运行。节点可能是所有集群节点，也可能是通过 nodeSelector选定的一些特定节点。典型的后台支撑型服务包括：存储、日志和监控等。在每个节点上支撑K8S集群运行的服务。
+#### 常见场景
 
-守护进程在我们每个节点上，运行的是同一个pod，新加入的节点也同样运行在同一个pod里面
+| 类型     | 组件               |
+| -------- | ------------------ |
+| 日志采集 | Filebeat / Fluentd |
+| 监控     | Node Exporter      |
+| 网络     | Calico / Flannel   |
+| 存储     | Ceph / CSI插件     |
 
-- 例子：在每个node节点安装数据采集工具
+#### 核心特征
+
+- 每个节点一个 Pod
+- 新节点自动部署
+- 节点删除自动清理
+- 可指定节点运行
+
+例子：在每个node节点安装数据采集工具
 
 ![image-20201117204430836](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291527796.webp)
 
-这里是不是一个FileBeat镜像，主要是为了做日志采集工作
-
-![image-20201117204810350](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291527797.webp)
+采集 Node 上的日志文件 → 发送到 ES / Kafka
 
 进入某个 Pod里面，进入
 
@@ -93,26 +110,71 @@ DaemonSet 即后台支撑型服务，主要是用来部署守护进程
 kubectl exec -it ds-test-cbk6v bash
 ```
 
-通过该命令后，我们就能看到我们内部收集的日志信息了
+通过该命令后，我们就能看到我们容器内映射的日志文件
 
 ![image-20201117204912838](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291527799.webp)
 
+## DaemonSet vs Deployment
 
+| 特性     | Deployment | DaemonSet  |
+| -------- | ---------- | ---------- |
+| Pod数量  | 用户指定   | 每节点1个  |
+| 调度方式 | 随机       | 固定每节点 |
+| 应用类型 | 业务服务   | 系统服务   |
 
 ## Job和CronJob
 
-一次性任务 和 定时任务
+Job 和 CronJob 是 Kubernetes 中用于执行批处理任务的控制器。Job 用于执行一次性任务，而 CronJob 用于按照时间规则周期性执行任务。
 
-- 一次性任务：一次性执行完就结束
-- 定时任务：周期性执行
+### Job（一次性任务）
 
-Job是K8S中用来控制批处理型任务的API对象。批处理业务与长期伺服业务的主要区别就是批处理业务的运行有头有尾，而长期伺服业务在用户不停止的情况下永远运行。Job管理的Pod根据用户的设置把任务成功完成就自动退出了。成功完成的标志根据不同的 spec.completions 策略而不同：单Pod型任务有一个Pod成功就标志完成；定数成功行任务保证有N个任务全部成功；工作队列性任务根据应用确定的全局成功而标志成功。
+#### Job 的核心特点
 
-### Job
+- 任务执行完就结束（不像 Deployment 一直运行）
+- 支持重试机制
+- 可以并行执行多个任务
 
-Job也即一次性任务
+#### 核心参数
 
-![image-20201117205635945](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291527800.webp)
+1. completions（完成次数）
+
+   ```bash
+   completions: 3
+   # 任务成功执行 3 次才算完成
+   ```
+
+2. parallelism（并行数）
+
+   ```bash
+   parallelism: 2
+   # 同时最多运行 2 个 Pod
+   ```
+
+3. backoffLimit（失败重试次数）
+
+   ```bash
+   backoffLimit: 4
+   # 最多重试 4 次
+   ```
+
+**标准写法:**
+
+```shell
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: demo-job
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      containers:
+      - name: job
+        image: busybox
+        command: ["echo", "hello job"]
+      restartPolicy: Never
+```
 
 使用下面命令，能够看到目前已经存在的Job
 
@@ -136,13 +198,45 @@ kubectl logs pi-qpqff
 
 ### CronJob
 
-定时任务，cronjob.yaml如下所示
+> 按照 cron 表达式周期性创建 Job
+>
 
-![image-20201117210309069](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291527804.webp)
+核心字段：schedule
 
-这里面的命令就是每个一段时间，这里是通过 cron 表达式配置的，通过 schedule字段
+```shell
+schedule: "*/1 * * * *"
 
-然后下面命令就是每个一段时间输出 
+# 每 1 分钟执行一次
+```
+
+#### 常见 cron 表达式
+
+| 表达式        | 含义   |
+| ------------- | ------ |
+| `*/1 * * * *` | 每分钟 |
+| `0 * * * *`   | 每小时 |
+| `0 0 * * *`   | 每天   |
+| `0 0 * * 0`   | 每周   |
+
+**示例：**
+
+```bash
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: demo-cronjob
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cron
+            image: busybox
+            command: ["echo", "hello cronjob"]
+          restartPolicy: Never
+```
 
 我们首先用上述的配置文件，创建一个定时任务
 
@@ -170,22 +264,76 @@ kubectl logs hello-1599100140-wkn79
 
 ![image-20201117210751068](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291527807.webp)
 
+## 常用点
+
+#### 历史记录控制
+
+```yaml
+successfulJobsHistoryLimit: 3
+failedJobsHistoryLimit: 1
+```
+
+#### 并发策略（CronJob）
+
+```yaml
+concurrencyPolicy: Forbid
+```
+
+| 策略    | 说明       |
+| ------- | ---------- |
+| Allow   | 允许并发   |
+| Forbid  | 禁止并发   |
+| Replace | 替换旧任务 |
+
+#### 任务超时
+
+```yaml
+activeDeadlineSeconds: 100
+```
+
 ## 删除svc 和 statefulset
 
 使用下面命令，可以删除我们添加的svc 和 statefulset
 
 ```bash
 kubectl delete svc web
+kubectl delete statefulset web
 
+# 会删掉所有，不建议
 kubectl delete statefulset --all
 ```
 
 ## Replication Controller
 
-Replication Controller 简称 **RC**，是K8S中的复制控制器。RC是K8S集群中最早的保证Pod高可用的API对象。通过监控运行中的Pod来保证集群中运行指定数目的Pod副本。指定的数目可以是多个也可以是1个；少于指定数目，RC就会启动新的Pod副本；多于指定数目，RC就会杀死多余的Pod副本。
+> ReplicationController（RC）是 Kubernetes 早期用于保证 Pod 副本数量的控制器，通过控制循环机制确保实际运行的 Pod 数量与期望一致。由于其在标签选择能力上的局限性，RC 已被 ReplicaSet（RS）取代。
 
-即使在指定数目为1的情况下，通过RC运行Pod也比直接运行Pod更明智，因为RC也可以发挥它高可用的能力，保证永远有一个Pod在运行。RC是K8S中较早期的技术概念，只适用于长期伺服型的业务类型，比如控制Pod提供高可用的Web服务。
+```yaml
+1.selector 太弱
+selector:
+  app: nginx
+不能支持复杂匹配
 
-### Replica Set
+2.不支持集合表达式
+RC做不到app in (nginx, apache)
 
-Replica Set 检查 RS，也就是副本集。RS是新一代的RC，提供同样高可用能力，区别主要在于RS后来居上，能够支持更多种类的匹配模式。副本集对象一般不单独使用，而是作为Deployment的理想状态参数来使用
+3.无法支持现代部署方式
+滚动升级（弱）
+版本管理（几乎没有）
+```
+
+> ReplicaSet 是 RC 的增强版本，支持更灵活的标签选择器，并同样用于维持 Pod 副本数量。在实际使用中，ReplicaSet 通常不直接使用，而是作为 Deployment 的底层组件，由 Deployment 统一管理，实现滚动升级与版本控制。
+
+支持更复杂的selector
+
+```yaml
+selector:
+  matchLabels:
+    app: nginx
+  matchExpressions:
+  - key: app
+    operator: In
+    values:
+    - nginx
+    - apache
+```
+
