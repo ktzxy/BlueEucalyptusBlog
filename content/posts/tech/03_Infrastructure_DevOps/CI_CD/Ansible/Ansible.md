@@ -4,14 +4,14 @@ draft = false
 title = 'Ansible'
 slug = "2ez2sr21vd"
 description = "Ansible"
-categories = ["📒运维"]
+categories = ["📒CI_CD"]
 tags = ["Ansible"]
 summary = "Ansible"
 comments = true  
 +++
 # 一、Ansible介绍
 
-Ansible是当下比较流行的自动化运维工具，可通过SSH协议对远程服务器进行集中化的配置管理、应用部署等，常结合Jenkins来实现自动化部署。
+Ansible 是一款极其流行的开源自动化工具，它采用**无代理 (Agentless)** 架构，通过 SSH 协议（默认）管理远程主机。其核心理念是使用 **YAML 语言**以一种**声明式**的方式描述系统的最终状态，从而实现配置管理、应用部署、任务编排等多种自动化任务，常结合Jenkins来实现自动化部署。
 
 除了Ansible，还有像SaltStack、Fabric（曾经管理100多台服务器上的应用时也曾受益于它）、Puppet等自动化工具。相比之下，Ansible最大的优势就是无需在被管理主机端部署任何客户端代理程序，通过SSH通道就可以进行远程命令的执行或配置的下发，足够轻量级，但同时功能非常强大，且各项功能通过模块来实现，具备良好的扩展性。不足之处是Ansible只支持在Linux系统上安装，不支持Windows。
 
@@ -89,6 +89,30 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.40.201
 ```
 
 Ansible只需要在管理主机上安装，然后打通管理主机到各被管理主机的SSH免密访问即可进行集中化的管理控制，不需在被管理主机安装任何代理程序。
+
+python安装
+
+```shell
+# 安装 python3
+yum install python3.8 -y
+
+# 升级 pip3
+pip3.8 install pip==22.3.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# pip3 安装 ansible
+pip3.8 install ansible -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# ansible 版本查看
+ansible --version
+
+# 安装 sshpass
+yum install sshpass -y
+
+# 创建普通用户 greg
+useradd greg
+echo Fhl3y_Jsdwj | passwd --stdin greg
+echo "greg ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/greg
+```
 
 # 三、Ansible命令
 
@@ -433,6 +457,291 @@ roles:          # 所有的角色项目必须放在roles目录下
 ```
 
 roles将playbook的各个部分进行拆分组织，主要用于代码复用度较高的场景。
+
+# 1. Ansible Inventory - 定义管理主机
+
+Inventory 文件是 Ansible 的基础，它定义了 Ansible 需要管理的主机是谁、如何分组。Inventory 分为静态和动态两种。
+
+- **静态 Inventory**：一个纯文本文件，手动维护主机列表和分组，适用于环境相对固定的场景。
+- **动态 Inventory**：一个可执行脚本（如 Python），它可以从云平台（AWS, Azure）、CMDB 或其他系统中动态获取主机信息，适用于主机数量频繁变化的云环境。
+
+### 1.1 基础 Inventory 与分组
+
+最简单的 Inventory 就是一个主机列表。为了便于管理，我们通常会对其进行分组。
+
+```toml
+# /etc/ansible/hosts or a custom inventory file
+
+servera.lab.example.com
+serverb.lab.example.com
+
+[webservers]
+serverc.lab.example.com
+serverd.lab.example.com
+
+[database]
+db1.lab.example.com
+```
+
+> Ansible 有两个内置的特殊组：`all`（包含 Inventory 中的所有主机）和 `ungrouped`（包含所有未被明确分组的主机）。
+
+### 1.2 嵌套组与主机范围
+
+Inventory 支持更灵活的定义方式。
+
+**嵌套组 (Nested Groups):** 一个组可以包含其他组。
+
+```toml
+[webservers]
+serverc.lab.example.com
+serverd.lab.example.com
+
+[database]
+db1.lab.example.com
+
+[production:children]
+webservers
+database
+```
+
+> 在这个例子中，`production` 组会自动包含 `webservers` 和 `database` 组中的所有主机。
+
+**主机范围 (Host Ranges):**
+
+```toml
+# 数字范围
+db-[01:50].example.com  # 匹配 db-01 到 db-50
+
+# 字母范围
+webserver[a:f].example.com # 匹配 webservera 到 webserverf
+```
+
+### 1.3 查看 Inventory 信息
+
+使用 `--list-hosts` 参数可以清晰地看到指定模式匹配到的主机。
+
+```bash
+# 查看 webservers 组中的所有主机
+ansible webservers --list-hosts
+
+# 查看所有主机
+ansible all --list-hosts
+
+# 查看未分组的主机
+ansible ungrouped --list-hosts
+```
+
+## 2. Ansible 配置 - `ansible.cfg` 文件
+
+`ansible.cfg` 文件用于定义 Ansible 的默认行为，如默认 Inventory 路径、远程用户、提权方式等。
+
+### 2.1 配置文件的优先级
+
+Ansible 会按照以下顺序查找配置文件，并使用它找到的第一个：
+
+1. **`ANSIBLE_CONFIG` 环境变量**：指定的路径（优先级最高）。
+2. **`./ansible.cfg`**：当前目录下的配置文件（**最常用**）。
+3. **`~/.ansible.cfg`**：用户家目录下的配置文件。
+4. **`/etc/ansible/ansible.cfg`**：全局默认配置文件（优先级最低）。
+
+使用 `ansible --version` 可以查看当前正在使用的配置文件路径。
+
+### 2.2 常用配置参数详解
+
+配置文件由多个 section（如 `[defaults]`）组成。
+
+```toml
+[defaults]
+# inventory: 指定默认的 Inventory 文件路径。
+inventory = /etc/ansible/hosts
+# remote_user: 执行任务时默认使用的远程用户名。
+remote_user = root
+# ask_pass: 是否在连接时提示输入 SSH 密码（建议使用密钥对，设为 false）。
+ask_pass = false
+
+[privilege_escalation]
+# become: 是否需要提权 (等同于 sudo)。
+become = true
+# become_method: 提权方式，默认为 sudo。
+become_method = sudo
+# become_user: 提权到哪个用户，默认为 root。
+become_user = root
+# become_ask_pass: 提权时是否需要输入密码 (例如 sudo 密码)。
+become_ask_pass = false
+```
+
+> **注意**：要使提权生效，`remote_user` 必须在远程主机的 `sudoers` 文件中被正确配置。
+
+## 3. Ad-Hoc 命令 - 快速执行单任务
+
+Ad-Hoc 命令是使用 Ansible 在命令行快速执行单个任务的方式，非常适合进行一些临时的检查、分发文件或安装软件包等操作。
+
+**命令格式：** `ansible <host-pattern> -m <module> -a "<module-arguments>"`
+
+### 3.1 常用模块示例
+
+**`ping` 模块**: 测试与主机的连通性及 Python 解释器的可用性。
+
+```bash
+ansible webservers -m ping
+```
+
+**`command` 模块**: 在远程主机上执行命令。**这是默认模块**，如果不指定 `-m`，则使用 `command`。
+
+```bash
+# 以下两条命令等效
+ansible webservers -m command -a 'id student'
+ansible webservers -a 'id student'
+```
+
+**`copy` 模块**: 将文件或内容从控制节点复制到远程主机。
+
+```bash
+ansible webservers -m copy -a 'content="Managed by Ansible" dest=/etc/motd' --become
+```
+
+> `--become` 是在命令行中临时启用提权的快捷方式。
+
+**`yum` / `apt` 模块**: 管理软件包。
+
+```bash
+ansible webservers -m yum -a 'name=httpd state=latest' --become
+```
+
+**`user` 模块**: 管理用户账户。
+
+```bash
+ansible webservers -m user -a 'name=devuser uid=2000 state=present' --become
+```
+
+## 4. Playbook - 编排复杂任务
+
+当需要执行多个有序、复杂的任务时，就需要使用 Playbook。Playbook 是 Ansible 自动化的核心，使用 YAML 格式编写。
+
+### 4.1 Playbook 核心概念
+
+- **Playbook**: 剧本，一个 YAML 文件，定义了一个自动化任务的完整流程。
+- **Play**: 剧集，一个 Playbook 可以包含一个或多个 Play。每个 Play 定义了一组要在**特定主机**（由 `hosts` 指定）上执行的任务。
+- **Task**: 情节，一个 Play 包含一个或多个 Task。每个 Task 是一个独立的执行步骤，背后由一个 **Ansible 模块**驱动。
+
+### 4.2 YAML 语法基础
+
+**注释**: 以 `#` 开始。
+
+**字符串**: 可以不加引号，也可以用单引号或双引号。
+
+**列表 (List/Array)**:
+
+```yaml
+packages:
+  - httpd
+  - mariadb-server
+  - firewalld
+```
+
+**字典 (Dictionary/Map)**:
+
+```yaml
+user:
+  name: dmxy
+  uid: 2002
+```
+
+### 4.3 编写并运行 Playbook
+
+**示例 (`install_httpd.yml`):**
+
+```yaml
+---
+- name: Install and configure Apache httpd
+  hosts: webservers
+  become: yes  # 在整个 Play 级别上启用提权
+  tasks:
+    - name: Install the latest version of httpd
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Ensure httpd is running and enabled
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Copy website content
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+```
+
+**常用执行选项：**
+
+```bash
+# 正常运行 Playbook
+ansible-playbook install_httpd.yml
+
+# 检查 Playbook 语法是否正确
+ansible-playbook --syntax-check install_httpd.yml
+
+# “彩排”模式 (Dry Run)，只模拟运行，不实际执行更改
+ansible-playbook -C install_httpd.yml
+
+# 显示更详细的输出 (-v, -vv, -vvv, -vvvv)
+ansible-playbook install_httpd.yml -v
+```
+
+## 5. 变量与流程控制
+
+为了让 Playbook 更灵活和可重用，Ansible 提供了强大的变量和流程控制功能。
+
+### 5.1 使用变量
+
+可以在 Playbook 中直接定义变量，或从外部文件加载。
+
+**外部变量文件 (`vars/packages.yml`):**
+
+```yaml
+web_packages:
+  - httpd
+  - firewalld
+  - php
+```
+
+**在 Playbook 中使用:**
+
+```yaml
+---
+- name: Install web packages
+  hosts: webservers
+  become: yes
+  vars_files:
+    - vars/packages.yml
+  tasks:
+    - name: Install packages
+      yum:
+        name: "{{ web_packages }}" # 使用 Jinja2 模板引用变量
+        state: present
+```
+
+### 5.2 使用循环 (`loop`)
+
+`loop` 关键字可以遍历一个列表，对列表中的每个元素执行同一个任务。
+
+```yaml
+---
+- name: Create multiple users
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure users exist
+      user:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - alice
+        - bob
+        - charlie
+```
 
 # 总结
 

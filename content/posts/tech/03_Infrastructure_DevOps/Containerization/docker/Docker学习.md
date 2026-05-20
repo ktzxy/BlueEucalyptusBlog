@@ -397,8 +397,6 @@ $sudo systemctl restart docker
 
 这条命令会用 nginx 镜像启动一个容器，命名为 webserver，并且映射了 80 端口，这样可以用浏览器去访问这个 nginx 服务器。直接用浏览器访问的话，会看到默认的 Nginx 欢迎页面。
 
-![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163724049.webp)
-
 
 现在，假设非常不喜欢这个欢迎页面，希望改成欢迎 Docker 的文字，可以使用 docker exec命令进入容器，修改其内容。
 
@@ -753,9 +751,17 @@ Docker镜像都是只读的,当容器启动时,—个新的可写层被加载到
 
 ![在这里插入图片描述](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/20260304163848004.webp)
 
-
-
-
+```shell
+# Docker容器和Docker镜像的关系。
+# Docker镜像运行之后就是Docker容器。（通俗的解释）
+# 基于Docker镜像挂载一个可读可写的文件系统，这个文件系统就是Docker容器的根分区。有了根分区，我们才能认为Docker容器像一个操作系统，可以运行。
+# Docker镜像本身是没有写权限的。基于Docker镜像之上挂载一个可读可写的文件系统就可以当这个文件系统是一个Docker容器的文件系统。
+# 也就是说我们针对Docker容器的操作，其实是我们在可读可写的文件系统上操作，而不是操作Docker容器底层的镜像。
+# 因为Docker镜像是不具备写权限的。所以无论你在Docker容器内做任何操作都不会影响到Docker镜像。
+# 为何Docker容器的存储是非持久化的？
+# 因为Docker容器的文件系统是即用即删的。也就意味着，当你的Docker容器被删除之后，你挂载的Docker文件系统也会被删除，
+# 那么你在Docker容器中做的任何操作，都会随着Docker容器的文件系统删除而删除。
+```
 
 # 数据卷
 
@@ -1428,6 +1434,143 @@ Docker支持五种网络模式
  自定义 
 
 自定义网桥，默认与bridge网络一样。
+
+```shell
+# bridge网络模式会为每个容器分配IP地址。分配的IP地址从何而来呢？
+ip a show docker0
+
+# 在该模式中，Docker进程创建了一个以太网桥docker0，这个以太网桥你可以理解成一个交换机，新建的容器默认会自动的桥接到这个网桥上。
+# 从RHEL8或者CentOS8开始已经默认不使用brctl命令查看网桥和网卡的关系了，代替的是bridge命令
+bridge link
+
+# 可以看到在 host 上看到的两个桥接到 docker 网桥的网卡和容器内部看到的网卡并不是一个，因为 mac 地址不同。
+# 在 host 上看到的网卡和容器内部的网卡其实叫做 veth pair
+# veth pair其实是一对虚拟网卡，这一对虚拟网卡就像"网线"一样。具体内容如下图所示
+docker exec -it centos-test ip a
+
+iptables -L -t nat -n
+
+# 查看docker的网络
+docker network ls
+
+# 连接到 bridge 的容器都在 bridge 的网桥中被记录了
+docker network inspect bridge
+
+# 总结：Docker 的 bridge 网络模式的底层采用的是 Linux bridge，veth pair，iptables
+```
+
+```shell
+# Docker的Host网络模式其实就是容器和host共享一个网络。说白了就是容器完全的使用容器所在主机上的网络，并不对容器网络做任何隔离。
+# 使用--network指定容器运行时的网络模式
+docker run -dt --name centos1 --network host centos
+
+docker exec -it centos1 ip a
+
+# 采用host网络模式的Docker容器，可以直接使用宿主机的IP地址与外界通信，若是宿主机的eth0是一个公有IP，那么容器也会共享这个公有IP，
+# 同时容器服务的端口也可以使用宿主机的端口，无需进行SNAT的转换。
+# 带来的好处就是性能好，带来的劣势就是容器的网络缺少了隔离性，增加了风险，并且由于所有容器和宿主机共享同一个网络，网络资源也受到了限制。
+docker network inspect host
+```
+
+```shell
+# none的网络模式是Docker容器中最容易理解的一种网络模式，因为如果使用了none作为Docker容器的网络模式，
+# 那么就意味着容器会禁用网络功能，只会留一个环回接口。我们同样可以使用--network参数在容器运行的时候指定none类型的网络。
+docker run -dt --name centos2 --network none centos
+
+docker exec -it centos2 ip a show
+
+# none模式的好处就是Docker容器几乎不参与网络的配置，那么如果你想针对这个容器配置网络，就需要第三方的driver。
+# none模式的优点就是让你容器的网络设置更加的开放，不再局限于Docker自带的网络模式。
+docker network inspect none
+```
+
+```shell
+docker run -dt --network container:centos1 --name centos3 centos
+# container类型的网络表明指定一个容器，和那个容器共享一个网络
+```
+
+```bash
+# 自定义网络和网络连接
+# 通过我们之前的学习，我们知道了，Docker容器网络的几种常见的模式。默认情况下docker容器会使用bridge类型的网络。
+docker network create test-network
+ip a show
+
+docker run -dt --network test-network --name test-centos1 centos
+docker run -dt --network test-network --name test-centos2 centos
+
+docker exec -it test-centos1 ip a
+docker exec -it test-centos2 ip a
+
+docker network disconnect test-network test-centos1
+docker network disconnect test-network test-centos2
+
+docker exec -it test-centos1 ip a
+docker exec -it test-centos2 ip a
+
+docker network connect test-network test-centos1
+docker network connect test-network test-centos2
+
+docker exec -it test-centos1 ip a
+docker exec -it test-centos2 ip a
+
+docker network connect bridge test-centos1
+docker exec -it test-centos1 ip a
+
+# 如果你想删除一个网络，那么必须要先将这个网络中的容器断连，全部断连之后，你才能删除这个网络
+docker network disconnect test-network test-centos1
+docker network disconnect test-network test-centos2
+docker network rm test-network
+docker network ls
+```
+
+```shell
+# Docker容器间网络通信
+# Docker网络设置的目的无非就是两个，第一个要保证容器间的通信，第二要保证外部能够访问到我们的容器承载的业务。
+# 比如说我们有一些复杂的应用，要部署在不同的容器中，那么我们为了让着个复杂的应用能够完美运行，我们一般都要求不同容器的端口实现通信。
+docker rm -f `docker ps -qa`
+docker ps -a
+
+# 想实现容器之间的通信，有两种方法，第一种就是将容器放到同一个bridge中，第二种就是将容器都设置为host的网络模式，让容器和宿主机共享一个网络。
+docker run -dt --name b-centos1 centos
+docker run -dt --name b-centos2 centos
+docker exec -it b-centos1 ip a
+docker exec -it b-centos2 ip a
+
+docker exec -it b-centos2 ping -c 1 172.17.0.2
+```
+
+```shell
+# 容器被外部访问
+# Docker容器被外部访问一般基于两种网络模式，第一种是bridge，第二种是Host。
+# 如果是bridge模式则需要通过DNAT的方法让我们的Docker容器被访问到
+# 如果是Host模式，则我们的Docker容器可以直接被访问到
+
+docker run -dt --name web1 nginx
+docker ps
+
+docker inspect web1 | grep -i ip
+
+curl 172.17.0.4:80
+# 上面的情况默认外部是访问不到nginx容器的，因为nginx容器所获得的地址是docker网桥内部的地址。
+
+docker run -dt --name web2 -p 8080:80 nginx
+docker ps
+# -p 参数表示端口映射，-p 8080:80的意思是将宿主机的8080端口映射到容器的80端口
+ss -tunlp
+iptables -L -t nat -n
+
+curl localhost:8080
+
+docker inspect web2 | grep -i NetworkSettings -A 10
+
+# 如果容器的网络模式是host，那就简单了，由于容器会和host共享一个网络，那么容器曝露的端口将会被直接访问到
+docker run -dt --network host --name web3 nginx
+docker ps
+ss -tunlp
+```
+
+
+
 ### --link
 
 通过容器名来实现互ping

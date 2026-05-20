@@ -24,22 +24,6 @@ showSeries= true
 
 ### 实战一：部署 K8s 集群（1 master + 2 node）
 
-🎯 目标
-
-- 使用 kubeadm 搭建集群
-
-✅ 预期
-
-```
-kubectl get nodes
-# Ready
-```
-
-💣 故障
-
-- node NotReady
-- kubelet 启动失败
-
 ```shell
 kubectl create deployment web --image=nginx
 
@@ -70,16 +54,7 @@ kube-flannel-ds-4qksn   0/1     CrashLoopBackOff   4 (37s ago)   2m20s   192.168
 kube-flannel-ds-bps76   0/1     CrashLoopBackOff   4 (49s ago)   2m20s   192.168.31.52   k8snode1    <none>           <none>
 kube-flannel-ds-pm5k7   0/1     CrashLoopBackOff   4 (37s ago)   2m20s   192.168.31.51   k8smaster   <none>           <none>
 [root@k8smaster ~]# kubectl logs -n kube-flannel kube-flannel-ds-4qksn
-Defaulted container "kube-flannel" out of: kube-flannel, install-cni-plugin (init), install-cni (init)
-I0504 07:25:26.137398       1 main.go:226] CLI flags config: {etcdEndpoints:http://127.0.0.1:4001,http://127.0.0.1:2379 etcdPrefix:/coreos.com/network etcdKeyfile: etcdCertfile: etcdCAFile: etcdUsername: etcdPassword: version:false kubeSubnetMgr:true kubeApiUrl: kubeAnnotationPrefix:flannel.alpha.coreos.com kubeConfigFile: iface:[] ifaceRegex:[] ipMasq:true ipMasqRandomFullyDisable:false ifaceCanReach: subnetFile:/run/flannel/subnet.env publicIP: publicIPv6: subnetLeaseRenewMargin:60 healthzIP:0.0.0.0 healthzPort:0 iptablesResyncSeconds:5 iptablesForwardRules:true blackholeRoute:false netConfPath:/etc/kube-flannel/net-conf.json setNodeNetworkUnavailable:true}
-W0504 07:25:26.137581       1 client_config.go:667] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
-I0504 07:25:26.156926       1 kube.go:139] Waiting 10m0s for node controller to sync
-I0504 07:25:26.157092       1 kube.go:537] Starting kube subnet manager
-I0504 07:25:26.163772       1 kube.go:558] Creating the node lease for IPv4. This is the n.Spec.PodCIDRs: [10.244.0.0/24]
-I0504 07:25:26.163808       1 kube.go:558] Creating the node lease for IPv4. This is the n.Spec.PodCIDRs: [10.244.1.0/24]
-I0504 07:25:26.163818       1 kube.go:558] Creating the node lease for IPv4. This is the n.Spec.PodCIDRs: [10.244.2.0/24]
-I0504 07:25:27.158224       1 kube.go:163] Node controller sync successful
-I0504 07:25:27.158319       1 main.go:252] Created subnet manager: Kubernetes Subnet Manager - k8snode2
+......
 I0504 07:25:27.158332       1 main.go:255] Installing signal handlers
 I0504 07:25:27.158760       1 main.go:534] Found network config - Backend type: vxlan
 E0504 07:25:27.158824       1 main.go:289] Failed to check br_netfilter: stat /proc/sys/net/bridge/bridge-nf-call-iptables: no such file or directory
@@ -95,31 +70,32 @@ echo "br_netfilter" > /etc/modules-load.d/k8s.conf
 
 ### 实战四：副本扩缩容
 
+```shell
 kubectl scale deployment web --replicas=3
 
 kubectl get pods -o wide
+```
 
 ### 实战五：滚动升级 + 回滚
 
-💣 故障
-
-- image 拉取失败
-- rollout 卡住
-
+```shell
 kubectl set image deployment web nginx=nginx:1.25
 
 kubectl rollout status deployment web
 
 kubectl rollout undo deployment web
+```
 
 ## 🚀 Service
 
 ### 实战六：ClusterIP 访问
 
+```shell
 kubectl expose deployment web \
   --port=80 \
   --target-port=80 \
   --type=ClusterIP
+```
 
 ### 实战七：NodePort 对外暴露
 
@@ -284,8 +260,6 @@ pod/ingress-nginx-controller-6c4b58cb44-j5g5h   1/1     Running     0          7
 NAME                                         TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
 service/ingress-nginx-controller             LoadBalancer   10.101.73.42   <pending>     80:31772/TCP,443:30385/TCP   78m
 service/ingress-nginx-controller-admission   ClusterIP      10.96.159.19   <none>        443/TCP                      78m
-
-
 
 ```
 

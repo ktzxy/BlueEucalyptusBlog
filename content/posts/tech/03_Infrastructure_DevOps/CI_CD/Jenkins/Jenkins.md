@@ -4,14 +4,12 @@ draft = false
 title = 'Jenkins'
 slug = "7oz04i87az"
 description = "Jenkins"
-categories = ["📒运维"]
+categories = ["📒CI_CD"]
 tags = ["Jenkins"]
 summary = "Jenkins"
 comments = true  
 +++
 # Jenkins
-
-[TOC]
 
 ## 安装
 

@@ -15,53 +15,6 @@ showSeries= true
 
 kubeadm是官方社区推出的一个用于快速部署kubernetes集群的工具。
 
-这个工具能通过两条指令完成一个kubernetes集群的部署：
-
-```bash
-# 创建一个 Master 节点
-kubeadm init
-
-# 将一个 Node 节点加入到当前集群中
-kubeadm join <Master节点的IP和端口 >
-```
-
-## Kubeadm方式搭建K8S集群
-
-使用kubeadm方式搭建K8s集群主要分为以下几步
-
-- 准备三台虚拟机，同时安装操作系统CentOS 7.x
-- 对三个安装之后的操作系统进行初始化操作
-- 在三个节点安装 docker kubelet kubeadm kubectl
-- 在master节点执行kubeadm init命令初始化
-- 在node节点上执行 kubeadm join命令，把node节点添加到当前集群
-- 配置CNI网络插件，用于节点之间的连通【失败了可以多试几次】
-- 通过拉取一个nginx进行测试，能否进行外网测试
-
-## 安装要求
-
-在开始之前，部署Kubernetes集群机器需要满足以下几个条件：
-
-- 一台或多台机器，操作系统 CentOS7.x-86_x64
-- 硬件配置：2GB或更多RAM，2个CPU或更多CPU，硬盘30GB或更多【注意master需要两核】
-- 可以访问外网，需要拉取镜像，如果服务器不能上网，需要提前下载镜像并导入节点
-- 禁止swap分区
-
-## 创建虚拟机的参数
-
-Master：1 CPU × 2核
-
-Worker：1 CPU × 2核
-
-### Master节点
-
-- CPU：**1 × 2核（起步）**
-- 内存：3GB
-
-### Worker节点
-
-- CPU：**1 × 2核**
-- 内存：2~2.5GB
-
 硬盘40G分区方案
 
 | 挂载点 | 大小 | 用途                  |
@@ -98,6 +51,8 @@ setenforce 0
 swapoff -a 
 # 永久关闭
 sed -ri 's/.*swap.*/#&/' /etc/fstab
+# 检查
+free -m
 
 # 根据规划设置主机名【master节点上操作】
 hostnamectl set-hostname k8smaster
@@ -113,14 +68,34 @@ cat >> /etc/hosts << EOF
 192.168.31.53 k8snode2
 EOF
 
-
-# 将桥接的IPv4流量传递到iptables的链
-cat > /etc/sysctl.d/k8s.conf << EOF
-net.bridge.bridge-nf-call-ip6tables = 1
-net.bridge.bridge-nf-call-iptables = 1
+#加载模块（解决“找不到文件”的问题）
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
 EOF
-# 生效
-sysctl --system  
+
+# 立即加载
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+----------------------------------
+
+#配置参数（解决“网络不通”的问题）
+cat <<EOF | tee /etc/sysctl.d/k8s.conf
+# 开启网桥流量过滤，使 iptables 能看到桥接流量 (K8s 网络插件依赖)
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+# 开启 IP 转发
+net.ipv4.ip_forward                 = 1
+# 内存溢出时保护机制
+vm.swappiness = 0
+EOF
+
+# 加载配置
+sysctl --system
+# 验证一下
+ls /proc/sys/net/bridge/
+cat /proc/sys/net/ipv4/ip_forward
 
 # 时间同步 临时同步
 # 原因：K8s 极度依赖“时间一致性 ；
@@ -136,74 +111,58 @@ systemctl start chronyd
 chronyc sources
 ```
 
-[Docker 常见疑难杂症解决方案 | 🏘️Home](https://ktzxy.top/posts/7k38hq60mo/#20yum源报错)
+```shell
+问题1：sysctl是做什么的？
+在运行时配置内核参数
+  -p   从指定的文件加载系统参数，如不指定即从/etc/sysctl.conf中加载
 
-## 安装Docker/kubeadm/kubelet
+问题2：为什么要执行modprobe br_netfilter？
+修改/etc/sysctl.d/k8s.conf文件，增加如下三行参数：
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+
+sysctl -p /etc/sysctl.d/k8s.conf出现报错：
+
+sysctl: cannot stat /proc/sys/net/bridge/bridge-nf-call-ip6tables: No such file or directory
+sysctl: cannot stat /proc/sys/net/bridge/bridge-nf-call-iptables: No such file or directory
+
+解决方法：
+modprobe br_netfilter
+
+问题3：为什么开启net.bridge.bridge-nf-call-iptables内核参数？
+在centos下安装docker，执行docker info出现如下警告：
+WARNING: bridge-nf-call-iptables is disabled
+WARNING: bridge-nf-call-ip6tables is disabled
+
+解决办法：
+vim  /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+
+问题4：为什么要开启net.ipv4.ip_forward = 1参数？
+kubeadm初始化k8s如果报错：
+就表示没有开启ip_forward，需要开启。
+
+net.ipv4.ip_forward是数据包转发：
+出于安全考虑，Linux系统默认是禁止数据包转发的。所谓转发即当主机拥有多于一块的网卡时，其中一块收到数据包，根据数据包的目的ip地址将数据包发往本机另一块网卡，该网卡根据路由表继续发送数据包。这通常是路由器所要实现的功能。
+要让Linux系统具有路由转发功能，需要配置一个Linux的内核参数net.ipv4.ip_forward。这个参数指定了Linux系统当前对路由转发功能的支持情况；其值为0时表示禁止进行IP转发；如果是1,则说明IP转发功能已经打开。
+```
+
+
+
+yum源报错：[Docker 常见疑难杂症解决方案 | 🏘️Home](https://ktzxy.top/posts/7k38hq60mo/#20yum源报错)
+
+## 安装Containerd/kubeadm/kubelet
 
 所有节点安装Docker/kubeadm/kubelet ，Kubernetes默认CRI（容器运行时）为Docker，因此先安装Docker
-
-### 安装Docker（新版不推荐）
-
-首先配置一下Docker的阿里yum源
-
-```bash
-cat >/etc/yum.repos.d/docker.repo<<EOF
-[docker-ce-edge]
-name=Docker CE Edge - \$basearch
-baseurl=https://mirrors.aliyun.com/docker-ce/linux/centos/7/\$basearch/edge
-enabled=1
-gpgcheck=1
-gpgkey=https://mirrors.aliyun.com/docker-ce/linux/centos/gpg
-EOF
-```
-
-然后yum方式安装docker
-
-```bash
-sudo yum install -y yum-utils
-
-# Step 2: 添加软件源信息
-yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-
-# Step 3: 安装Docker
-sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-# Step 4: 开启Docker服务
-sudo service docker start
-```
-
-配置docker的镜像源
-
-```bash
-cat >> /etc/docker/daemon.json << EOF
-{
-  "registry-mirrors": ["https://b9pmyelo.mirror.aliyuncs.com"]
-}
-EOF
-```
-
-然后重启docker
-
-```bash
-systemctl restart docker
-```
 
 ### 安装containerd
 
 ```shell
 #安装容器运行时（containerd 推荐）
 # 可以不安装docker，而是只安装containerd
-# 安装
-yum install -y containerd.io
-
-#报错
-[root@k8smaster ~]# yum install -y containerd
-Loaded plugins: fastestmirror
-Loading mirror speeds from cached hostfile
-No package containerd available.
-Error: Nothing to do
-
-#解决
+# 添加docker-ce 软件源
 cat > /etc/yum.repos.d/docker-ce.repo <<EOF
 [docker-ce-stable]
 name=Docker CE Stable - Aliyun
@@ -214,16 +173,19 @@ EOF
 
 yum clean all
 yum makecache
-
-
+# 安装
+yum install -y containerd.io
 
 # 生成配置
 containerd config default > /etc/containerd/config.toml
 
-# 修改
+# 修改一
 SystemdCgroup = true
 
-# 添加镜像
+# 修改二
+sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"
+
+# 修改三 添加镜像地址 
 [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
 #加入下列
   [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
@@ -240,8 +202,8 @@ systemctl restart containerd
 systemctl enable containerd
 
 
-containerd 和 Docker 关系
-Docker = containerd + CLI + 构建工具
+#containerd 和 Docker 关系
+#Docker = containerd + CLI + 构建工具
 ```
 
 ### 加kubernetes软件源
@@ -275,8 +237,25 @@ systemctl enable kubelet
 
 在   192.168.31.51  执行，也就是master节点
 
-```bash
+```shell
 kubeadm init --apiserver-advertise-address=192.168.31.51 --image-repository registry.aliyuncs.com/google_containers --kubernetes-version v1.28.2 --service-cidr=10.96.0.0/12  --pod-network-cidr=10.244.0.0/16
+```
+
+```bash
+#参数详解
+--apiserver-advertise-address API Server 对外“广播”的地址
+--apiserver-advertise-address=192.168.31.51  表示所有节点通过这个IP访问 master
+--image-repository   镜像仓库地址
+--kubernetes-version 指定安装的 K8s 版本
+--service-cidr Service 虚拟IP网段  10.96.0.0/12 默认值（推荐不改）
+--pod-network-cidr  Pod 网络网段   10.244.0.0/16  这是 Flannel 默认网段
+这个参数必须和你用的网络插件匹配！
+# 各个组件的端口
+6443（API Server）
+2379（etcd）
+10250（kubelet）
+
+
 
 #如果卡在拉取镜像那里，可以手动拉取镜像
 [root@k8smaster ~]# kubeadm config images list \
@@ -289,253 +268,9 @@ registry.aliyuncs.com/google_containers/kube-proxy:v1.28.2
 registry.aliyuncs.com/google_containers/pause:3.9
 registry.aliyuncs.com/google_containers/etcd:3.5.9-0
 registry.aliyuncs.com/google_containers/coredns:v1.10.1
-[root@k8smaster ~]# kubeadm config images pull \
-> --kubernetes-version v1.28.2 \
-> --image-repository registry.aliyuncs.com/google_containers
-[config/images] Pulled registry.aliyuncs.com/google_containers/kube-apiserver:v1.28.2
-[config/images] Pulled registry.aliyuncs.com/google_containers/kube-controller-manager:v1.28.2
-[config/images] Pulled registry.aliyuncs.com/google_containers/kube-scheduler:v1.28.2
-[config/images] Pulled registry.aliyuncs.com/google_containers/kube-proxy:v1.28.2
-[config/images] Pulled registry.aliyuncs.com/google_containers/pause:3.9
-[config/images] Pulled registry.aliyuncs.com/google_containers/etcd:3.5.9-0
-[config/images] Pulled registry.aliyuncs.com/google_containers/coredns:v1.10.1
 
-
-
-#如果初始化有误，重置，然后初始化
-kubeadm reset -f
-
-rm -rf /etc/kubernetes/
-rm -rf /var/lib/kubelet/
-rm -rf /var/lib/etcd/
-
-rm -rf /var/lib/cni/
-rm -rf /var/lib/containerd/*
-
-systemctl restart containerd
-systemctl restart kubelet
-
-########################################
-#参数详解
---apiserver-advertise-address API Server 对外“广播”的地址
---apiserver-advertise-address=192.168.31.51  表示所有节点通过这个IP访问 master
-
---image-repository   镜像仓库地址
-[root@k8snode1 ~]# kubeadm config images list
-I0503 20:48:11.711560   14155 version.go:256] remote version is much newer: v1.36.0; falling back to: stable-1.28
-registry.k8s.io/kube-apiserver:v1.28.15
-registry.k8s.io/kube-controller-manager:v1.28.15
-registry.k8s.io/kube-scheduler:v1.28.15
-registry.k8s.io/kube-proxy:v1.28.15
-registry.k8s.io/pause:3.9
-registry.k8s.io/etcd:3.5.9-0
-registry.k8s.io/coredns/coredns:v1.10.1
-
-
-可以提前拉 kubeadm config images pull
-
---kubernetes-version 指定安装的 K8s 版本
-
---service-cidr Service 虚拟IP网段 
-10.96.0.0/12 默认值（推荐不改）
-
---pod-network-cidr  Pod 网络网段
-10.244.0.0/16  这是 Flannel 默认网段
-这个参数必须和你用的网络插件匹配！
-
-6443（API Server）
-2379（etcd）
-10250（kubelet）
-
-##生产写法了解：
-kubeadm init \
---apiserver-advertise-address=192.168.31.51 \
---image-repository registry.aliyuncs.com/google_containers \
---kubernetes-version v1.28.2 \
---service-cidr=10.96.0.0/12 \
---pod-network-cidr=10.244.0.0/16 \
---control-plane-endpoint=192.168.31.100 \
---upload-certs
-
---control-plane-endpoint  VIP（高可用入口）
---upload-certs  多 master 时共享证书
+#可以提前拉 kubeadm config images pull
 ```
-
-### 报错
-
-```shell
-[kubelet-check] Initial timeout of 40s passed.
-[kubelet-check] It seems like the kubelet isn't running or healthy.
-[kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get "http://localhost:10248/healthz": dial tcp [::1]:10248: connect: connection refused.
-[kubelet-check] It seems like the kubelet isn't running or healthy.
-[kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get "http://localhost:10248/healthz": dial tcp [::1]:10248: connect: connection refused.
-
-#关闭swap
-free -m
-swapoff -a
-sed -i '/ swap / s/^/#/' /etc/fstab #不管用
-```
-
-
-
-```shell
-[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
-[kubelet-check] Initial timeout of 40s passed.
-
-Unfortunately, an error has occurred:
-        timed out waiting for the condition
-
-This error is likely caused by:
-        - The kubelet is not running
-        - The kubelet is unhealthy due to a misconfiguration of the node in some way (required cgroups disabled)
-
-If you are on a systemd-powered system, you can try to troubleshoot the error with the following commands:
-        - 'systemctl status kubelet'
-        - 'journalctl -xeu kubelet'
-
-Additionally, a control plane component may have crashed or exited when started by the container runtime.
-To troubleshoot, list all containers using your preferred container runtimes CLI.
-Here is one example how you may list all running Kubernetes containers by using crictl:
-        - 'crictl --runtime-endpoint unix:///var/run/containerd/containerd.sock ps -a | grep kube | grep -v pause'
-        Once you have found the failing container, you can inspect its logs with:
-        - 'crictl --runtime-endpoint unix:///var/run/containerd/containerd.sock logs CONTAINERID'
-error execution phase wait-control-plane: couldn't initialize a Kubernetes cluster
-To see the stack trace of this error execute with --v=5 or higher
-
-原因：控制平面（apiserver等）没起来 → kubeadm 等超时了
-排查：
-1.systemctl status kubelet
-如果是 failed / restarting：
-journalctl -xeu kubelet -n 50
-常见：failed to run Kubelet: cgroup driver mismatch
-改SystemdCgroup = true
-systemctl restart containerd
-systemctl restart kubelet
-
-2.systemctl status containerd
-常见containerd 配置不对：
-containerd config default > /etc/containerd/config.toml
-再改：
-SystemdCgroup = true
-
-3.看控制面容器 
-crictl ps -a | grep kube
-正常：
-kube-apiserver
-kube-controller-manager
-kube-scheduler
-etcd
-
-报错：
-[root@k8smaster ~]# crictl ps -a | grep kube
-WARN[0000] runtime connect using default endpoints: [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
-WARN[0000] image connect using default endpoints: [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
-E0501 14:20:28.004631   62932 remote_runtime.go:390] "ListContainers with filter from runtime service failed" err="rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory\"" filter="&ContainerFilter{Id:,State:nil,PodSandboxId:,LabelSelector:map[string]string{},}"
-FATA[0000] listing containers: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory"
-说明：
-❌ crictl 试图连接 Docker
-❌ 但你机器上没有 Docker
-
-K8s 1.24+ 已经移除 dockershim
-👉 默认运行时 = containerd
-
-journalctl -u kubelet -n 50
-得到下列：
-kuberuntime_manager.go:1166] "CreatePodSandbox for pod failed" err="rpc error: code = DeadlineExceeded
-May 01 14:27:22 k8smaster kubelet[60125]: E0501 14:27:22.294032   60125 pod_workers.go:1300] "Error syncing pod, skipping" err="failed to \"CreatePodSandbox\" for \"kube-apise
-May 01 14:27:23 k8smaster kubelet[60125]: W0501 14:27:23.609419   60125 reflector.go:535] vendor/k8s.io/client-go/informers/factory.go:150: failed to list *v1.Node: Get "https
-May 01 14:27:23 k8smaster kubelet[60125]: E0501 14:27:23.609484   60125 reflector.go:147] vendor/k8s.io/client-go/informers/factory.go:150: Failed to watch *v1.Node: failed to
-May 01 14:27:24 k8smaster kubelet[60125]: E0501 14:27:24.859727   60125 eviction_manager.go:258] "Eviction manager: failed to get summary stats" err="failed to get node info:
-May 01 14:27:25 k8smaster kubelet[60125]: W0501 14:27:25.129489   60125 reflector.go:535] vendor/k8s.io/client-go/informers/factory.go:150: failed to list *v1.CSIDriver: Get "
-May 01 14:27:25 k8smaster kubelet[60125]: E0501 14:27:25.129603   60125 reflector.go:147] vendor/k8s.io/client-go/informers/factory.go:150: Failed to watch *v1.CSIDriver: fail
-May 01 14:27:25 k8smaster kubelet[60125]: E0501 14:27:25.326026   60125 controller.go:146] "Failed to ensure lease exists, will retry" err="Get \"https://192.168.31.51:6443/ap
-May 01 14:27:25 k8smaster kubelet[60125]: I0501 14:27:25.795630   60125 kubelet_node_status.go:70] "Attempting to register node" node="k8smaster"
-May 01 14:27:25 k8smaster kubelet[60125]: E0501 14:27:25.796202   60125 kubelet_node_status.go:92] "Unable to register node with API server" err="Post \"https://192.168.31.51:
-May 01 14:27:28 k8smaster kubelet[60125]: W0501 14:27:28.905314   60125 reflector.go:535] vendor/k8s.io/client-go/informers/factory.go:150: failed to list *v1.RuntimeClass: Ge
-May 01 14:27:28 k8smaster kubelet[60125]: E0501 14:27:28.905466   60125 reflector.go:147] vendor/k8s.io/client-go/informers/factory.go:150: Failed to watch *v1.RuntimeClass: f
-May 01 14:27:30 k8smaster kubelet[60125]: E0501 14:27:30.129295   60125 event.go:289] Unable to write event: '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMet
-May 01 14:27:32 k8smaster kubelet[60125]: E0501 14:27:32.330126   60125 controller.go:146] "Failed to ensure lease exists, will retry" err="Get \"https://192.168.31.51:6443/ap
-May 01 14:27:32 k8smaster kubelet[60125]: I0501 14:27:32.799305   60125 kubelet_node_status.go:70] "Attempting to register node" node="k8smaster"
-
-containerd 创建 Pod 沙箱超时（根本没成功）
-crictl images
-
-#真实原因：containerd 仍在访问国外 registry（registry.k8s.io）失败
-最终查看
-cat /etc/containerd/config.toml | grep sandbox_image
-看到
-sandbox_image = "registry.k8s.io/pause:3.9"
-
-#解决：
-修改 sandbox 镜像
-vi /etc/containerd/config.toml
-找到：sandbox_image = "registry.k8s.io/pause:3.9"
-改成：sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"
-重启 containerd（必须）
-systemctl restart containerd
-清理环境
-kubeadm reset -f
-rm -rf /etc/kubernetes/*
-rm -rf /var/lib/etcd
-重新初始化
-```
-
-报错二
-
-```shell
-[root@k8smaster ~]# kubeadm init --apiserver-advertise-address=192.168.31.51 .28.2 --service-cidr=10.96.0.0/12  --pod-network-cidr=10.244.0.0/16
-[init] Using Kubernetes version: v1.28.2
-[preflight] Running pre-flight checks
-error execution phase preflight: [preflight] Some fatal errors occurred:
-        [ERROR FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: /pr
-        [ERROR FileContent--proc-sys-net-ipv4-ip_forward]: /proc/sys/net/ipv4
-[preflight] If you know what you are doing, you can make a check non-fatal wi
-To see the stack trace of this error execute with --v=5 or higher
-
-
-解决：
-1. bridge-nf-call-iptables 不存在
-/proc/sys/net/bridge/bridge-nf-call-iptables does not exist
-说明：br_netfilter 模块没有加载
-2. ip_forward 没开
-/proc/sys/net/ipv4/ip_forward contents are not set to 1
-说明：Linux 没开启路由转发（K8s 必须开启）
-
-##
-① 加载内核模块
-modprobe br_netfilter
-② 开启内核参数（临时）
-echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
-echo 1 > /proc/sys/net/ipv4/ip_forward
-③ 永久生效（关键！）
-
-创建配置文件：
-
-cat > /etc/sysctl.d/k8s.conf <<EOF
-net.bridge.bridge-nf-call-iptables = 1
-net.ipv4.ip_forward = 1
-EOF
-
-应用配置：
-sysctl --system
-验证一下
-ls /proc/sys/net/bridge/
-cat /proc/sys/net/ipv4/ip_forward
-
-应该看到：
-bridge 目录存在
-ip_forward = 1
-```
-
-
-
-由于默认拉取镜像地址k8s.gcr.io国内无法访问，这里指定阿里云镜像仓库地址，【执行上述命令会比较慢，因为后台其实已经在拉取镜像了】，我们 docker images 命令即可查看已经拉取的镜像
-
-![image-20200929094302491](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291520817.webp)
-
-当我们出现下面的情况时，表示kubernetes的镜像已经安装成功
-
-![image-20200929094620145](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291520818.webp)
 
 使用kubectl工具 【master节点操作】
 
@@ -594,18 +329,7 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 
 # 查看状态 【kube-system是k8s中的最小单元】
 kubectl get pods -n kube-system
-
-#或者
-kubectl delete -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/calico.yaml
-
-报错
-Warning  FailedMount  20s (x10 over 4m30s)  kubelet            MountVolume.SetUp failed for volume "bpffs" : hostPath type check failed: /sys/fs/bpf is not a directory
-
 ```
-
-运行后的结果
-
-![image-20201113165929510](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291520821.webp)
 
 运行完成后，我们查看状态可以发现，已经变成了Ready状态了
 
@@ -615,9 +339,6 @@ Warning  FailedMount  20s (x10 over 4m30s)  kubelet            MountVolume.SetUp
 
 ```bash
 # master节点将该节点删除
-
-##20210223 yan 查阅资料添加###kubectl drain k8snode1 --delete-local-data --force --ignore-daemonsets
-
 kubectl delete node k8snode1
  
 # 然后到k8snode1节点进行重置
@@ -625,57 +346,6 @@ kubectl delete node k8snode1
 # 重置完后在加入
 kubeadm join 192.168.31.51:6443 --token qw723k.qv8r5vopayulrq2x \
         --discovery-token-ca-cert-hash sha256:fc19d3cdb16c7a38a21add21a1f1a953320755f1d14933656d9f7648171603a1
-        
-
-#添加后，发现主节点ready，node节点还是处于NotReady
-且node节点得到如下
-[root@k8snode1 ~]# kubectl get nodes E0501 15:16:53.952084 43193 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?
-解决：
-Step 1：Master 删除 Node
-在 master 上执行：
-kubectl delete node k8snode1
-kubectl delete node k8snode2
-Node 执行 reset（非常关键）
-在每个 node 上执行：
-kubeadm reset -f
-清理残留：
-rm -rf /etc/kubernetes/
-rm -rf /var/lib/kubelet/
-rm -rf /var/lib/cni/
-rm -rf /run/flannel
-确认 containerd 配置正确
-检查：
-cat /etc/containerd/config.toml | grep sandbox
-应该是：
-sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"
-然后重启：
-systemctl restart containerd
-systemctl restart kubelet
-重新 join 集群
-
-然后
-kubectl get node
-发现还是处于NotReady
-kubectl desctibe node k8snode1
-得打如下错误
-reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized
-
-master检查
-[root@k8smaster ~]# kubectl get pods -n kube-flannel -o wide
-NAME                    READY   STATUS    RESTARTS   AGE     IP              NODE        NOMINATED NODE   READINESS GATES
-kube-flannel-ds-c7469   1/1     Running   0          9m1s    192.168.31.52   k8snode1    <none>           <none>
-kube-flannel-ds-qfzln   1/1     Running   0          8m54s   192.168.31.53   k8snode2    <none>           <none>
-kube-flannel-ds-tmkw8   1/1     Running   0          24m     192.168.31.51   k8smaster   <none>           <none>
-再检查node，应该没问题了
-kubectl get nodes
-有时候 Node 刚加入不会立刻调度：
-kubectl delete pod -n kube-flannel --all
-
-##报错
-[root@k8smaster ~]# kubectl get pod -n kube-system                           NAME                                READY   STATUS    RESTARTS   AGE
-coredns-66f779496c-jq9hr            0/1     Pending   0          5m5s
-coredns-66f779496c-q2chh            0/1     Pending   0          5m5s
-
 ```
 
 ## 测试kubernetes集群
@@ -690,29 +360,6 @@ kubectl create deployment web --image=nginx
 # 查看状态
 kubectl get pod
 ```
-
-### 镜像拉取解决方案
-
-```shell
-#拉取镜像报错
-1.ImagePullBackOff
-# 注意，所有节点都要修改配置
-vi /etc/containerd/config.toml
- [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
-        endpoint = [
-         "https://registry.aliyuncs.com",
-         "https://mirror.ccs.tencentyun.com"
-        ]
-[plugins."io.containerd.grpc.v1.cri".registry.mirrors."registry.k8s.io"]
-  endpoint = ["https://registry.aliyuncs.com/google_containers"]
-  
-systemctl restart containerd
-crictl pull nginx
-```
-
-如果我们出现Running状态的时候，表示已经成功运行了
-
-![image-20201113203537028](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291520823.webp)
 
 下面我们就需要将端口暴露出去，让其它外界能够访问
 
@@ -730,14 +377,6 @@ http://192.168.31.52:30633/
 ```
 
 发现我们的nginx已经成功启动了
-
-![image-20201113204056851](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291520825.webp)
-
-到这里为止，我们就搭建了一个单master的k8s集群
-
-![image-20201113204158884](https://fastly.jsdelivr.net/gh/ktzxy/blog-img@main/2026/202507291520826.webp)
-
-
 
 ## 错误汇总
 
@@ -804,14 +443,14 @@ rm -rf $HOME/.kube
 然后 在master重新初始化
 
 ```bash
-kubeadm init --apiserver-advertise-address=202.193.57.11 --image-repository registry.aliyuncs.com/google_containers --kubernetes-version v1.18.0 --service-cidr=10.96.0.0/12  --pod-network-cidr=10.244.0.0/16
+kubeadm init --apiserver-advertise-address=192.168.31.51 --image-repository registry.aliyuncs.com/google_containers --kubernetes-version v1.28.2 --service-cidr=10.96.0.0/12  --pod-network-cidr=10.244.0.0/16
 ```
 
 初始完成后，我们再到 node1节点，执行 kubeadm join命令，加入到master
 
 ```bash
-kubeadm join 202.193.57.11:6443 --token c7a7ou.z00fzlb01d76r37s \
-    --discovery-token-ca-cert-hash sha256:9c3f3cc3f726c6ff8bdff14e46b1a856e3b8a4cbbe30cab185f6c5ee453aeea5
+kubeadm join 192.168.31.51:6443 --token qw723k.qv8r5vopayulrq2x \
+        --discovery-token-ca-cert-hash sha256:fc19d3cdb16c7a38a21add21a1f1a953320755f1d14933656d9f7648171603a1
 ```
 
 添加完成后，我们使用下面命令，查看节点是否成功添加
