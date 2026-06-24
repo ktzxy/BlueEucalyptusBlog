@@ -3201,3 +3201,355 @@ insert into my_emp (ename) values ('jack');
 `for update nowait`：也会对所查询到得结果集进行加锁，别的线程对结果集进行操作时会报错ORA-00054，提示：内容是资源正忙，但指定以 NOWAIT 方式获取资源。
 `select t.*,t.rowid from 表名`：用ROWID来定位记录是最快的，比索引还快，不加锁查询。不会锁表
 
+## 16.其他
+
+## Windows 环境 archive log list 排障记录
+
+### 一、问题现象
+
+在 Windows 环境下，使用 Oracle 19c 检查归档日志状态时，执行：
+
+```sql
+archive log list;
+```
+
+出现多种错误：
+
+#### 1. PL/SQL 工具中提示：
+
+```text
+无效语句
+```
+
+或：
+
+```text
+ORA-00900: invalid SQL statement
+```
+
+#### 2. SQLPlus 中使用 SYSTEM 用户提示：
+
+```text
+ORA-01031: 权限不足
+```
+
+#### 3. 使用：
+
+```cmd
+sqlplus / as sysdba
+```
+
+提示：
+
+```text
+ORA-01017: 用户名/口令无效; 登录被拒绝
+```
+
+------
+
+## 二、问题分析
+
+## 1. archive log list 不是普通 SQL
+
+命令：
+
+```sql
+archive log list;
+```
+
+属于：
+
+- SQL*Plus 命令
+
+不是：
+
+- 标准 SQL
+- PL/SQL
+
+因此：
+
+很多图形化工具（PLSQL Developer/Navicat 等）无法识别。
+
+只能在：
+
+- sqlplus
+- sqlcl
+- rman
+
+中执行。
+
+------
+
+## 2. SYSTEM 用户不是 SYSDBA
+
+虽然 SYSTEM 属于 DBA 用户。
+
+但：
+
+```sql
+archive log list;
+```
+
+属于：
+
+- 实例级管理命令
+
+需要：
+
+```text
+SYSDBA
+```
+
+权限。
+
+因此：
+
+```cmd
+sqlplus system/密码
+```
+
+登录后执行：
+
+```sql
+archive log list;
+```
+
+会报：
+
+```text
+ORA-01031: 权限不足
+```
+
+------
+
+## 3. Windows 本地认证失败
+
+使用：
+
+```cmd
+sqlplus / as sysdba
+```
+
+时报：
+
+```text
+ORA-01017
+```
+
+经过排查：
+
+- ORA_DBA 用户组正常
+- OracleServiceORCL 服务正常
+- ORACLE_SID 正常
+
+最终定位：
+
+```ini
+SQLNET.AUTHENTICATION_SERVICES = (NONE)
+```
+
+导致：Windows NTS 本地认证被禁用
+
+从而：
+
+```cmd
+sqlplus / as sysdba
+```
+
+无法进行 OS Authentication。
+
+------
+
+## 三、解决步骤
+
+### 步骤1：确认实例名
+
+执行：
+
+```cmd
+sc query type= service | findstr OracleService
+```
+
+输出：
+
+```text
+SERVICE_NAME: OracleServiceORCL
+```
+
+确认：
+
+```text
+ORACLE_SID=ORCL
+```
+
+------
+
+### 步骤2：设置 ORACLE_SID
+
+CMD 执行：
+
+```cmd
+set ORACLE_SID=ORCL
+```
+
+------
+
+### 步骤3：检查 ORA_DBA 组
+
+执行：
+
+```cmd
+whoami /groups
+```
+
+确认存在：
+
+```text
+ORA_DBA
+```
+
+------
+
+### 步骤4：检查 sqlnet.ora
+
+路径：
+
+```text
+D:\WINDOWS.X64_193000_db_home\NETWORK\ADMIN\sqlnet.ora
+```
+
+原配置：
+
+```ini
+SQLNET.AUTHENTICATION_SERVICES = (NONE)
+```
+
+问题：
+
+```text
+禁用了 Windows NTS 本地认证
+```
+
+------
+
+### 步骤5：修改配置
+
+修改为：
+
+```ini
+SQLNET.AUTHENTICATION_SERVICES = (NTS)
+```
+
+------
+
+### 步骤6：重启 Oracle 服务
+
+管理员 CMD：
+
+```cmd
+net stop OracleServiceORCL
+net start OracleServiceORCL
+```
+
+重启监听：
+
+```cmd
+lsnrctl stop
+lsnrctl start
+```
+
+------
+
+### 步骤7：重新登录 SYSDBA
+
+执行：
+
+```cmd
+sqlplus / as sysdba
+```
+
+成功连接数据库。
+
+------
+
+### 步骤8：检查归档状态
+
+执行：
+
+```sql
+archive log list;
+```
+
+成功输出：
+
+```text
+数据库日志模式             非存档模式
+自动存档                   禁用
+存档终点                   D:\WINDOWS.X64_193000_db_home\RDBMS
+最早的联机日志序列         669
+当前日志序列               671
+```
+
+------
+
+## 四、最终结论
+
+当前数据库：
+
+```text
+NOARCHIVELOG
+```
+
+即：未开启归档模式
+
+特点：
+
+- redo log 会循环覆盖
+- 不支持完整热备
+- 不支持时间点恢复
+- 不适合生产环境
+
+------
+
+## 五、后续建议
+
+### 1. 配置 FRA（快速恢复区）
+
+推荐：
+
+```sql
+alter system set db_recovery_file_dest_size=20G scope=both;
+
+alter system set db_recovery_file_dest='D:\oracle\fra' scope=both;
+```
+
+------
+
+### 2. 开启归档模式
+
+执行：
+
+```sql
+shutdown immediate;
+startup mount;
+alter database archivelog;
+alter database open;
+```
+
+------
+
+### 3. 再次验证
+
+执行：
+
+```sql
+archive log list;
+```
+
+应显示：
+
+```text
+数据库日志模式     存档模式
+自动存档         启用
+```
+

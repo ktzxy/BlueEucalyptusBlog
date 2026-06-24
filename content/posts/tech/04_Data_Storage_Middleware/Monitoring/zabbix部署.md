@@ -18,7 +18,7 @@ comments = true
 
 #### 1.1 文档地址
 
-[https://www.zabbix.com/cn/download?zabbix=6.0&os_distribution=red_hat_enterprise_linux&os_version=8&components=server_frontend_agent&db=mysql&ws=nginx](https://www.zabbix.com/cn/download?zabbix=6.0&os_distribution=red_hat_enterprise_linux&os_version=8&components=server_frontend_agent&db=mysql&ws=nginx)
+[Zabbix地址](https://www.zabbix.com/cn/download?zabbix=6.0&os_distribution=red_hat_enterprise_linux&os_version=8&components=server_frontend_agent&db=mysql&ws=nginx)
 
 #### 1.2 服务列表
 
