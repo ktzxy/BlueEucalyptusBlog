@@ -61,4 +61,6 @@ jobs:
           port: ${{ secrets.ALI_PORT }}
           script: |
             cd /var/www/myblog
-            docker compose up -d --force-recreate
+            docker compose down --remove-orphans || true
+            docker rm -f myblog_nginx 2>/dev/null || true
+            docker compose up -d --force-recreate --remove-orphans
